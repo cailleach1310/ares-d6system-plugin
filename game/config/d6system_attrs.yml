@@ -1,0 +1,31 @@
+---
+d6system:
+  attributes:
+  - name: Reflexes
+    desc: Measure of balance, limberness, quickness, and full-body motor abilities.
+  - name: Coordination
+    desc: Measure of hand-eye coordination and fine motor abilities.
+  - name: Physique
+    desc: Measure of physical power and ability to resist damage.
+  - name: Knowledge
+    desc: Measure of strength of memory and ability to learn.
+  - name: Perception
+    desc: Measure of mental quickness and attention to detail.
+  - name: Presence
+    desc: Measure of emotional strength, physical attractiveness and personality.
+  - name: Magic
+    desc: Measure of a character’s extraordinary abilities in regards to magic.
+  - name: Psionics
+    desc: Measure of a character’s extraordinary abilities in regards to psionics.
+  attributes_blurb: Each character has seven attributes, which measure basic physical
+    and mental abilities that are common to every living creature (and some nonliving
+    things), no matter what universe or dimension they exist in. Distribute 18 dice
+    among the seven attributes. The minimum is 1D and the maximum is 5D in all  attributes
+    except Extranormal attributes. Extranormal attributes have no minimum  and no
+    maximum.
+  max_attr_cg_dice: 18
+  max_attr_dice: 5
+  min_attr_dice: 1
+  extranormal_attributes:
+  - Magic
+  - Psionics

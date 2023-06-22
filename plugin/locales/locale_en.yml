@@ -1,0 +1,66 @@
+---
+en:
+  d6system:
+        no_permission_to_view_sheet: "You are not allowed to view that sheet."
+        # Attribute / Action Skill Ratings
+#        incapable_rating: "Incapable"
+#        poor_rating: "Poor"
+#        average_rating: "Average"
+#        good_rating: "Good"
+#        great_rating: "Great"
+#        exceptional_rating: "Exceptional"
+#        legendary_rating: "Legendary"
+        # Chargen
+        attribute_set: "Attribute '%{name}' is now %{dice}D6+%{pips}."
+        skill_set: "Skill '%{name}' is now %{dice}D6+%{pips}."
+        advantage_set: "Advantage '%{name}' is set to rank %{rank}."
+        advantage_at_max: "Advantage '%{name}' is already at maximum rank."
+        specialty_set: "Specialty '%{name}' has been set for the skill  %{skill}."
+        ability_removed: "Ability '%{name}' removed."
+        admin_ability_set: "You set %{name}'s %{ability_name} ability (%{ability_type}) to %{rating}."
+        max_dice_is: "You can't set %{name} to a value higher than %{max}D6."
+        min_dice_is: "You can't lower that ability any lower."
+#        invalid_rating: That is not a valid ability rating.  You have to use a number.
+        no_special_characters: "Ability names may not contain special characters."
+        error_saving_ability: "There was a problem saving %{name}: %{error}"
+        
+        ability_not_found: "Ability not found."
+        invalid_specialty_skill: "That skill cannot have a specialty."
+        specialty_added: "Specialty %{name} added for the skill %{skill}."
+        specialty_not_found: "%{name} doesn't have that specialty."
+        specialty_removed: "Specialty %{name} removed."
+        specialty_already_exists: "%{name} already has that specialty."
+        disadvantage_set: "Disadvantage %{name} set to rank %{rank}."
+        disadvantage_not_found: "%{name} doesn't have that distadvantage."
+        disadvantage_removed: "Disadvantage %{name} removed."
+        error_saving_ability: "While saving ability %{name} the following error occurred: %{error}"        
+        reset_complete: "Your abilities have been reset."
+        # App Review
+        too_many_points_spent: "You can't spend more than %{max} points. You've spent %{total} points."
+        too_many_specialties: "You can't pick more than %{max} specialties in chargen. You've chosen %{total}."
+        too_many_flaws: "You can't pick more than %{max} flaws in chargen. You've chosen %{total}."
+        too_many_disadvantage_points_spent: "You can't gain more than %{max} disadvantage points in chargen. You've gained %{total} points."
+        # Rolls
+        embarrassing_failure: "%xREmbarrassing Failure%xn"
+        failure: "%xrFailure%xn"
+        success: "%xgSuccess%xn"
+        good_success: "%xh%xgGood Success%xn"
+        exceptional_success: "%xh%xGExceptional Success%xn"
+        amazing_success: "%xh%xyAmazing Success%xn"
+        
+        opposed_both_fail: "%xrEveryone failed!%xn"
+        opposed_draw: "%xbDRAW!%xn"
+        opposed_marginal_victory: "%xgMarginal Victory for %{name}.%xn"
+        opposed_victory: "%xh%xgVictory for %{name}.%xn"
+        opposed_crushing_victory: "%xh%xyCrushing Victory for %{name}.%xn"
+        
+        spends_fate_point: "%xc<D6>%xn %{name} spends a fate point to double the following roll."
+        spends_cp_point: "%xc<D6>%xn %{name} spends a character point to add an additional die to a roll."
+        no_fate_point: "%xc<D6>%xn %{name} tries to spend a fate point but has none!"
+
+        num_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn %r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total}"
+        simple_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn (%{details}).%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn %{success} Total result: %{total}"
+        opposed_roll_result: "%xc<D6>%xn %{name1} rolls %{roll1} %{dice1} vs %{name2}'s %{roll2} %{dice2}%R%xc<D6>%xn %{success1} Result: %{total1}%t%t%{success2} Result: %{total2}%R%xc<D6>%xn%T%T%{result}"
+                
+        unknown_roll_params: "Can't figure out what you're trying to roll. You can specify a single ability, an optional ruling attribute, and an optional modifier.  See 'help roll' for more details."
+        npc: "%{name} (NPC)"

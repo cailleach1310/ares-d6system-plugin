@@ -1,0 +1,49 @@
+---
+d6system:
+  advantages:
+  - name: Authority
+    desc: 'The level of the Advantage is based on the character’s rank, duties, and
+      power in his local jurisdiction. '
+    max_rank: 3
+  - name: Contacts
+    desc: The character “knows somebody” or a group of somebodies who will generally
+      help out the character if he makes a decent appeal or sufficiently compensates
+      the contact.
+    max_rank: 4
+  - name: Cultures
+    desc: The character has knowledge of a particular (usually unusual) culture that  he
+      can use to his benefit when among people of that culture.
+    max_rank: 4
+  - name: Equipment
+    desc: The character gains a piece of equipment he would not normally have because
+      it is too expensive or “unavailable,” but only if it is allowable under the  game
+      setting.
+    max_rank: 4
+  - name: Fame
+    desc: The character, for some reason, is fairly well known. The extent of the
+      character’s fame should be determined by the game setting.
+    max_rank: 3
+  - name: Patron
+    desc: The odds are that most players’ characters are not independently wealthy.  But
+      they might have access to wealth in the form of patrons.
+    max_rank: 3
+  - name: Size
+    desc: The character is much larger or smaller than the average Human. For every
+      rank in this Advantage, the player receives +3 to his character’s scale modifier  (which
+      starts at zero). The player must specify whether the character is  bigger or
+      littler than the average Human.
+    max_rank: 2
+  - name: Trademark Specialization
+    desc: The character is very good at one very specific thing, and he is known for
+      it.  Choose any specialization that the character has (or would like to have
+      in the future), and the character gains +2D to the roll when it is used.
+    max_rank: 1
+  - name: Wealth
+    desc: The character with this Advantage probably has an estate or a series of  investments
+      that will keep him comfortable for a good long time. Alternatively,  the character
+      could be minor nobility, have a large trust fund, or be married  to the owner
+      of a large corporation.
+    max_rank: 1
+  advantages_blurb: Advantages are optional and can grant benefits. They cost 1 creation
+    point per  rank.
+  max_advantage_rating: 4

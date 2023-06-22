@@ -1,0 +1,19 @@
+<div class="row fs3-abilitybox"> 
+  <div class="col col-sm-7">
+    {{yield}}
+  </div>
+
+  <div class="col col-sm-5">
+    <div class="fs3-rating-control">
+      <button class="fs3-skillbutton" {{action "lower"}}>-</button>
+
+      <div class="fs3-rating-display">
+        {{this.rating}}
+      </div>
+
+      <button class="fs3-skillbutton" {{action "raise"}}>+</button>
+    </div>
+    
+  </div>
+
+</div>

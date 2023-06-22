@@ -1,0 +1,86 @@
+<div role="tabpanel" class="tab-pane" id="d6system">
+
+     <ul class="nav nav-tabs" role="tablist">
+
+           <li role="presentation" class="nav-item"><a href="#d6attrs" aria-controls="d6attrs" role="tab" data-bs-toggle="tab" class="nav-link active">Attributes</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6skills" aria-controls="d6skills" role="tab" data-bs-toggle="tab" class="nav-link">Skills</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6advantages" aria-controls="d6advantages" role="tab" data-bs-toggle="tab" class="nav-link">Advantages</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6disadvantages" aria-controls="d6disadvantages" role="tab" data-bs-toggle="tab" class="nav-link">Disadvantages</a></li>
+       
+         </ul>
+
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane active" id="d6attrs">
+
+  <div class="card card-default">
+       <div class="card-heading">
+           Attributes
+       </div>
+   <div class="card-body">
+
+     <p class="cg-tip"><AnsiFormat @text={{char.custom.cg_d6.attrs_blurb}} /></p>
+
+     {{#each char.custom.d6.attrs as |att|}}
+     <D6Attrbox @rating={{att.rating}} @updated={{action "abilityChanged"}}>
+         <b>{{att.name}}</b> - {{att.desc}}
+     </D6Attrbox>
+     {{/each}}
+     <br>
+     Points spent on attributes: {{this.attrPoints}} ({{this.attrDice}} dice)
+     <br>
+
+   </div>
+  </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="d6skills">
+
+  <div class="card card-default">
+       <div class="card-heading">
+           Skills
+       </div>
+   <div class="card-body">
+
+     <p class="cg-tip"><AnsiFormat @text={{char.custom.cg_d6.skills_blurb}} /></p>     
+     <br>
+   
+     {{#each char.custom.d6.skills as |skill|}}
+     <D6Skillbox @rating={{skill.rating}} @maxRating={{5}} @updated={{action "abilityChanged"}}>
+        <b>{{skill.name}}</b> (<i>{{skill.linked_attr}}</i>) - {{skill.desc}}
+     </D6Skillbox>
+     {{/each}}
+
+     <br>
+     Points spent on skills: {{this.skillPoints}} ({{this.skillDice}} dice)
+     <br>
+
+   </div>
+  </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane active" id="d6advantages">
+
+  <div class="card card-default">
+       <div class="card-heading">
+           Advantages
+       </div>
+   <div class="card-body">
+
+     <p class="cg-tip"><AnsiFormat @text={{char.custom.cg_d6.advantages_blurb}} /></p>
+
+     {{#each char.custom.d6.advantages as |adv|}}
+     <D6Advbox @rating={{adv.rating}} @maxRating=5 @updated={{action "abilityChanged"}}>
+         <b>{{adv.name}}</b> - {{adv.desc}}
+     </D6Advbox>
+     {{/each}}
+     <br>
+     Points spent on advantages: {{this.advPoints}}
+     <br>
+
+   </div>
+  </div>
+  </div>
+
+</div>
+</div>

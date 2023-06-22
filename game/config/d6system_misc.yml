@@ -1,0 +1,14 @@
+---
+d6system:
+  achievements:
+    d6_roll:
+      type: d6
+      message: Rolled an ability.
+    d6_fate_spent:
+      type: d6
+      message: Spent a fate point when making a roll.
+  sheet_columns:
+  - Reflexes Presence
+  - Physique Coordination Magic
+  - Knowledge Perception
+  show_sheet: true

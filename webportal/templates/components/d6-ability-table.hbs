@@ -1,0 +1,11 @@
+  <div class="char-ability-title">{{this.title}} ({{this.rating}})</div>
+  <table class="char-ability-list">
+  {{#each this.list as |ability| }}
+  <tr>
+    <td>{{ability.name}} 
+   </td>
+    <td>{{ability.dice}}
+   </td>
+  </tr>
+  {{/each}}
+</table>

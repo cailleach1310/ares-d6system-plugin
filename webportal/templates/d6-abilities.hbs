@@ -1,0 +1,92 @@
+{{page-title 'D6 Abilities'}}
+<h1>D6 Abilities</h1>
+
+<h2>Attributes</h2>
+
+<AnsiFormat @text={{this.model.attrs_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Attribute</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.attrs as |attr| }}
+<tr>
+    <td>{{attr.name}}</td> 
+    <td>{{attr.desc}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<h2>Skills</h2>
+
+<AnsiFormat @text={{this.model.skills_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Skill</th>
+    <th class="hidden-xs hidden-sm">Linked Attribute</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.skills as |ability| }}
+<tr>
+    <td>{{ability.name}}</td> 
+    <td class="hidden-xs hidden-sm">{{ability.linked_attr}}</td> 
+    <td>{{ability.desc}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<h2>Extranormal Skills</h2>
+<table class="table table-striped">
+
+<thead>
+    <th>Skill</th>
+    <th class="hidden-xs hidden-sm">Linked Attribute</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.extranormal_skills as |ability| }}
+<tr>
+    <td>{{ability.name}}</td>
+    <td class="hidden-xs hidden-sm">{{ability.linked_attr}}</td>
+    <td>{{ability.desc}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+
+<h2>Advantages</h2>
+
+<AnsiFormat @text={{this.model.advantages_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Advantage</th>
+    <th>Description</th>
+    <th>Maximum Rank</th>
+</thead>
+
+<tbody>
+{{#each this.model.advantages as |adv| }}
+<tr>
+   <td>{{adv.name}}</td> 
+   <td>{{adv.desc}}</td>
+   <td>{{adv.max_rank}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{outlet}}

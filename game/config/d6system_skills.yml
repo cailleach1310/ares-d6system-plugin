@@ -1,0 +1,252 @@
+---
+d6system:
+  max_skill_cg_dice: 7
+  max_skill_dice: 3
+  min_skill_dice: 0
+  skills:
+  - name: Acrobatics
+    desc: Performing feats of gymnastics, extraordinary balance, and dance (and related
+      performance arts), as well as break falls. Useful for running obstacle courses
+      or doing water ballet.
+    linked_attr: Reflexes
+  - name: Brawling
+    desc: Competence in unarmed combat.
+    linked_attr: Reflexes
+  - name: Climbing
+    desc: Scaling various surfaces.
+    linked_attr: Reflexes
+  - name: Contortion
+    desc: Escaping from otherwise secure physical bonds by twisting, writhing, and
+      contorting the body.
+    linked_attr: Reflexes
+  - name: Dodge
+    desc: Slipping out of danger’s way, whether avoiding an attack or a sprung booby
+      trap.
+    linked_attr: Reflexes
+  - name: Flying
+    desc: Maneuvering under one’s own power (such as with wings) or in null gravity.
+    linked_attr: Reflexes
+  - name: Jumping
+    desc: Leaping over obstacles.
+    linked_attr: Reflexes
+  - name: Melee Combat
+    desc: Wielding hand-to-hand weapons.
+    linked_attr: Reflexes
+  - name: Riding
+    desc: Controlling and riding domesticated mounts.
+    linked_attr: Reflexes
+  - name: Sneak
+    desc: Moving silently and avoiding detection, whether through shadows or crowds.
+    linked_attr: Reflexes
+  - name: Lockpicking
+    desc: Opening a mechanical (not electronic) lock or safe without possessing the
+      key or combination, as well as disarming small mechanical traps.
+    linked_attr: Coordination
+  - name: Marksmanship
+    desc: Shooting guns of any type. Covers everything from small slugthrowers to
+      vehicle-mounted rockets.
+    linked_attr: Coordination
+  - name: Missile Weapons
+    desc: Firing unpowered ranged weapons.
+    linked_attr: Coordination
+  - name: Piloting
+    desc: Operating any kind of vehicle or powered armor traveling on or through the
+      ground, a liquid medium, the air, or space.
+    linked_attr: Coordination
+  - name: Sleight of hand
+    desc: Nimbleness with the fingers and misdirection, including picking pockets,
+      palming items, and stage magic.
+    linked_attr: Coordination
+  - name: Throwing
+    desc: Hitting a target accurately with a thrown item, including grenades, stones,
+      and knives. Also used for catching thrown items. (Using or modifying grenades
+      as explosives for special destructive effects requires the demolitions skill.)
+    linked_attr: Coordination
+  - name: Lifting
+    desc: Moving or lifting heavy objects, as well as representing the ability to
+      inflict additional damage with strength-powered weapons.
+    linked_attr: Physique
+  - name: Running
+    desc: Moving quickly on the ground while avoiding obstacles and keeping from stumbling.
+    linked_attr: Physique
+  - name: Stamina
+    desc: Physical endurance and resistance to pain, disease, and poison.
+    linked_attr: Physique
+  - name: Swimming
+    desc: Moving and surviving in a liquid medium.
+    linked_attr: Physique
+  - name: Business
+    desc: Comprehension of business practices and the monetary value of goods and
+      opportunities, including the ability to determine how to make money with another
+      skill the character has Business can complement charm, con, and persuasion when
+      haggling over prices for goods and services being bought or sold.
+    linked_attr: Knowledge
+  - name: Demolitions
+    desc: Using corrosives and explosives to achieve particular destructive effects.
+    linked_attr: Knowledge
+  - name: Forgery
+    desc: Creating and noticing false or altered documentation in various media (paper,
+      electronic, plastic card, etc.), including counterfeiting, though tasks may
+      require other skills to help detect or make the forgery.
+    linked_attr: Knowledge
+  - name: Languages
+    desc: Familiarity with and ability to use various forms of communication, including
+      written, spoken, and nonverbal. Characters may choose one “native” language
+      in which they have written and spoken fluency. Additional languages in which
+      a character has proficiency can be represented by specializations of this skill.
+    linked_attr: Knowledge
+  - name: Medicine
+    desc: Using first aid techniques to treat injuries, as well as an understanding
+      and application of medical procedures, including diagnosing illnesses and performing
+      surgery.
+    linked_attr: Knowledge
+  - name: Navigation
+    desc: Determining the correct course using external reference points,  such as
+      stars, maps, or landmarks, as well as creating maps.
+    linked_attr: Knowledge
+  - name: Scholar
+    desc: This skill represents knowledge and/or education in areas not covered under
+      any other skill (such as chemistry, mathematics, archeology, interior design,
+      etc.). This may be restricted to a specific field (represented by specializations)
+      or a general knowledge of a wide range of subjects. It is used to remember details,
+      rumors, tales, legends, theories, important people, and the like, as appropriate
+      for the subject in question. However, the broader the category, the fewer the
+      details that can be recalled. It covers what the character himself can recall.
+      Having another skill as a specialization of the scholar skill means that the
+      character knows the theories and history behind the skill but can’t actually
+      use it. It can be useful with investigation to narrow a search for information.
+    linked_attr: Knowledge
+  - name: Security
+    desc: Installing, altering, and bypassing electronic security and surveillance
+      systems.
+    linked_attr: Knowledge
+  - name: Tech
+    desc: Using and designing (not making) complex mechanical or electronic equipment,
+      such as programming and operating computers and manipulating communication devices.
+    linked_attr: Knowledge
+  - name: Artist
+    desc: Making works of art, like paintings, photographs, and music or literary
+      compositions.
+    linked_attr: Perception
+  - name: Gambling
+    desc: Playing and cheating at games of strategy and luck.
+    linked_attr: Perception
+  - name: Hide
+    desc: Concealing objects, both on oneself and using camouflage.
+    linked_attr: Perception
+  - name: Investigation
+    desc: Gathering information, researching topics, analyzing data and piecing together
+      clues.
+    linked_attr: Perception
+  - name: Know-how
+    desc: Ability to figure out how to perform an action in which the character  does
+      not have experience, as well as a catch-all skill encompassing areas  not covered
+      by other skills (such as basic, not fancy, sewing or cooking).
+    linked_attr: Perception
+  - name: Repair
+    desc: Creating, fixing, or modifying gadgets, weapons, armor and vehicles.
+    linked_attr: Perception
+  - name: Search
+    desc: Spotting hidden objects or people, reconnoitering, lipreading, or  eavesdropping
+      on or watching another person.
+    linked_attr: Perception
+  - name: Streetwise
+    desc: Finding information, goods, and contacts in an urban environment, particularly
+      through criminal organizations, black markets, and other illicit operations.
+      Also useful for determining possible motives and methods of criminals.
+    linked_attr: Perception
+  - name: Survival
+    desc: Surviving in wilderness environments.
+    linked_attr: Perception
+  - name: Tracking
+    desc: Following the trail of another person, animal, or creature, or keeping after
+      a moving target without being noticed.
+    linked_attr: Perception
+  - name: Animal Handling
+    desc: Controlling animals and making them perform tricks and follow commands.
+    linked_attr: Presence
+  - name: Charm
+    desc: Using friendliness, flattery, or seduction to influence someone else. Also
+      useful in business transactions, putting on performances (such as singing, acting,
+      or storytelling), and situations involving etiquette.
+    linked_attr: Presence
+  - name: Command
+    desc: Effectively ordering and coordinating others in team situations.
+    linked_attr: Presence
+  - name: Con
+    desc: Bluffing, lying, tricking, or deceiving others, as well as verbal evasiveness,
+      misdirection, and blustering. Also useful in putting on acting performances.
+    linked_attr: Presence
+  - name: Disguise
+    desc: Altering features or clothing to be unrecognizable or to look like someone
+      else. Also useful in acting performances.
+    linked_attr: Presence
+  - name: Intimidation
+    desc: Using physical presence, verbal threats, taunts, torture, or fear to influence
+      others or get information out of them.
+    linked_attr: Presence
+  - name: Persuasion
+    desc: Influencing others or getting information out of them through bribery, honest
+      discussion, debate, diplomacy, or speeches. Also useful in negotiations, business
+      transactions, and putting on performances (such as singing, acting, or storytelling).
+    linked_attr: Presence
+  - name: Willpower
+    desc: Ability to withstand stress, temptation, other people’s interaction attempts,
+      mental attacks, and pain. The gamemaster may allow a specialization in a specific
+      faith tradition or belief system to enhance many, though not all, applications
+      of willpower.
+    linked_attr: Presence
+  - name: Alteration
+    desc: Casting spells involving change.
+    linked_attr: Magic
+  - name: Apportation
+    desc: Casting spells involving movement.
+    linked_attr: Magic
+  - name: Conjuration
+    desc: Casting spells involving creation.
+    linked_attr: Magic
+  - name: Divination
+    desc: Casting spells involving knowledge.
+    linked_attr: Magic
+  - name: Astral Projection
+    desc: The ability to leave one’s body.
+    linked_attr: Psionics
+  - name: Empathy
+    desc: The ability to sense emotions.
+    linked_attr: Psionics
+  - name: Far-Sensing
+    desc: The ability to use one’s senses at a distance.
+    linked_attr: Psionics
+  - name: Healing
+    desc: The ability to heal injuries with the mind.
+    linked_attr: Psionics
+  - name: Medium
+    desc: The ability to speak with the spirits of the dead.
+    linked_attr: Psionics
+  - name: Protection
+    desc: The ability to psychically defend against injury.
+    linked_attr: Psionics
+  - name: Psychometry
+    desc: The ability to sense information about a person, place, or event by looking
+      at an object connected to it.
+    linked_attr: Psionics
+  - name: Strike
+    desc: The ability to psychically cause injury.
+    linked_attr: Psionics
+  - name: Telekinesis
+    desc: The ability to move things with the mind.
+    linked_attr: Psionics
+  - name: Telepathy
+    desc: The ability to read thoughts.
+    linked_attr: Psionics
+  skills_blurb: Skills are more specific applications of an attribute. For example,
+    the skill dodge is a more specific use of your character’s Reflexes. Characters
+    learn them through instruction or experience. Skills are areas of knowledge that
+    are  not necessarily common to every living creature. Some creatures simply don’t  have
+    the capacity to learn certain skills. All skills beneath a given attribute  begin
+    at that attribute’s die code. To highlight skills in which the character  has
+    trained or has some experience, add pips or dice to the base attribute value.
+    As with attributes, when creating your character, you can either put whole dice
+    in each skill, or you can give each a mixture of whole dice and pips. Remember
+    that each die equals three pips. Distribute seven dice among the skills.  The
+    maximum number of dice added to  any one skill is 3D.

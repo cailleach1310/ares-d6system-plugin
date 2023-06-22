@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col col-md-4 col-sm-12">
+    {{#each this.char.custom.d6.abilities_1 as |entry| }}
+       <D6AbilityTable @title={{entry.attribute}} @rating={{entry.rating}} @list={{entry.skills}} @max={{5}} />
+    {{/each}}
+  </div>
+  <div class="col col-md-4 col-sm-12">
+    {{#each this.char.custom.d6.abilities_2 as |entry| }}
+       <D6AbilityTable @title={{entry.attribute}} @rating={{entry.rating}} @list={{entry.skills}} @max={{5}} />
+    {{/each}}
+  </div>
+  <div class="col col-md-4 col-sm-12">
+    {{#each this.char.custom.d6.abilities_3 as |entry| }}
+       <D6AbilityTable @title={{entry.attribute}} @rating={{entry.rating}} @list={{entry.skills}} @max={{5}} />
+    {{/each}}
+  </div>
+</div>

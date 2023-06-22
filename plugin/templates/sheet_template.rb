@@ -1,0 +1,132 @@
+module AresMUSH
+  module D6System
+    class SheetTemplate < ErbTemplateRenderer
+      
+      attr_accessor :char, :client, :section
+      
+      def initialize(char, client, section = nul)
+        @char = char
+        @client = client
+        @section = section
+        super File.dirname(__FILE__) + "/sheet.erb"
+      end
+     
+      def approval_status
+        Chargen.approval_status(@char)
+      end
+      
+      def show_section(section)
+#        sections = ['abilities', 'advantages', 'disadvantages', 'stats']
+        sections = ['abilities']
+        return true if self.section.blank?
+        return true if !sections.include?(section)
+        return true if !sections.include?(self.section)
+        return section == self.section
+      end
+      
+      def abilities
+       list = []        
+        char_sorted_attr_lists(@char).each_with_index do |a, i| 
+          if (a)
+             list << format_ability(a, i)
+          end
+        end   
+        list     
+      end
+        
+      def advantages
+        list = []
+#        @char.d6advantagess.each_with_index do |m, i| 
+#           list << format_advantage(m, i)
+#        end
+        list
+      end
+      
+      def disadvantages
+        list = []
+#        @char.d6disadvantages.each_with_index do |f, i|
+#          list << format_advantage(f, i)
+#        end
+        list
+      end
+      
+      def stats
+ #       list = []
+ #       D6System.other_stats(@char).each_with_index do |st, i| 
+ #         list << format_stat(st, i)
+ #       end
+ #       list.join("")
+      end
+       
+      def format_stat(st, i)
+        name = "  %xh#{st['name']}%xn "
+        linebreak = ((i+1) % 4 == 1) ? "%r" : ""
+        rating = "#{st['rating']}"
+        "#{linebreak}#{name.ljust(22,".")} #{rating} "
+      end
+
+      def format_ability(a, i)
+         linebreak = ((i+1) % 3 == 1) ? "%r" : ""
+         if (a['name'] != "<empty>")
+           name = "  %xh#{a['name']}%xn "
+           rating = " #{a['dice']}"
+           dots = 30 - name.length
+           "#{linebreak}#{name}#{rating.rjust(dots,".")}  "
+#           "#{linebreak}#{name}#{rating.rjust(dots,".")}  "
+        else
+            "#{linebreak}                          "
+        end
+      end
+
+      def section_line(title)
+        @client.screen_reader ? title : line_with_text(title)
+      end
+
+      def attribute_skills(char, attribute)
+         D6System.skill_list(char,attribute,false).unshift({'name' => attribute.upcase, 'dice' => D6System.ability_rating(char,attribute) })
+      end
+
+      def build_column(char, attributes)
+        column = []
+        attributes.each do |attr|
+           attribute_skills(char,attr).each do |m|
+              column << m
+           end
+           column << { 'name' => '<empty>', 'dice' => "" }
+        end
+        return column
+      end
+
+      def char_sorted_attr_lists(char)
+        list = []
+#        sheet_columns = Global.read_config("d6system","sheet_columns")
+        sheet_columns = D6System.sheet_columns   
+        column_1 = build_column(char, sheet_columns[0].split(" "))
+        column_2 = build_column(char, sheet_columns[1].split(" "))
+        column_3 = build_column(char, sheet_columns[2].split(" "))
+        i = 0
+        len = [ column_1.length, column_2.length, column_3.length ].max
+        while (i < len)
+          if (column_1 != [])
+            list << column_1.shift
+          else
+            list << { 'name' => '<empty>', 'dice' => "" }
+          end
+          if (column_2 != [])
+            list << column_2.shift
+          else
+            list << { 'name' => '<empty>', 'dice' => "" }
+          end
+          if (column_3 != [])
+            list << column_3.shift
+          else
+            list << { 'name' => '<empty>', 'dice' => "" }
+          end
+          i = i + 1
+        end
+        return list
+      end
+
+    end
+  end
+end
