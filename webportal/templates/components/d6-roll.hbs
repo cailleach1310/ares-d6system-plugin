@@ -15,12 +15,14 @@
     {{#if this.fatePoints}} 
        Spend a fate point: <Input @type="checkbox" @checked={{this.rollFate}} /> 
    {{/if}}
+    Difficulty (optional): <Input @type="integer" size={{3}} id="difficulty" @enter={{action "addRoll"}} @value={{this.difficulty}} />
    <hr>
     <p><b>Roll for Another PC / NPC</b></p>
     
     <p>
       Character: <Input @type="text" size={{15}} id="pcRollName" @enter={{action "addRoll"}} @value={{this.pcRollName}} /> 
       Ability: <Input @type="text" size={{15}} id="pcRollAbility" @enter={{action "addRoll"}} @value={{this.pcRollAbility}} /><br>
+      Difficulty (optional): <Input @type="integer" size={{3}} id="pcDifficulty" @enter={{action "addRoll"}} @value={{this.pcDifficulty}} />
     </p>
       
     <hr>

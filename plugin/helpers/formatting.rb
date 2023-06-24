@@ -38,7 +38,27 @@ module AresMUSH
       end
     end
         
-    
+    def self.get_diff_success_title(success_level)
+      case success_level
+      when -99..-1
+        t('d6system.failure')
+      when 0
+        t('d6system.minimal_success')
+      when 1..4
+        t('d6system.solid_success')
+      when 5..8
+        t('d6system.good_success')
+      when 9..12
+        t('d6system.superior_success')
+      when 13..16
+        t('d6system.spectacular_success')
+      when 17..99
+        t('d6system.incredible_success')
+      else
+        raise "Unexpected roll result: #{success_level}"
+      end
+    end
+   
     def self.get_success_title(success_level)
       case success_level
       when -1

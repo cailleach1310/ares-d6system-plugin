@@ -2,14 +2,6 @@
 en:
   d6system:
         no_permission_to_view_sheet: "You are not allowed to view that sheet."
-        # Attribute / Action Skill Ratings
-#        incapable_rating: "Incapable"
-#        poor_rating: "Poor"
-#        average_rating: "Average"
-#        good_rating: "Good"
-#        great_rating: "Great"
-#        exceptional_rating: "Exceptional"
-#        legendary_rating: "Legendary"
         # Chargen
         attribute_set: "Attribute '%{name}' is now %{dice}D6+%{pips}."
         skill_set: "Skill '%{name}' is now %{dice}D6+%{pips}."
@@ -41,12 +33,13 @@ en:
         too_many_flaws: "You can't pick more than %{max} flaws in chargen. You've chosen %{total}."
         too_many_disadvantage_points_spent: "You can't gain more than %{max} disadvantage points in chargen. You've gained %{total} points."
         # Rolls
-        embarrassing_failure: "%xREmbarrassing Failure%xn"
         failure: "%xrFailure%xn"
-        success: "%xgSuccess%xn"
-        good_success: "%xh%xgGood Success%xn"
-        exceptional_success: "%xh%xGExceptional Success%xn"
-        amazing_success: "%xh%xyAmazing Success%xn"
+        minimal_success: "%xgMinimal Success%xn"
+        solid_success: "%xgSolid Success%xn"
+        good_success: "%xh%xGGood Success%xn"
+        superior_success: "%xySuperior Success%xn"
+        spectacular_success: "%xh%xmSpectacular Success%xn"
+        incredible_success: "%xh%xMIncredible Success%xn"
         
         opposed_both_fail: "%xrEveryone failed!%xn"
         opposed_draw: "%xbDRAW!%xn"
@@ -60,6 +53,7 @@ en:
 
         num_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn %r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total}"
         simple_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn (%{details}).%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn %{success} Total result: %{total}"
+        difficulty_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn (%{details}) against difficulty %{difficulty}.%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total} --> %{diff_result}"
         opposed_roll_result: "%xc<D6>%xn %{name1} rolls %{roll1} %{dice1} vs %{name2}'s %{roll2} %{dice2}%R%xc<D6>%xn %{success1} Result: %{total1}%t%t%{success2} Result: %{total2}%R%xc<D6>%xn%T%T%{result}"
                 
         unknown_roll_params: "Can't figure out what you're trying to roll. You can specify a single ability, an optional ruling attribute, and an optional modifier.  See 'help roll' for more details."

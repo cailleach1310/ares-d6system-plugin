@@ -12,8 +12,10 @@ export default Component.extend({
     vsName2: null,
     pcRollAbility: null,
     pcRollName: null,
+    pcDifficulty: null,
     rollString: null,
     rollFate: false,
+    difficulty: null,
     destinationType: 'scene',
 
     didInsertElement: function() {
@@ -34,11 +36,13 @@ export default Component.extend({
         let rollString = this.rollString || defaultAbility;
         let pcRollAbility = this.pcRollAbility;
         let pcRollName = this.pcRollName;
+        let pcDifficulty = this.pcDifficulty
         let vsRoll1 = this.vsRoll1;
         let vsRoll2 = this.vsRoll2;
         let vsName1 = this.vsName1;
         let vsName2 = this.vsName2;
         let rollFate = false;
+        let difficulty = this.difficulty;
 
         var sender;
         if (this.scene) {
@@ -73,6 +77,8 @@ export default Component.extend({
         this.set('pcRollAbility', null);
         this.set('pcRollName', null);
         this.set('pcFate', false);
+        this.set('difficulty', null);
+        this.set('pcDifficulty', null);
 
         var destinationId, command;
         if (this.destinationType == 'scene') {
@@ -86,6 +92,7 @@ export default Component.extend({
         
         api.requestOne(command, { id: destinationId,
            roll_string: rollString,
+           difficulty: difficulty || pcDifficulty,
            vs_roll1: vsRoll1,
            vs_roll2: vsRoll2,
            vs_name1: vsName1,

@@ -126,6 +126,7 @@ module AresMUSH
     def self.determine_web_roll_result(request, enactor)
       
       roll_str = request.args[:roll_string]
+      difficulty = (request.args[:difficulty] || '0').to_i
       vs_roll1 = request.args[:vs_roll1] || ""
       vs_roll2 = request.args[:vs_roll2] || ""
       vs_name1 = (request.args[:vs_name1] || "").titlecase
@@ -221,14 +222,27 @@ module AresMUSH
           if (pc_ability != "")
              roll = D6System.parse_and_roll(char, pc_ability)
              overall_result = get_result(roll[:dice_roll]) + roll[:roll_modifiers]
-             success_title = get_success_title(roll[:dice_roll])
-             return { message: t('d6system.simple_roll_result',
-               :name => "#{pc_name} (#{enactor.name})",
-               :roll => pc_ability,
-               :dice => D6System.print_dice(roll[:dice_roll]),
-               :details => roll[:roll_details],
-               :total => overall_result,
-               :success => success_title) }
+             if (difficulty == 0)
+                success_title = D6System.get_success_title(roll[:dice_roll])
+                return { message: t('d6system.simple_roll_result',
+                  :name => "#{pc_name} (#{enactor.name})",
+                  :roll => pc_ability,
+                  :dice => D6System.print_dice(roll[:dice_roll]),
+                  :details => roll[:roll_details],
+                  :total => overall_result,
+                  :success => success_title) }
+             else
+                success_title = D6System.get_diff_success_title(overall_result - difficulty)
+                return { message: t('d6system.difficulty_roll_result',
+                  :name => "#{pc_name} (#{enactor.name})",
+                  :roll => pc_ability,
+                  :dice => D6System.print_dice(roll[:dice_roll]),
+                  :details => roll[:roll_details],
+                  :total => overall_result,
+                  :diff_result => success_title,
+                  :difficulty => difficulty
+                ) }
+             end
           else
              return { error: "That is not a valid roll." }
           end
@@ -255,15 +269,28 @@ module AresMUSH
               message = message + t('d6system.no_fate_point', :name => char ? char.name : enactor.name) + "%r"
            end
         end
-        success_title = get_success_title(roll[:dice_roll])
-        message = message + t('d6system.simple_roll_result',
-          :name => enactor.name,
-          :roll => roll_str,
-          :dice => D6System.print_dice(roll[:dice_roll]),
-          :details => roll[:roll_details],
-          :total => overall_result,
-          :success => success_title
-          )
+        if (difficulty == 0)
+           success_title = D6System.get_success_title(roll[:dice_roll])
+           message = message + t('d6system.simple_roll_result',
+             :name => enactor.name,
+             :roll => roll_str,
+             :dice => D6System.print_dice(roll[:dice_roll]),
+             :details => roll[:roll_details],
+             :total => overall_result,
+             :success => success_title
+             )
+        else
+           success_title = D6System.get_diff_success_title(overall_result - difficulty)
+           message = message + t('d6system.difficulty_roll_result',
+             :name => enactor.name,
+             :roll => roll_str,
+             :dice => D6System.print_dice(roll[:dice_roll]),
+             :details => roll[:roll_details],
+             :total => overall_result,
+             :diff_result => success_title,
+             :difficulty => difficulty
+           )
+        end 
       end
 
       Achievements.award_achievement(enactor, "d6_roll")
