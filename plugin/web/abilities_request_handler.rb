@@ -24,16 +24,32 @@ module AresMUSH
           desc: a['desc'],
           max_rank: a['max_rank']
         }}
+
+        disadvantages = D6System.disadvantages.sort_by { |a| a['name'] }.map { |a| {
+          name: a['name'].titleize,
+          desc: a['desc'],
+          ranks: a['ranks']
+        }}
+
+        special_abilities = D6System.special_abilities.sort_by { |a| a['name'] }.map { |a| {
+          name: a['name'].titleize,
+          desc: a['desc'],
+          cost: a['cost']
+        }}
         
         {
           attrs_blurb: Website.format_markdown_for_html(D6System.attributes_blurb),
           skills_blurb: Website.format_markdown_for_html(D6System.skills_blurb),
           advantages_blurb: Website.format_markdown_for_html(D6System.advantages_blurb),
+          disadvantages_blurb: Website.format_markdown_for_html(D6System.disadvantages_blurb),
+          special_abilities_blurb: Website.format_markdown_for_html(D6System.specials_blurb),
           
           attrs: attrs,
           skills: skills,
           extranormal_skills: extranormal_skills,
-          advantages: advantages
+          advantages: advantages,
+          disadvantages: disadvantages,
+          special_abilities: special_abilities
         } 
       end
     end

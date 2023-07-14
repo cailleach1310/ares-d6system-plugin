@@ -1,5 +1,5 @@
 module AresMUSH
-  class D6Advantage < Ohm::Model
+  class D6SpecialAbility < Ohm::Model
     include ObjectModel
     
     reference :character, "AresMUSH::Character"

@@ -3,25 +3,20 @@ en:
   d6system:
         no_permission_to_view_sheet: "You are not allowed to view that sheet."
         # Chargen
-        attribute_set: "Attribute '%{name}' is now %{dice}D6+%{pips}."
-        skill_set: "Skill '%{name}' is now %{dice}D6+%{pips}."
+        attribute_set: "Attribute '%{name}' is now %{rating}."
+        skill_set: "Skill '%{name}' is now %{rating}."
+        specialization_set: "Specialization '%{name}' is now %{rating}."
         advantage_set: "Advantage '%{name}' is set to rank %{rank}."
         advantage_at_max: "Advantage '%{name}' is already at maximum rank."
-        specialty_set: "Specialty '%{name}' has been set for the skill  %{skill}."
+        specialization_added: "Specialization '%{name}' has been set for the skill %{skill}."
         ability_removed: "Ability '%{name}' removed."
         admin_ability_set: "You set %{name}'s %{ability_name} ability (%{ability_type}) to %{rating}."
         max_dice_is: "You can't set %{name} to a value higher than %{max}D6."
         min_dice_is: "You can't lower that ability any lower."
-#        invalid_rating: That is not a valid ability rating.  You have to use a number.
         no_special_characters: "Ability names may not contain special characters."
         error_saving_ability: "There was a problem saving %{name}: %{error}"
         
         ability_not_found: "Ability not found."
-        invalid_specialty_skill: "That skill cannot have a specialty."
-        specialty_added: "Specialty %{name} added for the skill %{skill}."
-        specialty_not_found: "%{name} doesn't have that specialty."
-        specialty_removed: "Specialty %{name} removed."
-        specialty_already_exists: "%{name} already has that specialty."
         disadvantage_set: "Disadvantage %{name} set to rank %{rank}."
         disadvantage_not_found: "%{name} doesn't have that distadvantage."
         disadvantage_removed: "Disadvantage %{name} removed."
@@ -29,8 +24,6 @@ en:
         reset_complete: "Your abilities have been reset."
         # App Review
         too_many_points_spent: "You can't spend more than %{max} points. You've spent %{total} points."
-        too_many_specialties: "You can't pick more than %{max} specialties in chargen. You've chosen %{total}."
-        too_many_flaws: "You can't pick more than %{max} flaws in chargen. You've chosen %{total}."
         too_many_disadvantage_points_spent: "You can't gain more than %{max} disadvantage points in chargen. You've gained %{total} points."
         # Rolls
         failure: "%xrFailure%xn"

@@ -2,8 +2,20 @@ module AresMUSH
   module D6System
 
     def self.spent_points(char)
-      sum = 0
+      attr_total_dice = dice_spent(char.d6attributes)
+      skill_total_dice = dice_spent(char.d6skills)
+      spec_total_dice = dice_spent(char.d6specializations)
+      sum = attr_total_dice * 4 + skill_total_dice + (spec_total_dice/3.to_f).ceil
+#      return "Attribute Dice: " + attr_total_dice.to_s + "%rSkill Dice: " + skill_total_dice.to_s + "%rSpecialization Dice: " + spec_total_dice.to_s + "%rTotal: " + sum.to_s + " Creation Points"
       return sum
+    end
+
+    def self.dice_spent(list)
+      total_dice = '0D+0'
+      list.each do |a|
+        total_dice = D6System.add_dice(total_dice, a.rating, 0)
+      end
+      dice_spent = (D6System.get_pips(total_dice) > 0) ? D6System.get_dice(total_dice) + 1 : D6System.get_dice(total_dice)
     end
 
     def self.skill_list(char, attr, chargen)
@@ -13,71 +25,80 @@ module AresMUSH
          if (m['linked_attr'] == attr)
             dice_str = D6System.ability_rating(char, m['name'])
             if (chargen)
-               abilities << { 'name' => m['name'], 'dice' => dice_str, 'desc' => m['desc'] }
+               abilities << { 'name' => m['name'], 'rating' => dice_str, 'desc' => m['desc'], 'linked_attr' => attr }
             else
-               abilities << { 'name' => m['name'], 'dice' => dice_str }
+               abilities << { 'name' => m['name'], 'rating' => dice_str }
             end
          end
       end
       return abilities.sort_by { |a| a['name'] }
-#      attribute_info = { 'name' => attr, 'dice' => D6System.ability_rating(char, attr) }
-#      return 
-#         { 'attribute' => attribute_info,
-#           'skills' => abilities.sort_by { |a| a['name'] } }
     end
 
     def self.init_abilities(char)
       D6System.attr_names.each do |a|
         if !D6System.extranormal_attributes.include?(a)
-           D6Attribute.create(character: char, name: a, dice: 1, pips: 0 )
+           D6Attribute.create(character: char, name: a, rating: '1D+0')
         else
-           D6Attribute.create(character: char, name: a, dice: 0, pips: 0 )
+           D6Attribute.create(character: char, name: a, rating: '0D+0')
         end
       end
       D6System.skill_names.each do |a|
-        D6Skill.create(character: char, name: a, dice: 0, pips: 0 )
+        D6Skill.create(character: char, name: a, rating: '0D+0')
       end
     end
 
-    # use this for setting attributes and skills
-    def self.set_ability(char, name, dice, pips)
-      name = name.titleize
-      ability = D6System.find_ability(char, name)
+    def self.init_specialization(char, spec, skill)
+      D6Specialization.create(character: char, name: spec, skill: skill, rating: '0D+1')
+    end
 
-      if (ability)
-        ability.update(dice: dice)
-        ability.update(pips: pips)
+    # use this for setting attributes, skills and existing specializations
+    def self.set_ability(char, name, rating)
+      name = name.titleize
+      if name =~ /\(/
+        s_name = name.split("(")[0].trim
+        s_skill = name.split("(")[1].gsub(")","")
       else
-        ability_type = D6System.get_ability_type(name)
-        case ability_type
-        when "attribute"
-          ability = D6Attribute.create(character: char, name: name, dice: dice, pips: pips )
-        when "skill"
-          ability = D6Skill.create(character: char, name: name, dice: dice, pips: pips )
-        end
+        s_name = name 
       end
-      return nil
-    end
-
-   # use this for advantages and disadvantages
-    def self.set_advantage(char, name, rating)
-      name = name.titleize
-      ability = D6System.find_ability(char, name)
+      ability = D6System.find_ability(char, s_name)
 
       if (ability)
         ability.update(rating: rating)
       else
-        ability_type = D6System.get_ability_type(name)
+        ability_type = D6System.get_ability_type(s_name)
         case ability_type
-        when "advantage"        
-          ability = D6Advantage.create(character: char, name: name, rating: rating )
-        when "disadvantage"
-          ability = D6Disadvantage.create(character: char, name: name, rating: rating )
+        when :attribute
+          ability = D6Attribute.create(character: char, name: name, rating: rating )
+        when :skill
+          ability = D6Skill.create(character: char, name: name, rating: rating )
+        when :specialization
+          ability = D6Specialization.create(character: char, name: s_name, skill: s_skill, rating: rating )
         end
       end
       return nil
     end
 
+   # use this for advantages, disadvantages and special abilities
+    def self.set_option(char, name, rank, details)
+      name = name.titleize
+      ability = D6System.find_ability(char, name)
+
+      if (ability)
+        ability.update(rank: rank)
+        ability.update(details: details)
+      else
+        ability_type = D6System.get_ability_type(name)
+        case ability_type
+        when :advantage
+          ability = D6Advantage.create(character: char, name: name, rank: rank, details: details )
+        when :disadvantage
+          ability = D6Disadvantage.create(character: char, name: name, rank: rank, details: details )
+        when :special_ability
+          ability = D6SpecialAbility.create(character: char, name: name, rank: rank, details: details )
+        end
+      end
+      return nil
+    end
 
     def self.check_dice(ability_name, dice, pips)
       # extranormal being the exception for both attributes and skills
@@ -95,15 +116,17 @@ module AresMUSH
     def self.reset_char(char)
       char.d6skills.each { |s| s.delete }
       char.d6attributes.each { |s| s.delete }
+      char.d6specializations.each { |s| s.delete }
       char.d6advantages.each { |s| s.delete }
       char.d6disadvantages.each { |s| s.delete }
+      char.d6specials.each { |s| s.delete }
 
       D6System.init_abilities(char)        
     end
 
     def self.get_max_value(ability_type)
       case ability_type
-      when :skill
+      when :skill, :specialization
         return Global.read_config("d6system", "max_skill_dice")
       when :attribute
         return Global.read_config("d6system", "max_attr_dice")
@@ -129,26 +152,46 @@ module AresMUSH
       ability = D6System.find_ability(char, ability_name)
       if (ability)
         ability_type = D6System.get_ability_type(ability_name)
-        t("d6system.#{ability_type}_set", :name => ability.name, :dice => ability.dice, :pips => ability.pips)
+        t("d6system.#{ability_type}_set", :name => ability.name, :rating => ability.rating)
       else
         t("d6system.ability_removed", :name => ability_name)
       end
     end
 
+    def self.option_raised_text(char, ability_name)
+      ability = D6System.find_ability(char, ability_name)
+      ability_type = D6System.get_ability_type(ability_name)
+      t("d6system.#{ability_type}_set", :name => ability.name, :rank => ability.rank)
+    end
+
+# creating an array of levels for advantages, disadvantages and special abilities
+    def self.option_ranks(option)
+       ranks = []
+       if (option['ranks'].is_a? Integer)
+          ranks << option['ranks']
+       else
+          option['ranks'].split("/").each do |rank|
+             ranks << rank.to_i
+          end
+       end
+       return ranks
+    end
+
+
 # Saving abilities from web chargen
     def self.save_abilities(char, chargen_data)
        save_ability_list(char, chargen_data[:custom][:attrs])
        save_ability_list(char, chargen_data[:custom][:skills])
-       save_advantage_list(char, chargen_data[:custom][:advantages])
-#       save_advantage_list(char, chargen_data[:custom][:disadvantages])
+       save_specializations(char, chargen_data[:custom][:specializations])
+#       save_option_list(char, chargen_data[:custom][:advantages])
+#       save_option_list(char, chargen_data[:custom][:disadvantages])
+#       save_option_list(char, chargen_data[:custom][:special_abilities])
     end
 
     def self.save_ability_list(char, list)
       alerts = []
       (list || {}).each do |a, b|
-        dice = b.split("D")[0].to_i
-        pips = b.split("+")[1].to_i
-        error = set_ability(char, a, dice, pips )
+        error = set_ability(char, a, b)
         if (error)
           alerts << t('d6system.error_saving_ability', :name => a, :error => error)
         end
@@ -156,11 +199,31 @@ module AresMUSH
      return alerts
     end
 
-    def self.save_advantage_list(char, list)
+    def self.save_specializations(char, list)
       alerts = []
       (list || {}).each do |a, b|
+        Global.logger.info "Saving specialization: " + a + " - " + b
+        if (b != "0D+0")
+           error = set_ability(char, a, b ) 
+           if (error)
+              alerts << t('d6system.error_saving_ability', :name => a, :error => error)
+           end
+        else
+          name = a.split("(")[0].trim
+          ability = find_ability(char, name)
+          if (ability)
+            ability.delete
+          end
+        end
+      end
+     return alerts
+    end
+
+    def self.save_option_list(char, list)
+      alerts = []
+      (list || {}).each do |a, b, c|
         if (b.to_i > 0)
-           error = set_advantage(char, a, b.to_i ) 
+           error = set_option(char, a, b, c )
            if (error)
               alerts << t('d6system.error_saving_ability', :name => a, :error => error)
            end

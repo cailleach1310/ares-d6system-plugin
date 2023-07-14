@@ -250,3 +250,14 @@ d6system:
     in each skill, or you can give each a mixture of whole dice and pips. Remember
     that each die equals three pips. Distribute seven dice among the skills.  The
     maximum number of dice added to  any one skill is 3D.
+  specializations_blurb: Specializations reflect a greater familiarity in a particular
+    area covered by  a base skill. One skill die equals three specialization dice.
+    Of course, one  specialization die still equals three pips. You don’t need to
+    have any extra  dice in the base skill in order to take a specialization in that
+    skill, but when  you give your character specializations in that manner, they
+    are treated as  separate skills. If you give your character specializations in
+    base skills he  already has, those specializations are considered bonuses to the
+    base skill  when attempting tasks of that type. Once you’ve chosen at least one
+    specialization  and put one or two pips or dice in it, you have to use the remaining
+    specialization  dice and pips to either   purchase more pips in the same specialization
+    or purchase  one or more pips in other specializations.

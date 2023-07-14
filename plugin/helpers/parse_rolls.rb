@@ -3,9 +3,16 @@ module AresMUSH
     
     def self.dice_to_roll_for_ability(char, roll_params)
       ability = roll_params.ability
-      linked_attr = roll_params.linked_attr || D6System.get_linked_attr(ability)
       ability_type = D6System.get_ability_type(ability)
       skill_rating = D6System.ability_rating(char, ability)
+      if (ability_type == :specialization)
+        spec = find_ability(char, ability)
+        skill = spec.skill
+        skill_rating = add_dice(skill_rating, D6System.ability_rating(char, skill),0)  # spec rating + base skill rating
+      else
+        skill = ability 
+      end
+      linked_attr = roll_params.linked_attr || D6System.get_linked_attr(skill)
       
       if (ability_type == :attribute && !linked_attr)
         skill_rating = "0D+0"

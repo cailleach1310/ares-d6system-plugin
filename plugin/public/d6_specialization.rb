@@ -1,11 +1,12 @@
 module AresMUSH
-  class D6Advantage < Ohm::Model
+  class D6Specialization < Ohm::Model
     include ObjectModel
+    include LearnableAbility
     
     reference :character, "AresMUSH::Character"
     attribute :name
-    attribute :rank, :type => DataType::Integer, :default => 1
-    attribute :details
+    attribute :skill
+    attribute :rating, :default => '0D+0'
     
     index :name
     

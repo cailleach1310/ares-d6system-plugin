@@ -12,7 +12,10 @@ module AresMUSH
           {
              attrs: build_chargen_ability_list(char, "attribute"),
              skills: build_chargen_ability_list(char, "skill"),
-             advantages: build_chargen_list(char, D6System.advantages)
+             specializations: specialization_list(char),
+             advantages: build_chargen_list(char, D6System.advantages),
+             disadvantages: build_chargen_list(char, D6System.disadvantages),
+             special_abilities: build_chargen_list(char, D6System.special_abilities)
           }
         else
          if (show_sheet)
@@ -20,11 +23,13 @@ module AresMUSH
             abilities_1: build_column(char, D6System.sheet_columns[0].split(" ")),
             abilities_2: build_column(char, D6System.sheet_columns[1].split(" ")),
             abilities_3: build_column(char, D6System.sheet_columns[2].split(" ")),
-#            specialties: specialty_list(char),
-#            advantages: advantage_list(char,chargen),
+            specializations: specialization_list(char),
+            advantages: option_list(char.d6advantages),
+            disadvantages: option_list(char.d6disadvantages),
+            special_abilities: option_list(char.d6specials),
 #            other_stats: D6System.other_stats(char),
             show_sheet: show_sheet,
-#            xp: char.xp
+            character_points: char.character_points
           }
          end
         end
@@ -38,10 +43,19 @@ module AresMUSH
         return column
       end
 
-      def specialty_list(char)
+      def specialization_list(char)
         list = []
-        char.d6specialties.each do |s|
-           list << { name: s.name + " (" + s.skill + ")" } 
+        char.d6specializations.each do |s|
+           spec_name = s.name + " (" + s.skill + ")"
+           list << { name: spec_name, rating: s.rating } 
+        end
+        return list
+      end
+
+      def option_list(option_list)
+        list = []
+        option_list.each do |s|
+           list << { name: s.name, rating: s.rank, details: s.details }
         end
         return list
       end
@@ -65,7 +79,7 @@ module AresMUSH
                 if (ability_type == "skill")
                    list << { name: s['name'], rating: rating, desc: s['desc'], linked_attr: s['linked_attr'] }
                 end
-            end 
+            end
          end
          return list
       end
@@ -73,8 +87,13 @@ module AresMUSH
       def build_chargen_list(char, cg_list)
         list = []
         cg_list.each do |a|
-           rating = D6System.simple_rating(char, a['name'])
-           list << { name: a['name'], rating: rating, desc: a['desc'] }
+           ability = D6System.find_ability(char, a['name'])
+           if (ability)
+             max = Global.read_config('d6system', 'max_rank_specials')
+             cost = (D6System.get_ability_type(a['name']) == :special_ability) ? a['cost'] : 1
+             ranks = (D6System.get_ability_type(a['name']) == :special_ability) ? (1..max).to_a : D6System.option_ranks(a)
+             list << { name: a['name'], rating: ability.rank, details: ability.details, ranks: ranks, cost: cost }
+           end
         end
         return list
       end

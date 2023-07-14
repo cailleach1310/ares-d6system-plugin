@@ -58,8 +58,7 @@ module AresMUSH
     def self.ability_rating(char, ability_name)
       ability = D6System.find_ability(char, ability_name)
       if (ability)
-         dice_str = ability.dice.to_s + "D"
-         return (ability.pips == 0) ? dice_str : dice_str + "+" + ability.pips.to_s
+         return (ability.rating.split("+")[1] != '0') ? ability.rating : ability.rating.split("+")[0]
       else
          return '0D'
       end
@@ -83,7 +82,7 @@ module AresMUSH
 
     def self.web_abilities(char)
       abilities = []
-      [ char.d6attributes, char.d6skills ].each do |list|
+      [ char.d6attributes, char.d6skills, char.d6specializations ].each do |list|
          list.each do |a|
            abilities << a.name
          end

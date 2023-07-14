@@ -42,8 +42,8 @@ module AresMUSH
           client.emit_failure error
           return
         end
-
-        D6System.set_ability(enactor, self.name, self.dice, self.pips)
+        rating = self.dice.to_s + 'D+' + self.pips.to_s 
+        D6System.set_ability(enactor, self.name, rating)
         client.emit_success D6System.ability_raised_text(enactor, self.name)
       end
 

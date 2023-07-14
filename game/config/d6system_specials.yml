@@ -1,0 +1,26 @@
+---
+d6system:
+  special_abilities:
+  - name: Accelerated Healing
+    desc: 'The character gains a +1D per rank to his Physique for all natural
+healing attempts, and a Critical Failure is treated as 1, rather than
+having a negative effect on the die roll.'
+    cost: 3
+  - name: Ambidextrous
+    desc: 'The character is equally adept with her right or left hand. She may
+perform an action with each hand in the same round, and, though she
+takes the multi-action penalty, she receives a +1 per rank to each skill
+total.'
+    cost: 2
+  - name: Animal Control
+    desc: 'This gives the character the ability to control one particular species
+of animal, bird, or insect. The character gets a +10 bonus to her animal
+handling total for that species.'
+    cost: 3
+  - name: Armor-Defeating Attack
+    desc: 'When a character with natural weapons (the character’s fists, claws,
+teeth, etc.) attacks someone protected by armor, this ability negates the
+Armor Value, up to +1D per rank.'
+    cost: 2
+  specials_blurb: Special Abilities are optional and can grant benefits. The cost equals creation points or dice.
+  max_rank_specials: 5

@@ -75,7 +75,7 @@
 <thead>
     <th>Advantage</th>
     <th>Description</th>
-    <th>Maximum Rank</th>
+    <th>Ranks</th>
 </thead>
 
 <tbody>
@@ -83,7 +83,53 @@
 <tr>
    <td>{{adv.name}}</td> 
    <td>{{adv.desc}}</td>
-   <td>{{adv.max_rank}}</td>
+   <td>{{adv.ranks}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<h2>Disadvantages</h2>
+
+<AnsiFormat @text={{this.model.disadvantages_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Disadvantage</th>
+    <th>Description</th>
+    <th>Ranks</th>
+</thead>
+
+<tbody>
+{{#each this.model.disadvantages as |dis| }}
+<tr>
+   <td>{{dis.name}}</td>
+   <td>{{dis.desc}}</td>
+   <td>{{dis.ranks}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<h2>Special Abilities</h2>
+
+<AnsiFormat @text={{this.model.special_abilities_blurb}} />
+
+<table class="table table-striped">
+
+<thead>
+    <th>Special Ability</th>
+    <th>Description</th>
+    <th>Cost</th>
+</thead>
+
+<tbody>
+{{#each this.model.special_abilities as |spec| }}
+<tr>
+   <td>{{spec.name}}</td>
+   <td>{{spec.desc}}</td>
+   <td>{{spec.cost}}</td>
 </tr>
 {{/each}}
 </tbody>

@@ -1,0 +1,135 @@
+---
+d6system:
+  disadvantages:
+  - name: Achilles Heel
+    desc: >-
+     The character has a particular serious weakness. It is not something
+     that most other characters find especially dangerous or inconvenient,
+     but the character suffers severe modifiers to difficulties or even damage
+     when exposed to it.
+    ranks: 3/4
+  - name: Advantage Flaw
+    desc: >-
+     This Disadvantage is linked to a particular Advantage or set of skills. 
+     Whenever the character uses it, there is some a chance for a negative
+     modifier or roleplaying disadvantage.
+    ranks: 1/2/3
+  - name: Age
+    desc: >-
+     The character is a teenager or just past middle age and suffers certain 
+     disadvantages because of this.
+    ranks: 1/2
+  - name: Bad Luck
+    desc: >-
+     The character is exceptionally unlucky. This Disadvantage is under
+     the gamemaster’s control most of the time. The easiest way to handle
+     it is, whenever the player rolls the dice and a Critical Failure comes up,
+     not only does it take away the highest die in the roll, but something bad
+     happens.
+    ranks: 2/3/4
+  - name: Burn-Out
+    desc: >-
+     Under a certain set of proscribed circumstances, the Advantage goes
+     away — permanently.'
+    ranks: 1
+  - name: Cultural Unfamiliarity
+    desc: >-
+     The character is not from the “mainstream” culture of the society he
+     spends the most time in.
+    ranks: 1/2/3
+  - name: Debt
+    desc: 'The character owes money, or something else valuable, to someone.'
+    ranks: 1/2/3
+  - name: Devotion
+    desc: >-
+     The character feels compelled to take certain actions out of a love
+     of code or perceived duty to something else.
+    ranks: 1/2/3
+  - name: Employed
+    desc: >-
+     The character has a job. Maybe the job relates to what the character
+     wants to do during adventures, or maybe not. Regardless, the character
+     wants to keep her job (or has to, for some reason), and she must take
+     responsibility for missing work and fulfilling her obligations.
+    ranks: 1/2/3
+  - name: Enemy
+    desc: 'An individual or group has it in for the character.'
+    ranks: 1/2/3
+  - name: Hindrance
+    desc: >-
+     The character has a minor physical or mental handicap that makes
+     certain actions more difficult.'
+    ranks: 1
+  - name: Illiterate
+    desc: >-
+     A character can be considered Illiterate for one of two reasons. The
+     first is simply due to her inability to read. The other reason is if she did
+     not speak the local language (an immigrant arriving in a new country
+     or an explorer among natives, etc.). She may be an extremely intelligent
+     and well-read person, but she has difficulty exhibiting that in her new
+     country. She receives a +6 difficulty modifier in addition to any other
+     modifiers when attempting to read or write anything.
+    ranks: 1
+  - name: Infamy
+    desc: >-
+     The character is about as well known as a character with Fame (R1),
+     but for different reasons. The odds of being recognized are the same
+     as for Fame, but the reaction is quite different. The character
+     experiences hostility, prejudice, and intentional slights — in game
+     mechanic terms, the character should have the difficulty of all interactions
+     increased by at least +3.
+    ranks: 1/2/3
+  - name: Language Problems
+    desc: >-
+     The character does not understand the language of the area she
+     spends most of her time in. She must learn skill pips in the specialization 
+     (local language). She also receives a +6 difficulty modifier in
+     addition to any other modifiers for what she’s attempting to convey
+     or understand.
+    ranks: 2
+  - name: Learning Problems
+    desc: >-
+     When the character attempts to learn a new skill, or improve an old
+     one, he does so at +2 per rank to the Character Point cost.
+    ranks: 1
+  - name: Poverty
+    desc: >-
+     The character begins the game with the shirt on his back and, maybe, a
+     few pieces of cheap and substandard equipment. The character should
+     also have the attitude of someone who is “poor,” whatever that might
+     be in the game setting. If using Funds as an attribute, this Disadvantage 
+     subtracts 10 from relevant totals.
+    ranks: 1
+  - name: Prejudice
+    desc: >-
+     The character is of a minority group — or maybe it is just the character
+     himself — that is subject to prejudice and discrimination. The character
+     receives modifiers to the difficulties (from +2 to +4) during normal interaction
+     with characters not of the minority group, and is generally treated
+     unfairly by society.
+    ranks: 1/2
+  - name: Price
+    desc: >-
+     This is a Disadvantage similar to Advantage Flaw. But, instead of
+     there being something wrong with the character’s Advantage or a set of
+     three related skills, there is a price tag attached. Every time the character wants
+     to use the ability, he has to pay a Price at least a few times during the adventure
+     to continue using the ability.
+    ranks: 1/2
+  - name: Quirk
+    desc: >-
+     The character suffers from a personality quirk that makes certain
+     types of roleplaying and interaction more difficult.'
+    ranks: 1/2/3
+  - name: Reduced Attribute
+    desc: >-
+     Something about the character’s species, age, physical condition, or
+     some other factor has permanently reduced one attribute by one pip.
+     The character may not reduce the attribute die code below 1D, and
+     the attribute die code may never be increased by spending Character
+     Points (though gaining a Special Ability would help).'
+    ranks: 2
+  disadvantages_blurb: Disadvantages are optional and can grant additional points
+    that can be spent on learning advantages and special abilities. They grant 1 creation
+    point per rank.
+  cg_max_disadvantage_points: 10

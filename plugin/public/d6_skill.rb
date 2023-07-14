@@ -5,8 +5,7 @@ module AresMUSH
     
     reference :character, "AresMUSH::Character"
     attribute :name
-    attribute :dice, :type => DataType::Integer, :default => 0
-    attribute :pips, :type => DataType::Integer, :default => 0
+    attribute :rating, :default => '0D+0'
     
     index :name
     

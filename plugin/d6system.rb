@@ -28,12 +28,19 @@ module AresMUSH
         return SheetCmd
       when "raise", "lower"
         return RaiseCmd
-      when "advantage", "disadvantage"
+      when "option"
         case cmd.switch
-        when "raise"
-          return RaiseAdvantageCmd
-        when "lower"
-          return LowerAdvantageCmd
+        when "set"
+          return OptionSetCmd
+        when "add"
+          return OptionSetCmd
+        when "remove"
+          return OptionSetCmd
+        end
+      when "spec"
+        case cmd.switch
+        when "add", "remove"
+          return SpecAddCmd
         end
       when "reset"
         return ResetCmd
@@ -54,8 +61,8 @@ module AresMUSH
       case request.cmd
       when "abilities"
         return AbilitiesRequestHandler
-#      when "addJobRoll"
-#        return AddJobRollRequestHandler
+      when "addJobRoll"
+        return AddJobRollRequestHandler
       when "addSceneRoll"
         return AddSceneRollRequestHandler
       end

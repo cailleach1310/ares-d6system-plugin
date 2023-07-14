@@ -117,11 +117,6 @@ module AresMUSH
       Global.logger.info "D6 roll results: #{message}"
     end
 
-#    def self.is_specialty?(char,ability_name)
-#       specialties = char.d6specialties.map { |a| a.name }
-#       return specialties.include?(ability_name)
-#    end
-
     # Returns either { message: roll_result_message }  or  { error: error_message }
     def self.determine_web_roll_result(request, enactor)
       

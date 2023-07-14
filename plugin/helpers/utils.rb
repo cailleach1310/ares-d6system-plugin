@@ -17,6 +17,10 @@ module AresMUSH
       Global.read_config("d6system", "disadvantages")
     end
 
+    def self.special_abilities
+      Global.read_config("d6system", "special_abilities")
+    end
+
     def self.attributes_blurb
       Global.read_config("d6system", "attributes_blurb")
     end
@@ -25,12 +29,20 @@ module AresMUSH
       Global.read_config("d6system", "skills_blurb")
     end
 
+    def self.specializations_blurb
+      Global.read_config("d6system", "specializations_blurb")
+    end
+
     def self.advantages_blurb
       Global.read_config("d6system", "advantages_blurb")
     end
 
     def self.disadvantages_blurb
       Global.read_config("d6system", "disadvantages_blurb")
+    end
+
+    def self.specials_blurb
+      Global.read_config("d6system", "specials_blurb")
     end
 
     def self.extranormal_attributes
@@ -47,8 +59,13 @@ module AresMUSH
       actor.has_permission?("view_sheets")
     end
 
+    def self.spec_pretty(spec)
+      spec_str = spec.name + " (" + spec.skill + ")"
+      return spec_str
+    end
+
     def self.get_linked_attr(skill_name)
-       skill = D6System.skills.find { |s| s['name'] == skill_name }
+       skill = D6System.skills.find { |s| (s['name'] == skill_name) }
        if !(skill)
           return nil
        else
@@ -60,7 +77,7 @@ module AresMUSH
       list = []
       list << { 'name' => 'Body Points', 'rating' => char.body_points }
       list << { 'name' => 'Fate Points', 'rating' => char.fate_points }
-      list << { 'name' => 'Char Points', 'rating' => char.xp }
+      list << { 'name' => 'Char Points', 'rating' => char.char_points }
       return list
     end
 
@@ -77,9 +94,13 @@ module AresMUSH
        D6System.advantages.map { |a| a['name'].titlecase }
     end
 
-#    def self.disadvantage_names
-#       D6System.disadvantages.map { |a| a['name'].titlecase }
-#    end
+    def self.disadvantage_names
+       D6System.disadvantages.map { |a| a['name'].titlecase }
+    end
+
+    def self.special_ability_names
+       D6System.special_abilities.map { |a| a['name'].titlecase }
+    end
 
     def self.find_ability(char, ability_name)
       ability_name = ability_name.titlecase
@@ -89,12 +110,14 @@ module AresMUSH
         char.d6attributes.find(name: ability_name).first
       when :skill
         char.d6skills.find(name: ability_name).first
+      when :specialization
+        char.d6specializations.find(name: ability_name).first
       when :advantage
         char.d6advantages.find(name: ability_name).first
-#      when :disadvantage
-#        char.d6disadvantages.find(name: ability_name).first
-#      when :specialty
-#        char.d6specialties.find(name: ability_name).first
+      when :disadvantage
+        char.d6disadvantages.find(name: ability_name).first
+      when :special_ability
+        char.d6specials.find(name: ability_name).first
       else
         nil
       end
@@ -108,10 +131,12 @@ module AresMUSH
         return :skill
       elsif (advantage_names.include?(ability))
         return :advantage
-#      elsif (disadvantage_names.include?(ability))
-#        return :disadvantage
-#      else
-#        return :specialty
+      elsif (disadvantage_names.include?(ability))
+        return :disadvantage
+      elsif (special_ability_names.include?(ability))
+        return :special_ability
+      else
+        return :specialization
       end        
     end
 

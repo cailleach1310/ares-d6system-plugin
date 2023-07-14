@@ -7,7 +7,12 @@
 <%= a -%>
 <% end %> 
 <% end -%>
-<% if show_section('advantages') -%>
+<% if show_section('specializations') -%>
+%r<%= section_line 'Specializations' -%>
+<% specializations.each do |e| -%>
+<%= e -%>
+<% end %>
+<% end -%><% if show_section('advantages') -%>
 %r<%= section_line 'Advantages' -%>
 <% advantages.each do |k| -%>
 <%= k -%>
@@ -17,6 +22,13 @@
 <% if show_section('disadvantages') -%>
 %r<%= section_line 'Disadvantages' -%>
 <% disadvantages.each do |f| -%>
+<%= f -%>
+<% end %>
+
+<% end -%>
+<% if show_section('special_abilities') -%>
+%r<%= section_line 'Special Abilities' -%>
+<% special_abilities.each do |f| -%>
 <%= f -%>
 <% end %>
 
