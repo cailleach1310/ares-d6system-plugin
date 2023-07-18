@@ -7,6 +7,9 @@ en:
         skill_set: "Skill '%{name}' is now %{rating}."
         specialization_set: "Specialization '%{name}' is now %{rating}."
         advantage_set: "Advantage '%{name}' is set to rank %{rank}."
+        special_ability_set: "Special Ability '%{name}' is set to rank %{rank}."
+        special_ability_not_found: "%{name} doesn't have that special ability."
+        special_ability_removed: "Special Ability %{name} removed."
         advantage_at_max: "Advantage '%{name}' is already at maximum rank."
         specialization_added: "Specialization '%{name}' has been set for the skill %{skill}."
         ability_removed: "Ability '%{name}' removed."
@@ -18,7 +21,7 @@ en:
         
         ability_not_found: "Ability not found."
         disadvantage_set: "Disadvantage %{name} set to rank %{rank}."
-        disadvantage_not_found: "%{name} doesn't have that distadvantage."
+        disadvantage_not_found: "%{name} doesn't have that disadvantage."
         disadvantage_removed: "Disadvantage %{name} removed."
         error_saving_ability: "While saving ability %{name} the following error occurred: %{error}"        
         reset_complete: "Your abilities have been reset."

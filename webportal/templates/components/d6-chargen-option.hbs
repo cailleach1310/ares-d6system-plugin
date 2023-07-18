@@ -7,18 +7,20 @@
      <p class="cg-tip"><AnsiFormat @text={{this.blurb}} /></p>
 
      {{#each this.charList as |option|}}
-     <D6Optionbox @rating={{option.rating}} @details={{option.details}} @name={{option.name}} @ranks={{option.ranks}} @maxRating=5 @updated={{action "abilityChanged"}}>
+     {{#unless (eq option.rating 0)}}
+     <D6Optionbox @rating={{option.rating}} @details={{option.details}} @name={{option.name}} @ranks={{option.ranks}} @list={{this.list}} @maxRating=5 @updated={{action "abilityChanged"}} >
          <b>{{option.name}}</b> (R{{option.rating}}) - {{option.details}}
      </D6Optionbox>
+     {{/unless}}
      {{/each}}
      <br>
      Points 
        {{#if (eq this.type 'disadvantage')}}
           gained
        {{else}}
-          spent 
+          spent
        {{/if}}
-       : {{this.optionPoints}}
+      : {{this.optionPoints}}
      <br>
      <br>
      <button class="btn btn-primary" id="addopt" {{action (mut this.selectOption) true}}>Add {{this.typeCapitalize}}</button>
@@ -29,8 +31,8 @@
 <BsModalSimple @title="Add {{this.typeCapitalize}}" @closeTitle="Cancel" @submitTitle="Add" @size={{null}} @fade={{true}} @open={{this.selectOption}} @onSubmit={{action "addOption"}} @onHide={{action (mut this.selectOption) false}}>
     <p>Choose one {{this.type}} from the dropdown list below and add an explanation.</p>
        <select onchange={{action (mut this.optionString) value="target.value"}}>
-       {{#each this.list as |option|}}
-           <option value={{option.name}}>{{option.name}}</option>
+       {{#each this.list as |opt|}}
+           <option value={{opt.name}}>{{opt.name}}</option>
        {{/each}}
        </select>
     <br><br>

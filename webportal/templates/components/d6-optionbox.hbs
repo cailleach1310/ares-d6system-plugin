@@ -12,6 +12,8 @@
 </div>
 
 <BsModalSimple @title="Edit {{this.name}}" @closeTitle="Cancel" @submitTitle="Update" @size={{null}} @fade={{true}} @open={{this.editOption}} @onSubmit={{action "update"}} @onHide={{action (mut this.editOption) false}}>
+     <p><i>{{this.optionDesc}}</i></p>
+     <br>
      Rank:
     <div class="fs3-rating-display">
       <button class="fs3-skillbutton" {{action "lower"}}>-</button>

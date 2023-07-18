@@ -60,19 +60,11 @@
     {{#each char.custom.d6.attrs as |attribute index|}}
      {{#if (eq index 0)}}
      <div role="tabpanel" class="tab-pane active" id="d6{{attribute.name}}">
-      <div class="card card-default">
-         <div class="card-body">
-            <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @updated={{action "abilityChanged"}}/>
-         </div>
-      </div>
+        <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @updated={{action "abilityChanged"}}/>
     </div>
      {{else}}
      <div role="tabpanel" class="tab-pane" id="d6{{attribute.name}}">
-      <div class="card card-default">
-         <div class="card-body">
-            <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @updated={{action "abilityChanged"}}/>
-        </div>
-      </div>
+        <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @updated={{action "abilityChanged"}}/>
     </div>
    {{/if}}
    {{/each}}
@@ -116,28 +108,7 @@
   </div>
 
   <div role="tabpanel" class="tab-pane" id="d6advantages">
-
-  <div class="card card-default">
-       <div class="card-heading">
-           Advantages
-       </div>
-   <div class="card-body">
-
-     <p class="cg-tip"><AnsiFormat @text={{char.custom.cg_d6.advantages_blurb}} /></p>
-
-     {{#each char.custom.d6.advantages as |adv|}}
-     <D6Optionbox @rating={{adv.rating}} @details={{adv.details}} @name={{adv.name}} @ranks={{adv.ranks}} @maxRating=5 @updated={{action "abilityChanged"}}>
-         <b>{{adv.name}}</b> (R{{adv.rating}}) - {{adv.details}}
-     </D6Optionbox>
-     {{/each}}
-     <br>
-     Points spent on advantages: {{this.advPoints}}
-     <br>
-     <br>
-     <button class="btn btn-primary" id="addadv" {{action (mut this.selectAdvantage) true}}>Add Advantage</button>
-
-   </div>
-  </div>
+  <D6ChargenOption @type="advantage" @blurb={{char.custom.cg_d6.advantages_blurb}} @list={{char.custom.cg_d6.advantages}} @charList={{char.custom.d6.advantages}}/>
   </div>
 
   <div role="tabpanel" class="tab-pane" id="d6disadvantages">
@@ -161,18 +132,4 @@
        {{/each}}
        </select>
     <Input @type="text" size={{25}} id="specSkillString" @enter={{action "addSpecialization"}} @value={{this.specSkillString}} />
-  </BsModalSimple>
-
-<BsModalSimple @title="Advantage" @closeTitle="Cancel" @submitTitle="Add" @size={{null}} @fade={{true}} @open={{this.selectAdvantage}} @onSubmit={{action "addAdvantage"}} @onHide={{action (mut this.selectAdvantage) false}}>
-    <p>Choose an advantage from the dropdown list below and add an explanation.</p>
-       <select onchange={{action (mut this.advString) value="target.value"}}>
-       {{#each char.custom.cg_d6.advantages as |adv|}}
-           <option value={{adv.name}}>{{adv.name}}</option>
-       {{/each}}
-       </select>
-    <br><br>
-       <i>{{this.optionDesc}}</i>
-    <br><br>
-    <p>Details:</p>
-    <Input @type="text" size={{200}} id="advDetails" @enter={{action "addAdvantage"}} @value={{this.advDetails}} />
   </BsModalSimple>

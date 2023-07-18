@@ -1,16 +1,33 @@
 import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   editOption: false,
   optionRating: 0,
   optionDetails: "",
-    
+  flashMessages: service(),
+
+    optionDesc: computed('name',function() {
+      let list = this.list;
+      let item = list.findBy('name', this.name);
+      if (item) {
+        return item.desc;
+      } else {
+        return null;
+     }
+    }),
+
     actions: { 
         edit() {
-            this.set('editOption', true);
-            this.set('optionRating', this.rating);
-            this.set('optionDetails', this.details);
-            this.updated();
+            if (this.ranks) {
+               this.set('editOption', true);
+               this.set('optionRating', this.rating);
+               this.set('optionDetails', this.details);
+               this.updated();
+            } else {
+               this.flashMessages.danger("You have to save and reload before you can edit this option.");
+            }
         },
     
         update() {
@@ -21,18 +38,20 @@ export default Component.extend({
         },
 
         raise() {
-            var index = this.ranks.indexOf(this.optionRating);
+            var ranks = this.ranks;
+            var index = ranks.indexOf(this.optionRating);
             if (index == -1) {
-                this.set('optionRating', this.ranks[0]);
-            } else if (index < this.ranks.length - 1) {
-                this.set('optionRating', this.ranks[index + 1]);
+                this.set('optionRating', ranks[0]);
+            } else if (index < ranks.length - 1) {
+                this.set('optionRating', ranks[index + 1]);
             }
         },
 
         lower() {
-            var index = this.ranks.indexOf(this.optionRating);
+            var ranks = this.ranks;
+            var index = ranks.indexOf(this.optionRating);
             if (index > 0) {
-                this.set('optionRating', this.ranks[index - 1]);
+                this.set('optionRating', ranks[index - 1]);
             } else {
                 this.set('optionRating', 0);
             }

@@ -55,7 +55,7 @@ module AresMUSH
     def self.set_ability(char, name, rating)
       name = name.titleize
       if name =~ /\(/
-        s_name = name.split("(")[0].trim
+        s_name = name.split("(")[0].rstrip
         s_skill = name.split("(")[1].gsub(")","")
       else
         s_name = name 
@@ -113,6 +113,20 @@ module AresMUSH
       return nil
     end
     
+    def self.valid_rank(option_name, rank)
+       ability_type = D6System.get_ability_type(option_name)
+       case ability_type
+         when :advantage
+           list = D6System.advantages
+         when :disadvantage
+           list = D6System.disadvantages
+         when :special_ability
+           list = D6System.special_abilities
+       end
+       option = list.find { |o| (o['name'] == option_name) }
+       return option_ranks(option).include?(rank)
+    end
+
     def self.reset_char(char)
       char.d6skills.each { |s| s.delete }
       char.d6attributes.each { |s| s.delete }
@@ -177,15 +191,31 @@ module AresMUSH
        return ranks
     end
 
+    def self.specials_cost(option)
+      costs = []
+      max = Global.read_config("d6system","max_rank_specials")
+      first = option['cost']
+      costs << first
+      if Global.read_config("d6system","specials_difficult")
+         for i in 1..(max-1) do
+            costs << first
+         end 
+      else
+         for i in 1..(max-1) do
+            costs << 1
+         end
+      end
+      return costs
+    end
 
 # Saving abilities from web chargen
     def self.save_abilities(char, chargen_data)
        save_ability_list(char, chargen_data[:custom][:attrs])
        save_ability_list(char, chargen_data[:custom][:skills])
        save_specializations(char, chargen_data[:custom][:specializations])
-#       save_option_list(char, chargen_data[:custom][:advantages])
-#       save_option_list(char, chargen_data[:custom][:disadvantages])
-#       save_option_list(char, chargen_data[:custom][:special_abilities])
+       save_option_list(char, chargen_data[:custom][:advantages])
+       save_option_list(char, chargen_data[:custom][:disadvantages])
+       save_option_list(char, chargen_data[:custom][:special_abilities])
     end
 
     def self.save_ability_list(char, list)
@@ -202,14 +232,13 @@ module AresMUSH
     def self.save_specializations(char, list)
       alerts = []
       (list || {}).each do |a, b|
-        Global.logger.info "Saving specialization: " + a + " - " + b
         if (b != "0D+0")
            error = set_ability(char, a, b ) 
            if (error)
               alerts << t('d6system.error_saving_ability', :name => a, :error => error)
            end
         else
-          name = a.split("(")[0].trim
+          name = a.split("(")[0].rstrip
           ability = find_ability(char, name)
           if (ability)
             ability.delete
@@ -221,12 +250,19 @@ module AresMUSH
 
     def self.save_option_list(char, list)
       alerts = []
-      (list || {}).each do |a, b, c|
-        if (b.to_i > 0)
-           error = set_option(char, a, b, c )
+      (list || {}).each do |a, b|
+        rank = b.split(":")[0].to_i
+        details = b.split(":")[1]
+        if (rank > 0)
+           error = set_option(char, a, rank, details )
            if (error)
               alerts << t('d6system.error_saving_ability', :name => a, :error => error)
            end
+        else
+          option = find_ability(char, a)
+          if (option)
+            option.delete
+          end
         end
       end
      return alerts

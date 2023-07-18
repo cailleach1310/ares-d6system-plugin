@@ -19,10 +19,20 @@ export default Component.extend({
    },
  
   optionPoints: computed('charList.@each.rating', function() {
-    let total = this.countPointsInGroup(this.get('charList'));
-    if (this.type == 'special ability') {
-      total = total * (-1); // needs to be replaced with cost (general or for the first rank)
-    }
+    var total = 0;
+//    if (this.type != "special ability") {
+       total = this.countPointsInGroup(this.get('charList'));
+//    } else {
+//       list = this.get('charList');
+//       list.forEach(function(ability) {
+//          let index = this.ranks.indexOf(this.optionRating);
+//          ability.cost.forEach(function(level, i) {
+//             if (i <= index) {
+//                total = total + level; 
+//             }
+//          });
+//       });
+//    }
     return total;
   }),
 
@@ -63,27 +73,6 @@ export default Component.extend({
     }
    }),
 
-  onUpdate: function() {
-    return {
-//      advantages: this.createAbilityHash(this.get('char.custom.d6.advantages'))
-    };
-  },
-    
-  createAbilityHash: function(ability_list) {
-    if (!ability_list) {
-      return {};
-    }
-    return ability_list.reduce(function(map, obj) {
-      if (obj.name && obj.name.length > 0) {
-        map[obj.name] = obj.rating;
-      }
-      return map;
-    }, 
-    {}
-              
-    );
-  },
-
   validateChar: function() {
 // lots of stuff to be added here later!
     this.set('charErrors', A());
@@ -101,31 +90,26 @@ export default Component.extend({
       let optionString = this.optionString || option_list[0];
       let optionDetails = this.optionDetails || null;
       if (!optionString) {
-        this.flashMessages.danger("You didn't specify a valid " + this.type + ".");
+        this.flashMessages.danger("You have to specify a valid " + this.type + ".");
         this.set('selectOption', false);
         return;
       }
-      if (!optionString.match(/^[\w\s]+$/)) {
-        this.flashMessages.danger("Options can't have special characters in their names.");
-        this.set('selectOption', false);
-        return;
-      }
-      if (!optionDetails) {
-        this.flashMessages.danger("You didn't specify details for the " + this.type + ".");
-        this.set('selectOption', false);
-        return;
+      if (this.type == 'special ability') {
+         if (!optionDetails) {
+           optionDetails = this.optionDesc;
+         }
+      } else {
+         if (!optionDetails) {
+            this.flashMessages.danger("You have to specify details for the " + this.type + ".");
+            this.set('selectOption', false);
+            return;
+         }
       }
       this.set('optionDetails', null);
       this.set('selectOption', false);
       this.get('charList').pushObject( EmberObject.create( { name: optionString, rating: 1, details: optionDetails }) );
       this.validateChar();
     }
-
-//   selectAdv(name) {
-//     this.set('advString',name);
-//     let item = this.get('char.custom.cg_d6.advantages').findBy('name',name);
-//     this.set('advDesc', item.desc);
-//   },
 
   }
     

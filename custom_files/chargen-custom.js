@@ -1,5 +1,4 @@
 import EmberObject, { computed } from '@ember/object';
-import { helper } from '@ember/component/helper';
 import { A } from '@ember/array';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
@@ -9,10 +8,6 @@ export default Component.extend({
   newSpecialization: null,
   specSkillString: null, 
   selectSpecialization: false,
-  advDetails: null,
-  advString: null,
-  advDesc: null,
-  selectAdvantage: false,
   flashMessages: service(),
   gameApi: service(),
   
@@ -52,21 +47,6 @@ export default Component.extend({
     return total;
   }),
 
-  advPoints: computed('char.custom.d6.advantages.@each.rating', function() {
-    let total = this.countPointsInGroup(this.get('char.custom.d6.advantages'));
-    return total;
-  }),
-
-  disAdvantagePoints: computed('char.custom.d6.disadvantages.@each.rating', function() {
-    let total = this.countPointsInGroup(this.get('char.custom.d6.disadvantages'));
-    return total;
-  }),
-
-  specAbilityPoints: computed('char.custom.d6.special_abilities.@each.rating', function() {
-    let total = this.countPointsInGroup(this.get('char.custom.d6.special_abilities'));
-    return total;
-  }),
-
    countDiceInGroup: function(list) {
     if (!list) {
       return 0;
@@ -97,27 +77,14 @@ export default Component.extend({
     return total;
   },
 
-   optionDesc: computed('advString',function() {
-     let list = this.get('char.custom.cg_d6.advantages');
-     let item = list.findBy( 'name', this.advString);
-     if (item) {
-       return item.desc;
-     } else {
-       return null;
-    }
-   }),
-
-//   advDesc: computed('this.advString', function() {
-//     let item = this.get('char.custom.cg_d6.advantages').findBy('name',this.advString);
-//     return item;
-//   }),
-
   onUpdate: function() {
     return {
       attrs: this.createAbilityHash(this.get('char.custom.d6.attrs')),
       skills: this.createAbilityHash(this.get('char.custom.d6.skills')),
-      specializationss: this.createAbilityHash(this.get('char.custom.d6.specializations')),
-//      advantages: this.createAbilityHash(this.get('char.custom.d6.advantages'))
+      specializations: this.createAbilityHash(this.get('char.custom.d6.specializations')),
+      advantages: this.createOptionHash(this.get('char.custom.d6.advantages')),
+      disadvantages: this.createOptionHash(this.get('char.custom.d6.disadvantages')),
+      special_abilities: this.createOptionHash(this.get('char.custom.d6.special_abilities'))
     };
   },
     
@@ -136,7 +103,22 @@ export default Component.extend({
     );
   },
 
-     
+  createOptionHash: function(option_list) {
+    if (!option_list) {
+      return {};
+    }
+    return option_list.reduce(function(map, obj) {
+      if (obj.name && obj.name.length > 0) {
+        let optionStuff = obj.rating.toString() + ":" + obj.details;
+        map[obj.name] = optionStuff;
+      }
+      return map;
+    },
+    {}
+
+    );
+  },
+
   checkLimits: function(list, limits, title) {
 //    if (!list) {
 //      return;
@@ -189,38 +171,6 @@ export default Component.extend({
       this.get('char.custom.d6.specializations').pushObject( EmberObject.create( { name: spec + " (" + skill + ")", rating: '0D+1' }) );  
       this.validateChar();
     },
-
-    addAdvantage() {
-      let adv_list = this.get('char.custom.cg_d6.advantages').mapBy('name');
-      let advString = this.advSelected.name || adv_list[0];
-      let advDetails = this.advDetails || null;
-      if (!advString) {
-        this.flashMessages.danger("You didn't specify an advantage.");
-        this.set('selectAdvantage', false);
-        return;
-      }
-      if (!advString.match(/^[\w\s]+$/)) {
-        this.flashMessages.danger("Advantages can't have special characters in their names.");
-        this.set('selectAdvantage', false);
-        return;
-      }
-      if (!advDetails) {
-        this.flashMessages.danger("You didn't specify details for the advantage.");
-        this.set('selectAdvantage', false);
-        return;
-      }
-      this.set('advDetails', null);
-      this.set('selectAdvantage', false);
-      this.set('advSelected', null);
-      this.get('char.custom.d6.advantages').pushObject( EmberObject.create( { name: advString, rating: 1, details: advDetails }) );
-      this.validateChar();
-    },
-
-//   selectAdv(name) {
-//     this.set('advString',name);
-//     let item = this.get('char.custom.cg_d6.advantages').findBy('name',name);
-//     this.set('advDesc', item.desc);
-//   },
 
     reset() {
       this.reset();
