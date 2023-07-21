@@ -39,6 +39,9 @@ Update with: custom_files/chargen-custom.hbs
 #### ares-webportal/app/components/chargen-custom.js
 Update with: custom_files/chargen-custom.hbs
 
+#### ares-webportal/app/templates/components/chargen-custom-tabs.hbs
+Update with: custom_files/chargen-custom-tabs.hbs
+
 #### ares-webportal/app/custom-routes.js
 Update with: custom_files/custom-routes.js
 
@@ -47,6 +50,12 @@ Update with: custom_files/profile-custom.hbs
 
 #### ares-webportal/app/templates/components/profile-custom-tabs.hbs
 Update with: custom_files/profile-custom-tabs.hbs
+
+#### ares-webportal/app/templates/components/live-scene-custom-play.hbs
+Update with: custom_files/live-scene-custom-play.hbs
+
+#### ares-webportal/app//components/live-scene-custom-play.js
+Update with: custom_files/live-scene-custom-play.js
 
 ## Configuration
 After installation, you should check the d6system config files below and make adjustments where necessary. The keys in the configuration files are explained below.
