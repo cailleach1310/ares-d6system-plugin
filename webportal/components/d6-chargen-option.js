@@ -15,40 +15,55 @@ export default Component.extend({
     this._super(...arguments);
     let self = this;
     this.set('updateCallback', function() { return self.onUpdate(); } );
-    this.set('optionString', this.list.mapBy('name')[0]); // initialize value
+    this.set('optionString', this.opList.mapBy('name')[0]); // initialize value
    },
  
   optionPoints: computed('charList.@each.rating', function() {
     var total = 0;
-//    if (this.type != "special ability") {
+    if (this.type != "special ability") {
        total = this.countPointsInGroup(this.get('charList'));
-//    } else {
-//       list = this.get('charList');
-//       list.forEach(function(ability) {
-//          let index = this.ranks.indexOf(this.optionRating);
-//          ability.cost.forEach(function(level, i) {
-//             if (i <= index) {
-//                total = total + level; 
-//             }
-//          });
-//       });
-//    }
+    } else {
+       total = this.countSpecialAbilityPoints(this.get('charList'),this.get('opList'),this.get('specDifficulty'));
+    }
     return total;
   }),
 
    countPointsInGroup: function(list) {
-    if (!list) {
-      return 0;
-    }
-    let total = 0;
-    list.forEach(function (ability) {
-      total = total + ability.rating;
-    });
-    return total;
-  },
+     if (!list) {
+       return 0;
+     }
+     let total = 0;
+     list.forEach(function (ability) {
+       total = total + ability.rating;
+     });
+     return total;
+   },
+
+   countSpecialAbilityPoints: function(cList,sList,diff) {
+     if (!cList) {
+       return 0;
+     }
+     let total = 0;
+     let first = 0;
+     let factor = 0;
+     cList.forEach(function(opt) {
+        if (opt.rating > 0) {
+           let item = sList.findBy('name', opt.name);
+           first = item.cost;
+        // determine cost factor for ranks > 1
+           if (diff != "cost") {
+              factor = diff;  // usually 1, but keeping it configurable
+           } else {
+              factor = first;
+           }
+           total = total + first + ((opt.rating - 1) * factor);
+         }
+       });
+       return total;
+   },
 
    optionDesc: computed('optionString',function() {
-     let list = this.list;
+     let list = this.opList;
      let item = list.findBy('name', this.optionString);
      if (item) {
        return item.desc;
@@ -86,7 +101,7 @@ export default Component.extend({
     },
 
     addOption() {
-      let option_list = this.list.mapBy('name');
+      let option_list = this.opList.mapBy('name');
       let optionString = this.optionString || option_list[0];
       let optionDetails = this.optionDetails || null;
       if (!optionString) {

@@ -8,7 +8,7 @@
 
      {{#each this.charList as |option|}}
      {{#unless (eq option.rating 0)}}
-     <D6Optionbox @rating={{option.rating}} @details={{option.details}} @name={{option.name}} @ranks={{option.ranks}} @list={{this.list}} @maxRating=5 @updated={{action "abilityChanged"}} >
+     <D6Optionbox @rating={{option.rating}} @details={{option.details}} @name={{option.name}} @ranks={{option.ranks}} @list={{this.opList}} @maxRating=5 @updated={{action "abilityChanged"}} >
          <b>{{option.name}}</b> (R{{option.rating}}) - {{option.details}}
      </D6Optionbox>
      {{/unless}}
@@ -31,7 +31,7 @@
 <BsModalSimple @title="Add {{this.typeCapitalize}}" @closeTitle="Cancel" @submitTitle="Add" @size={{null}} @fade={{true}} @open={{this.selectOption}} @onSubmit={{action "addOption"}} @onHide={{action (mut this.selectOption) false}}>
     <p>Choose one {{this.type}} from the dropdown list below and add an explanation.</p>
        <select onchange={{action (mut this.optionString) value="target.value"}}>
-       {{#each this.list as |opt|}}
+       {{#each this.opList as |opt|}}
            <option value={{opt.name}}>{{opt.name}}</option>
        {{/each}}
        </select>

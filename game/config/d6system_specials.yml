@@ -1,26 +1,107 @@
 ---
 d6system:
+  max_rank_specials: 5
   special_abilities:
   - name: Accelerated Healing
-    desc: 'The character gains a +1D per rank to his Physique for all natural
-healing attempts, and a Critical Failure is treated as 1, rather than
-having a negative effect on the die roll.'
+    desc: The character gains a +1D per rank to his Physique for all natural healing
+      attempts, and a Critical Failure is treated as 1, rather than having a negative
+      effect on the die roll.
     cost: 3
   - name: Ambidextrous
-    desc: 'The character is equally adept with her right or left hand. She may
-perform an action with each hand in the same round, and, though she
-takes the multi-action penalty, she receives a +1 per rank to each skill
-total.'
+    desc: The character is equally adept with her right or left hand. She may perform
+      an action with each hand in the same round, and, though she takes the multi-action
+      penalty, she receives a +1 per rank to each skill total.
     cost: 2
   - name: Animal Control
-    desc: 'This gives the character the ability to control one particular species
-of animal, bird, or insect. The character gets a +10 bonus to her animal
-handling total for that species.'
+    desc: This gives the character the ability to control one particular species of
+      animal, bird, or insect. The character gets a +10 bonus to her animal handling
+      total for that species.
     cost: 3
   - name: Armor-Defeating Attack
-    desc: 'When a character with natural weapons (the character’s fists, claws,
-teeth, etc.) attacks someone protected by armor, this ability negates the
-Armor Value, up to +1D per rank.'
+    desc: When a character with natural weapons (the character’s fists, claws, teeth,
+      etc.) attacks someone protected by armor, this ability negates the Armor Value,
+      up to +1D per rank.
     cost: 2
-  specials_blurb: Special Abilities are optional and can grant benefits. The cost equals creation points or dice.
-  max_rank_specials: 5
+  - name: Atmospheric Tolerance
+    desc: The character can breathe one form of atmosphere (gas or liquid) that would
+      be lethal to most other characters. A character may not have more than one rank
+      in this ability, but he may have different versions for different atmospheres.
+    cost: 2
+  - name: Attack Resistance
+    desc: 'The character is highly resistant to a certain type of attack. She gains
+      +1D per rank to her damage resistance total against this type of attack. Energy
+      Attacks: Resistant to blasts of heat, fire, electricity, radiation, light, cold,
+      and so on, but not the ability to survive in extremes of such environments.
+      Extranormal Attack: Resistant to damage from any Extranormalbased (such as Magic
+      or Psionics) attack. Mental Attacks: Resistant to mental harm from any source.
+      It does not provide protection against interaction attempts. Nonenchanted Weapons:
+      Resistant to physical damage from nonenchanted weapons, but not from poisons,
+      energy, or similar materials.'
+    cost: 2
+  - name: Attribute Scramble
+    desc: The character can adjust an opponent’s (or a friend’s) attributes temporarily.
+      She gains the scramble skill at +1 per rank in a single version of this Special
+      Ability (it is a Presence skill, described only here), which she also can increase
+      as a normal skill. The scrambler must pick as her focus either physical or mental
+      attributes (never Extranormal, Funds, or Special Abilities). She can never do
+      both, except by taking this Special Ability once for each version.
+    cost: 4
+  - name: Blur
+    desc: The character can appear indistinct to the naked eye or nonenchanted visual
+      aids (binoculars, cameras, etc.). Commonly, a character with this Special Ability
+      will only be spotted out of the corner of the eye. This adds 1 to the character’s
+      dodge, sneak, and hide totals, as well as +1 to all default search, tracking,
+      investigation, and attack difficulties against the  character that the blurring
+      character is not actively trying to defeat.  (These modifiers are per rank in
+      this Special Ability.)
+    cost: 3
+  - name: Combat Sense
+    desc: The character can sense danger. She is never surprised. Rather, she and
+      her  attacker must determine initiative as normal. Even if the attacker still
+      goes  before the character does, any combat modifier from the surprise is reduced  by
+      2. A character may not have this ability more than once.
+    cost: 3
+  - name: Confusion
+    desc: The character can hamper the thoughts of those he comes into physical contact
+      with, at will. He gains the confuse skill at +1 per rank (it is a  Presence
+      skill, described only here), which he can increase as normal.
+    cost: 4
+  - name: Darkness
+    desc: The character can project a field of darkness around himself, adding +5
+      per rank to the difficulty of any sight-based skill totals. The field extends
+      in a half-sphere around the character with a radius equal to one meter per rank.
+      The field can be maintained for a maximum of one minute per rank before dispersing.
+    cost: 3
+  - name: Elasticity
+    desc: The character can stretch, elongate, and compress his body, allowing him
+      to expand his height or become so narrow he can pass through keyholes, cracks,
+      or any other opening he could normally see through. It takes one round or more
+      to slip through small openings, depending on their depth. The character gains
+      +1 per rank to contortion, dodge, or sleight of hand totals, in addition to
+      disguise attempts he performs on himself.
+    cost: 1
+  - name: Endurance
+    desc: The character has great endurance, and gains a +3D per rank to Physique
+      or  stamina checks when performing taxing physical tasks (such as holding one’s
+      breath underwater for a long period or running a long distance).
+    cost: 1
+  - name: Enhanced Sense
+    desc: 'One of the character’s five senses is heightened to abnormal levels. The  bonus
+      to the skill total received depends on the sense: sight is +1; hearing  is +2;
+      touch, taste, and smell are +3. The bonus is per rank and applies to  all skills
+      related to the sense.'
+    cost: 3
+  - name: Environmental Resistance
+    desc: The character is resistant to extremes of heat, cold, and pressure and gains  a
+      +3D per rank to Physique or stamina checks to resist ill effects from these
+      environmental condition. The character is not resistant to heat or cold  attacks,
+      as these come and go too quickly for the Special Ability to provide  protection.
+    cost: 1
+  - name: Fast Reactions
+    desc: The character gains +1D per rank to his Perception when determining initiative,
+      and, for up to three times during the adventure, he may receive one additional
+      action for one round.
+    cost: 3
+  specials_blurb: Special Abilities are optional and can grant benefits. The cost
+    equals creation points or dice.
+  specials_difficulty: 1

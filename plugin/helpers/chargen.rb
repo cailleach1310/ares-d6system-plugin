@@ -1,23 +1,6 @@
 module AresMUSH
   module D6System
 
-    def self.spent_points(char)
-      attr_total_dice = dice_spent(char.d6attributes)
-      skill_total_dice = dice_spent(char.d6skills)
-      spec_total_dice = dice_spent(char.d6specializations)
-      sum = attr_total_dice * 4 + skill_total_dice + (spec_total_dice/3.to_f).ceil
-#      return "Attribute Dice: " + attr_total_dice.to_s + "%rSkill Dice: " + skill_total_dice.to_s + "%rSpecialization Dice: " + spec_total_dice.to_s + "%rTotal: " + sum.to_s + " Creation Points"
-      return sum
-    end
-
-    def self.dice_spent(list)
-      total_dice = '0D+0'
-      list.each do |a|
-        total_dice = D6System.add_dice(total_dice, a.rating, 0)
-      end
-      dice_spent = (D6System.get_pips(total_dice) > 0) ? D6System.get_dice(total_dice) + 1 : D6System.get_dice(total_dice)
-    end
-
     def self.skill_list(char, attr, chargen)
       abilities = []
       list = D6System.skills

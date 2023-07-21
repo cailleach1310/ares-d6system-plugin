@@ -14,7 +14,9 @@ module AresMUSH
           skillnames: D6System.skill_names,
           advantages: D6System.advantages,
           disadvantages: D6System.disadvantages,
-          special_abilities: D6System.special_abilities
+          special_abilities: D6System.special_abilities,
+
+          specials_difficulty: Global.read_config("d6system","specials_difficulty")
         }
       end
     end
