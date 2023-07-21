@@ -1,15 +1,19 @@
 # Ares D6System Plugin
-A d6 system plugin for AresMUSH. 
+An open d6 system plugin for AresMUSH. 
 
 ## Credits
 Lyanna @ AresCentral
 
 ## Overview
-This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be modified to fit various settings and requirements. The system offered here is based on the D6 Adventure sheet, [https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf D6 Adventure sheet]
+This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be modified to fit various settings and requirements. The system offered here is based on the D6 Adventure sheet, (https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf)
 
 ### What this plugin covers
 * Setting attributes, skills, specializations, advantages, disadvantages and special abilities in chargen, both on the game client and on the webportal.
 * Rolling abilities from the game client and the webportal scene system.
+* In game sheet command and sheet integration on the character page of the webportal.
+
+### This is a work in progress
+As it is, I can offer no warranty of any kind for this code. Use it at your own risk. There may be bugs. And there are still some important features missing (body points, wounds, raising stuff after getting approved).
 
 ## Screenshots
 tbd
