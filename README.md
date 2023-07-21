@@ -30,8 +30,8 @@ Update with: custom_files/custom_char_fields.rb
 #### aresmush/plugins/chargen/custom_app_review.rb
 Update with: custom_files/custom_app_review.rb
 
-#### aresmush/plugins/scenes/custom_play_data.rb
-Update with: custom_files/custom_play_data.rb
+#### aresmush/plugins/scenes/custom_scene_data.rb
+Update with: custom_files/custom_scene_data.rb
 
 #### ares-webportal/app/templates/components/chargen-custom.hbs
 Update with: custom_files/chargen-custom.hbs
@@ -47,6 +47,9 @@ Update with: custom_files/custom-routes.js
 
 #### ares-webportal/app/templates/components/profile-custom.hbs
 Update with: custom_files/profile-custom.hbs
+
+#### ares-webportal/app/components/profile-custom.js
+Update with: custom_files/profile-custom.js
 
 #### ares-webportal/app/templates/components/profile-custom-tabs.hbs
 Update with: custom_files/profile-custom-tabs.hbs
