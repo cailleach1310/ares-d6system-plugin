@@ -1,0 +1,8 @@
+<%= header %>
+<%= attr_blurb %>
+<% data[:attributes].each do |a| %>
+%r%xc<%= a['name'] %>%xn%r<%= "-" * a['name'].length %>
+<%= a['desc'] %>
+<% end %>
+<%= page_footer %>
+<%= footer %>

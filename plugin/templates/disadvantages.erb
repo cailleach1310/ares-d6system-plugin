@@ -1,0 +1,8 @@
+<%= header %>
+<%= disadvantages_blurb %>
+<% data[:disadvantages].each do |a| %>
+%r%xc<%= a['name'] %>%xn%r<%= "-" * a['name'].length %>
+<%= a['desc'] %> (Ranks: <%= a['ranks'] %>)
+<% end %>
+<%= page_footer %>
+<%= footer %>

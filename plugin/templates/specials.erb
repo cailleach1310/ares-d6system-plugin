@@ -1,0 +1,8 @@
+<%= header %>
+<%= specials_blurb %>
+<% data[:special_abilities].each do |a| %>
+%r%xc<%= a['name'] %>%xn%r<%= "-" * a['name'].length %>
+<%= a['desc'] %> (Cost: <%= a['cost'] %>)
+<% end %>
+<%= page_footer %>
+<%= footer %>

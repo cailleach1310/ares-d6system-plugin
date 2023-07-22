@@ -1,20 +1,13 @@
 ---
 toc: Character Creation
-summary: Specializations - setting them and using them in roleplay.
+summary: Specializations - setting them in chargen.
 ---
 # Specializations
-Specializations reflect a greater familiarity in a particular area covered by a base skill.
+Specializations reflect a greater familiarity in a particular area covered by a base skill. Each three dice taken in specialitations cost you one creation point.
 
-`sheet` - Specializations are listed in your 'sheet'.
+`sheet` - Views your 'sheet'.
 
-## Chargen
-`spec/add <specialization>=<skill>` - Adds a specialization for the specified skill.
-`raise <specialization>` - Raises a specialization by one pip. This works only after adding the specialization.
-`lower <specialization>` - Lowers a specialization by one pip. Lowering to 0D removes the specialization.
+`spec/add <specialization>=<skill>` - Adds a specialization for a skill.
+`raise <specialization>` - Raises a specialization by one pip.
+`lower <specialization>` - Lowers a specialization by one pip.
 `spec/remove <specialization>` - Removes the specialization.
-
-## Roleplay
-`roll <specialization>` - Rolls a specialization with its skill and the linked attribute.
-`roll <specialization>+<attribute>` - You can use a different attribute for the roll.
-`roll <specialization>+<modifier>` - You can use a modifier for the roll.
-

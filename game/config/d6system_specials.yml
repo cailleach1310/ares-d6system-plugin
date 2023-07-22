@@ -102,6 +102,266 @@ d6system:
       and, for up to three times during the adventure, he may receive one additional
       action for one round.
     cost: 3
+  - name: Fear
+    desc: The character can provoke fear in those who can see or hear him. He gains
+      a  +1 per rank to all intimidation totals and combat defense difficulties  against
+      those so affected. The willpower or Presence difficulty to resist a  Fear attack
+      is 15.
+    cost: 2
+  - name: Flight
+    desc: The character can fly, either by nature or by virtue of having wings. The  character’s
+      flying rate equals his base Move times 2 times the number of  ranks. The flying
+      skill is required to maneuver.
+    cost: 6
+  - name: Glider Wings
+    desc: The character can fly by drifting with air currents, provided there is sufficient
+      wind (gamemaster’s call). Characters with this Special Ability need the flying
+      skill to control their passage. A character may not have this ability more than
+      once.
+    cost: 3
+  - name: Hardiness
+    desc: The character can take damage better than normal. She adds 1 per rank to  her
+      damage resistance total against any type of damage.
+    cost: 1
+  - name: Hypermovement
+    desc: The character is extremely fast, adding +2 meters per round per rank to
+      her  base Move rate, which in turn affects all other types of movements.
+    cost: 1
+  - name: Immortality
+    desc: The character is immortal, though she will grow older, at a decreased pace
+      compared to the rest of her species. If she is reduced to zero Body Points,
+      she doesn’t die. She will not go unconscious or bleed to death (as mortally
+      wounded characters do), but she will not heal without psionic or magical aid
+      or the Accelerated Healing Special Ability — her arms could be blown off, her
+      abdomen eviscerated, or whatever. She may perform only the most minimal of physical
+      actions, such as squirming, and some actions may be impossible. She may rely
+      on her Reflexes for initiative purposes only.
+    cost: 7
+  - name: Immunity
+    desc: The character is highly resistant to disease and poisons and receives a
+      +1D per rank to Physique or stamina checks when determining whether he has contracted
+      an illness or suffering from ingested poisons.
+    cost: 1
+  - name: Increased Attribute
+    desc: Some strange ability (or his species) allows the character to gain +1 bonus
+      per rank to all rolled totals related to that attribute. (For Physique, this
+      also includes the damage resistance total and Strength Damage.) A character
+      may have multiple ranks of this Special Ability, as well as multiple versions
+      of it.
+    cost: 2
+  - name: Intangibility
+    desc: The character can reduce his physical density to virtually zero for one
+      minute per rank. During that time, his damage resistance score against physical
+      and energy attacks is +3D per rank, but his movement rate is halved. An intangible
+      character can pass through solid objects, providing they do not contain wards
+      or other spells of protection designed to repel passage of this nature. He may
+      not pass through energy or electrified barriers. While intangible, the character
+      cannot carry any object along (including clothing), nor can he attempt any physical
+      attack. It takes a full round for a character to become intangible or solid,
+      during which he can do nothing else. The character must spend at least one minute
+      solid before attempting intangibility again.
+    cost: 5
+  - name: Invisibility
+    desc: The character can become transparent. This adds 1 per rank to the character's
+      dodge, sneak, and hide totals, as well as +1 per rank to all default search,
+      tracking, investigation, and attack difficulties against the character that
+      the invisible character is not actively trying to defeat. Additionally, no character
+      may take an action to “spot” the character unless the gamemaster feels there
+      is sufficient provocation, such as brushing against others or removing something
+      in a crowded area.
+    cost: 2
+  - name: Iron Will
+    desc: The character is highly resistant to all interaction attempts and mental
+      attacks. The character gains a +1D per rank to all willpower rolls and +2 to
+      the default difficulty of any such attempts against this character.
+    cost: 2
+  - name: Life Drain
+    desc: This ability allows the character to drain attribute pips or Body Points
+      from his target. The character must choose one set of attributes to target,
+      either physical (Reflexes, Coordination, Physique), mental (Knowledge, Perception,
+      Presence), Wounds, or Body Points. For example, most vampires drink blood, and
+      thus lower Body Points, while succubi target the soul and so weaken mental attributes.
+      The player must specify in what manner the character drains these attributes
+      (biting a vein, hypnosis, and so) It should involve some sort of successful
+      attack result (either physical or mental).
+    cost: 5
+  - name: Longevity
+    desc: The character lives longer than the average Human. Often, this Special Ability
+      has a Flaw attached that governs what the character must do to maintain his
+      life. The character should gain peripheral bonuses during game play because
+      of his "longer outlook." A character may not have this ability more than once.
+    cost: 3
+  - name: Luck, Good
+    desc: 'The character is blessed with unusually good luck. Once per adventure,
+      a character with Good Luck can receive one of the following benefits just by
+      asking for it: action, breakthrough, haste, or second chance. See the “Luck
+      Benefits” sidebar for details on each of these options. Calling upon one’s luck
+      does not count as an action.'
+    cost: 2
+  - name: Luck, Great
+    desc: 'A character with Great Luck can call on one of the following benefits once
+      per adventure per rank: action, alertness, breakthrough, haste, hero, opponent
+      fails, or second chance. See the “Luck Benefits” sidebar for details on each
+      of these options. Calling upon one’s luck does not count as an action.'
+    cost: 3
+  - name: Master of Disguise
+    desc: The character has a natural talent for disguise. She gains a +5 per rank
+      bonus to all disguise totals and a +1D bonus per rank to any Presence- based
+      actions while in that disguise.
+    cost: 3
+  - name: Multiple Abilities
+    desc: A character might have multiple minor abilities that are increased by a
+      Special Ability. All bonuses are added to the skill or attribute total, not
+      to the die code. For example, a character could have “eyestalks” that give him
+      a +1 bonus to Perception or search totals that would negate surprise, the ability
+      to focus his ears on particular types of noises (+1 bonus when listening for
+      particular sounds), and fingers that are sensitive to subdermal motion (+1 bonus
+      to lockpicking against safes with moving tumblers). All the bonuses should be
+      fairly limited in their applications, pertaining to only specific uses of particular
+      skills (like specializations do), but there can be several of them for each
+      selection of this Special Ability. The maximum total bonus for each rank of
+      this Special Ability is +4.
+    cost: 1
+  - name: Natural Armor
+    desc: The character has plates, toughened skin, scales, or something similar.
+      His own surface adds 1D per rank to his damage resistance total to physical
+      (not energy or mental) attacks and contact poisons, corrosives, or similar materials.
+    cost: 3
+  - name: Natural Hand-to-Hand Weapon
+    desc: The character has some sort of natural weapon — such as claws, pincers,
+      bone sword, or stinger — that adds 1D per rank to his Strength Damage when determining
+      his damage with the natural weapon. The character uses brawling to attack, unless
+      the weapon is something that detaches from him or (in the case of a super-scientific
+      or magical weapon) exists separately. In this latter case, the character employs
+      melee combat to wield it.
+    cost: 2
+  - name: Natural Magick
+    desc: The character can use a magic spell as a natural ability. An example of
+      this would be a character who can dispel magic by his nature, rather than through
+      the use of a countermagic spell. The cost of the ability — and the number of
+      ranks the character has in it — equals the difficulty of the spell. (See the
+      “Magic” chapter for details on creating spells; the “Precalculated Spells” chapter
+      has some sample spells.) The chosen spell may not be charged (that is, have
+      a fixed limit to the number of times it can be cast).
+    cost: 1
+  - name: Natural Ranged Weapon
+    desc: The character has some sort of natural ranged weapon, using missile weapons
+      (for solid objects) or marksmanship (for energy, gas, or chemical projection
+      or for solid projectiles in cybernetics or super-science weapons) to target
+      it. Long range equals 20 times the number of ranks in this Special Ability times
+      the character’s Physique, lifting, or marksmanship (as appropriate) in meters.
+      The damage for physically enhanced projections is the character’s Strength Damage
+      plus 1D per rank, while the damage for all other types of blasts is 3D per rank.
+      The projection must have a visible effect (such as a ray that glows or bone
+      spikes) and it may not do mental damage. Note that, regardless of the nature
+      of the projection, there are no additional effects from this type of Special
+      Ability unless an Enhancement allows otherwise.
+    cost: 3
+  - name: Omnivorous
+    desc: The character can gain nourishment from any organic substance (though she
+      is not immune to poisons). She can also chew through just about any organic
+      substance with no adverse effects to her teeth or jaws. A character may not
+      have this ability more than once.
+    cost: 2
+  - name: Paralyzing Touch
+    desc: 'The character can freeze her target with the merest touch. When she makes
+      a brawling attack, she may, instead of doing damage, paralyze her victim, who
+      remains that way until he makes a successful Presence or willpower roll against
+      the brawling skill total. He may attempt to do so once per round; the only other
+      actions he may take are mental-based ones and Extranormal or Special Ability
+      ones that do not require movement. Note: Characters who are heavily armored
+      or covered will be harder to hit. The gamemaster needs to decide how much skin
+      is exposed and adjust the attack difficulty accordingly.'
+    cost: 4
+  - name: Possession, Limited
+    desc: The character can possess the body of a living creature or a corpse. The
+      character must be within three times the rank of this Special Ability in meters
+      of the target in order to possess it.
+    cost: 8
+  - name: Possession, Full
+    desc: The character can possess the body of a living creature or a corpse. This  works
+      in the same way as Limited Possession, save that the possessing character gains
+      her new form’s physical attributes (Reflexes, Coordination,  Physique), retains
+      her own mental attributes, and gains complete control  over the new form.
+    cost: 10
+  - name: Quick Study
+    desc: The character has an uncanny ability to learn new skills and improve old  ones,
+      limited to one attribute. He always learns new skills as if he had a teacher
+      (even if he doesn’t), and he can improve skills he already knows  at a cost
+      of one Character Point per rank less than normal.
+    cost: 3
+  - name: Sense of Direction
+    desc: The character has a good sense of direction. He gains +1D per rank to  navigation
+      and tracking rolls.
+    cost: 2
+  - name: Shapeshifting
+    desc: The character can manipulate the shape, color, and overall appearance of
+      her body, though mass and body compositions remain the same. The character must
+      chose a specific creature to emulate, gaining one form for every three additional
+      points spent on this Special Ability. At six ranks in this ability, the gamemaster
+      may allow shifting among one class of creatures (such as birds or furniture)
+      as long as all forms chosen for previous ranks were within the same class.
+    cost: 3
+  - name: Silence
+    desc: The character can move in complete silence. He gains +2D per rank to all
+      sneak checks and a +1D per rank when attacking from behind.
+    cost: 3
+  - name: Skill Bonus
+    desc: Skill Bonus represents a natural talent (a character with the Charismatic
+      group might be “friendly and outgoing”), a particular knack (a character  with
+      the Animal Friendship group has a “way with animals”), years of  devotion to
+      a profession prior to beginning adventure, or the result of an  extended life.
+      The character chooses a group of three related skills in  which he gains +1
+      to the skill total of any action performed with those  skills (or specializations
+      of that skill). The skills need not be under the  same attribute. The character
+      may or may not actually have adds in those skills, and the gamemaster must approve
+      the fact that they are “related.”
+    cost: 1
+  - name: Skill Minimum
+    desc: The character can select three related skills unaffected by any other sort
+      of Special Ability and the character will always gain a minimum total of 3 times
+      the number before the “D.”
+    cost: 4
+  - name: Uncanny Aptitude
+    desc: This Special Ability is similar to the Skill Bonus Special Ability in  that
+      some sort of bizarre ability gives the character added bonuses to  certain actions.
+      However, instead of selecting a group of skills that the  character gains a
+      bonus to, the player and the gamemaster work out  circumstances where these
+      abilities come into play. For instance, a  character might gain a +1 bonus to
+      all Reflexes-related skills totals  when in sunlight.
+    cost: 3
+  - name: Teleportation
+    desc: The character can move instantly to another place up to 10 meters per rank  away.
+      The character must see her destination clearly. In combat, this action  takes
+      an entire round. The character may take along whatever she can carry.
+    cost: 3
+  - name: Transmutation
+    desc: The character can alter his substance to something else, while retaining
+      his form (such as a man who turns to stone). Characters with this ability  may
+      only shift into one specific substance, which the player must specify  when
+      his character gets the Special Ability. Generally, this substance  gives the
+      character distinct advantages. The player may select up to four  points (not
+      ranks) in other Special Abilities that relate to the chosen  form, per rank
+      in this Special Ability. (Thus, two Transmutation ranks  means eight points
+      in other Special Abilities.) Natural Armor, Hardiness, and Environmental Resistance
+      are common ones.
+    cost: 5
+  - name: Ventriloquism
+    desc: The character can throw her voice up to three meters away per rank. No skill  roll
+      is required to do this, but if it is part of a trick attempt, she  receives
+      a +2D bonus per rank to con and charm rolls.
+    cost: 3
+  - name: Water Breathing
+    desc: The character can breathe water and will not drown in water. She gains +1D  per
+      rank to all swimming rolls because she doesn’t need to worry about  drowning.
+    cost: 2
+  - name: Youthful Appearance
+    desc: The character looks much younger than she actually is and receives a +1D
+      per  rank to charm, con, or disguise attempts that involve posing as someone  youthful.
+      In general, characters should not look more than 10 to 20 years  younger than
+      they are, regardless of the number of ranks, though gamemaster  discretion and
+      common sense should rule here.
+    cost: 1
   specials_blurb: Special Abilities are optional and can grant benefits. The cost
     equals creation points or dice.
-  specials_difficulty: 1
+  specials_difficulty: cost

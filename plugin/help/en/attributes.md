@@ -1,18 +1,13 @@
 ---
 toc: Character Creation
-summary: Attributes - setting them and using them in roleplay.
+summary: Attributes - setting them in chargen.
 ---
+
 # Attributes
-Attributes measure basic physical and mental abilities that are common to every living creature.
+Attributes measure basic physical and mental abilities that are common to every living creature. Except for extranormal attributes, they can't be lowered beyond 1. You can distribute upto 18 dice on your attributes. Please note that each character dice you buy costs you four creation points.
 
-`sheet` - Attributes are listed in your 'sheet'.
+`sheet` - Views your 'sheet'.
+`abilities` - Lists attributes with their descriptions.
 
-## Chargen
 `raise <attribute>` - Raises an attribute by one pip.
-`lower <attribute>` - Lowers an attributeby one pip. Attributes can't be lowered beyond 1.
-
-## Roleplay
-`roll <attribute>` - Rolls an attribute.
-`roll <attribute>+<attribute>` - You can use combinations of attributes for the roll.
-`roll <attribute>+<modifier>` - You can use a modifier for the roll.
-
+`lower <attribute>` - Lowers an attribute by one pip.

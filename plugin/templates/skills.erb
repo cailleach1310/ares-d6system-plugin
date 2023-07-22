@@ -1,0 +1,8 @@
+<%= header %>
+<%= skills_blurb %>
+<% data[:skills].each do |s| %>
+%r%xc<%= s['name'] %>%xn%r<%= "-" * s['name'].length %>
+<%= s['desc'] %> (Linked attribute: <%= s['linked_attr'] %>)
+<% end %>
+<%= page_footer %>
+<%= footer %>

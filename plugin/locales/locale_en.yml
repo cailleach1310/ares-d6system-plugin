@@ -27,6 +27,8 @@ en:
         reset_complete: "Your abilities have been reset."
         # App Review
         too_many_points_spent: "%xh%xr< You can't spend more than %{max} points. You've spent %{total} points. >%xn"
+        too_many_attr_dice: "%xh%xr< You can't spend more than %{max} dice on attributes. You've spent %{total} dice. >%xn"
+        too_many_skill_dice: "%xh%xr< You can't spend more than %{max} dice on skills. You've spent %{total} dice. >%xn"
         too_many_disadvantage_points_spent: "You can't gain more than %{max} disadvantage points in chargen. You've gained %{total} points."
         # Rolls
         failure: "%xrFailure%xn"

@@ -41,6 +41,14 @@ module AresMUSH
        if (spent_total(char) > cp)
           msg = msg + "%r" + t('d6system.too_many_points_spent', :total => spent_total(char), :max => cp )
        end
+       max_attr_dice = Global.read_config("d6system","max_attr_cg_dice")
+       if (dice_spent(char.d6attributes) > max_attr_dice)
+          msg = msg + "%r" + t('d6system.too_many_attr_dice', :total => dice_spent(char.d6attributes), :max => max_attr_dice )
+       end
+       max_skill_dice = Global.read_config("d6system","max_skill_cg_dice")
+       if (dice_spent(char.d6skills) > max_skill_dice)
+          msg = msg + "%r" + t('d6system.too_many_skill_dice', :total => dice_spent(char.d6skills), :max => max_skill_dice )
+       end
        return msg
      end
 
