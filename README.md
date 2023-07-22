@@ -62,6 +62,23 @@ Update with: custom_files/live-scene-custom-play.hbs
 #### ares-webportal/app//components/live-scene-custom-play.js
 Update with: custom_files/live-scene-custom-play.js
 
+## Adding Chargen Stages
+Add the following lines to 'stages' in the chargen.yml, i.e. inbetween 'ranks' and 'background':
+    reset:
+      help: reset
+    attributes:
+      help: attributes
+    skills:
+      help: skills
+    specializations:
+      help: specializations
+    advantages:
+      help: advantages
+    disadvantages:
+      help: disadvantages
+    specials:
+      help: special abilities
+
 ## Configuration
 After installation, you should check the d6system config files below and make adjustments where necessary. The keys in the configuration files are explained below.
 
