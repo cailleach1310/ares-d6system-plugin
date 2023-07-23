@@ -99,7 +99,7 @@ export default Component.extend({
       return map;
     }, 
     {}
-              
+
     );
   },
 
@@ -119,31 +119,26 @@ export default Component.extend({
     );
   },
 
-  checkLimits: function(list, limits, title) {
-//    if (!list) {
-//      return;
-//    }
-
-//    for (var high_rating in limits) {
-//      let limit = limits[high_rating];
-//      let high = list.filter(l => l.rating >= high_rating);
-//      let count = high.length;
-//      if (count > limit) {
-//        this.charErrors.push(`You can only have ${limit} ${title} at ${high_rating}+.`);
-//      }
-//    }
-  },
-    
   validateChar: function() {
 // lots of stuff to be added here later!
     this.set('charErrors', A());
-
   },
-    
+
   actions: {
 
     abilityChanged() {
       this.validateChar();
+    },
+
+    resetD6Abilities(id) {
+      let api = this.gameApi;
+      api.requestOne('resetD6Abilities', { name: id }, null)
+          .then( (response) => {
+              if (response.error) {
+                  return;
+              }
+              this.flashMessages.success(response.name + "'s abilities have been reset! Please reload the page!");
+          });
     },
 
     addSpecialization() {
@@ -168,17 +163,10 @@ export default Component.extend({
       }
       this.set('newSpecialization', null);
       this.set('selectSpecialization', false);
-      this.get('char.custom.d6.specializations').pushObject( EmberObject.create( { name: spec + " (" + skill + ")", rating: '0D+1' }) );  
+      this.get('char.custom.d6.specializations').pushObject( EmberObject.create( { name: spec + " (" + skill + ")", rating: '0D+1' }) );
       this.validateChar();
     },
 
-    reset() {
-      this.reset();
-    },
-
-    reloadChar() {
-      this.reloadChar();
-    }
   }
-    
+
 });

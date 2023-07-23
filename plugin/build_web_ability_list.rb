@@ -15,7 +15,8 @@ module AresMUSH
              specializations: specialization_list(char),
              advantages: build_chargen_list(char, D6System.advantages),
              disadvantages: build_chargen_list(char, D6System.disadvantages),
-             special_abilities: build_chargen_list(char, D6System.special_abilities)
+             special_abilities: build_chargen_list(char, D6System.special_abilities),
+             reset_needed: D6System.abilities_not_set(char)
           }
         else
          if (show_sheet)
@@ -90,7 +91,7 @@ module AresMUSH
            ability = D6System.find_ability(char, a['name'])
            if (ability)
              max = Global.read_config('d6system', 'max_rank_specials')
-             cost = (D6System.get_ability_type(a['name']) == :special_ability) ? D6System.specials_cost(a) : nil
+             cost = (D6System.get_ability_type(a['name']) == :special_ability) ? a['cost'] : nil
              ranks = (D6System.get_ability_type(a['name']) == :special_ability) ? (1..max).to_a : D6System.option_ranks(a)
              list << { name: a['name'], rating: ability.rank, details: ability.details, ranks: ranks, cost: cost }
            end

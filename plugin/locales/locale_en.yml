@@ -26,6 +26,7 @@ en:
         error_saving_ability: "While saving ability %{name} the following error occurred: %{error}"        
         reset_complete: "Your abilities have been reset."
         # App Review
+        abilities_not_set: "%xh%xr< Your abilities haven't been set. You need to reset them once. >%xn"
         too_many_points_spent: "%xh%xr< You can't spend more than %{max} points. You've spent %{total} points. >%xn"
         too_many_attr_dice: "%xh%xr< You can't spend more than %{max} dice on attributes. You've spent %{total} dice. >%xn"
         too_many_skill_dice: "%xh%xr< You can't spend more than %{max} dice on skills. You've spent %{total} dice. >%xn"

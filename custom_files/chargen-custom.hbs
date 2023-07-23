@@ -1,5 +1,13 @@
 <div role="tabpanel" class="tab-pane" id="d6system">
 
+  {{#if char.custom.d6.reset_needed}}
+     <div class="cg-tip"><AnsiFormat @text="You need to reset your abilities first!" /></div>
+
+        <div class="action-buttons">
+           <button name="reset" {{action 'resetD6Abilities' char.name}} class="btn btn-secondary">Reset Abilities</button>
+        </div>
+    {{else}}
+
      <ul class="nav nav-tabs" role="tablist">
 
            <li role="presentation" class="nav-item"><a href="#d6attrs" aria-controls="d6attrs" role="tab" data-bs-toggle="tab" class="nav-link active">Attributes</a></li>
@@ -120,6 +128,7 @@
   </div>
 
  </div>
+{{/if}}
 </div>
 
 <BsModalSimple @title="Specialization" @closeTitle="Cancel" @submitTitle="Add" @size={{null}} @fade={{true}} @open={{this.selectSpecialization}} @onSubmit={{action "addSpecialization"}} @onHide={{action (mut this.selectSpecialization) false}}>

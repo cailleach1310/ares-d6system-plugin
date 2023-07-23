@@ -13,12 +13,8 @@ module AresMUSH
     end
 
     def self.abilities_not_set(char)
-      D6System.skill_names.each do |p|
-        if !D6System.find_ability(char, p)
-           return t('d6system.abilities_not_set')
-        end
-      end
-      return nil
+       normal_attributes = D6System.attributes.size - D6System.extranormal_attributes.size
+       return char.d6attributes.empty? || (D6System.dice_spent(char.d6attributes) < normal_attributes)
     end
 
     def self.points_overview(char)
@@ -36,6 +32,9 @@ module AresMUSH
 
     def self.ability_points_review(char)
        msg = ""
+       if abilities_not_set(char)
+          msg = msg + "%r" + t('d6system.abilities_not_set')
+       end
        # check points_max
        cp = Global.read_config("d6system","cg_creation_points")
        if (spent_total(char) > cp)
