@@ -15,7 +15,7 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 * In game sheet command and sheet integration on the character page of the webportal.
 
 ### This is a work in progress
-As it is, I can offer no warranty of any kind for this code. Use it at your own risk. There may be bugs. And there are still some important features missing (body points, wounds, raising stuff after getting approved).
+This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added.
 
 ## Screenshots
 tbd
