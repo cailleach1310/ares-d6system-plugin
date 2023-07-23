@@ -16,8 +16,7 @@ module AresMUSH
       end
       
       def show_section(section)
-#        sections = ['abilities', 'advantages', 'disadvantages', 'stats']
-        sections = ['abilities', 'specializations', 'advantages', 'disadvantages', 'special_abilities']
+        sections = ['abilities', 'specializations', 'advantages', 'disadvantages', 'special_abilities', 'stats']
         return true if self.section.blank?
         return true if !sections.include?(section)
         return true if !sections.include?(self.section)
@@ -69,18 +68,19 @@ module AresMUSH
       end
 
       def stats
- #       list = []
- #       D6System.other_stats(@char).each_with_index do |st, i| 
- #         list << format_stat(st, i)
- #       end
- #       list.join("")
+        list = []
+        D6System.other_stats(@char).each_with_index do |st, i| 
+          list << format_stat(st, i)
+        end
+        list.join("")
       end
        
       def format_stat(st, i)
         name = "  %xh#{st['name']}%xn "
-        linebreak = ((i+1) % 4 == 1) ? "%r" : ""
-        rating = "#{st['rating']}"
-        "#{linebreak}#{name.ljust(22,".")} #{rating} "
+        linebreak = ((i+1) % 3 == 1) ? "%r" : ""
+        rating = " #{st['rating']}"
+        dots = 30 - name.length
+        "#{linebreak}#{name}#{rating.rjust(dots,".")}  "
       end
 
       def format_ability(a, i)

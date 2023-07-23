@@ -77,7 +77,7 @@ module AresMUSH
       list = []
       list << { 'name' => 'Body Points', 'rating' => char.body_points }
       list << { 'name' => 'Fate Points', 'rating' => char.fate_points }
-      list << { 'name' => 'Char Points', 'rating' => char.char_points }
+      list << { 'name' => 'Char Points', 'rating' => char.xp }
       return list
     end
 

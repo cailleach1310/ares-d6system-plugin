@@ -6,8 +6,9 @@ module AresMUSH
     collection :d6disadvantages, "AresMUSH::D6Disadvantage"
     collection :d6specials, "AresMUSH::D6SpecialAbility"
     collection :d6specializations, "AresMUSH::D6Specialization"
-    attribute :fate_points, :type => DataType::Integer, :default => 0
-    attribute :character_points, :type => DataType::Integer, :default => 0
+    attribute :fate_points, :type => DataType::Integer, :default => 3
+    attribute :xp, :type => DataType::Integer, :default => 1
+    attribute :body_points, :type => DataType::Integer, :default => 0
 
     before_delete :delete_abilities
     

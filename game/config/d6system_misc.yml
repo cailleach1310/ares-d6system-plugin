@@ -7,9 +7,11 @@ d6system:
     d6_fate_spent:
       type: d6
       message: Spent a fate point when making a roll.
+  cg_creation_points: 79
   sheet_columns:
   - Reflexes Presence
   - Physique Coordination Magic
   - Knowledge Perception
   show_sheet: true
-  cg_creation_points: 79
+  starting_char_points: 1
+  starting_fate_points: 3
