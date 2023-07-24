@@ -85,9 +85,6 @@ Update with: custom_files/live-scene-custom-play.hbs
 #### ares-webportal/app/components/live-scene-custom-play.js
 Update with: custom_files/live-scene-custom-play.js
 
-#### ares-webportal/app/custom-routes.js
-Update with: custom_files/custom-routes.js
-
 ## Adding Chargen Stages
 Add the following lines to 'stages' in the chargen.yml, i.e. inbetween 'ranks' and 'background':
 
