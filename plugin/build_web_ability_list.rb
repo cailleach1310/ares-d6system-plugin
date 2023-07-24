@@ -29,8 +29,7 @@ module AresMUSH
             disadvantages: option_list(char.d6disadvantages),
             special_abilities: option_list(char.d6specials),
 #            other_stats: D6System.other_stats(char),
-            show_sheet: show_sheet,
-            character_points: char.character_points
+            show_sheet: show_sheet
           }
          end
         end
