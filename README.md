@@ -18,7 +18,30 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added.
 
 ## Screenshots
-tbd
+
+### Game Client Roll Examples
+![roll examples](/images/game_ability_roll_examples.PNG)
+
+### Webportal Roll Ability Window
+![webportal_roll](/images/webportal_ability_roll.PNG)
+
+### Webportal Roll Result
+![webportal_roll2](/images/webportal_ability_roll2.PNG)
+
+### Webportal Chargen - Attributes
+![roll examples](/images/webportal_chargen_attributes.PNG)
+
+### Webportal Chargen - Skills
+![roll examples](/images/webportal_chargen_skills.PNG)
+
+### Webportal Chargen - Specializations
+![roll examples](/images/webportal_chargen_specializations.PNG)
+
+### Webportal Chargen - Add Option
+![roll examples](/images/webportal_chargen_add_option.PNG)
+
+### Webportal Chargen - Edit Option
+![roll examples](/images/webportal_chargen_edit_option.PNG)
 
 ## Installation
 In the game, run: plugin/install https://github.com/cailleach1310/ares-d6system-plugin
@@ -59,8 +82,11 @@ Update with: custom_files/profile-custom-tabs.hbs
 #### ares-webportal/app/templates/components/live-scene-custom-play.hbs
 Update with: custom_files/live-scene-custom-play.hbs
 
-#### ares-webportal/app//components/live-scene-custom-play.js
+#### ares-webportal/app/components/live-scene-custom-play.js
 Update with: custom_files/live-scene-custom-play.js
+
+#### ares-webportal/app/custom-routes.js
+Update with: custom_files/custom-routes.js
 
 ## Adding Chargen Stages
 Add the following lines to 'stages' in the chargen.yml, i.e. inbetween 'ranks' and 'background':
@@ -96,6 +122,12 @@ Here you can toggle visibility of the sheet for other players.
 #### cg_creation_points
 Here you can set the max amount of creation points for character generation.
 
+#### starting_char_points
+By default 1.
+
+#### starting_fate_points
+By default 3.
+
 ### d6system_attrs.yml
 #### attributes
 Each attribute has a name and a desc. The attribute list can be adjusted here.
@@ -113,7 +145,7 @@ Maximum value of dice for attributes in chargen.
 Minimum value of dice for attributes in chargen.
 
 #### extranormal_attributes
-Extranormal attributes are listed here, as some of the limitations are not valid for them.
+Extranormal attributes are listed here, as some of the limitations are not valid for them. If you don't have any extranormal attributes on your game, set this to '{}'.
 
 ### d6system_skills.rb
 #### max_skill_cg_dice
