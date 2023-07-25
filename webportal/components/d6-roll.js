@@ -15,6 +15,9 @@ export default Component.extend({
     pcDifficulty: null,
     rollString: null,
     rollFate: false,
+    rollChar: false,
+    rollDiff: false,
+    pcRollDiff: false,
     difficulty: null,
     destinationType: 'scene',
 
@@ -41,7 +44,10 @@ export default Component.extend({
         let vsRoll2 = this.vsRoll2;
         let vsName1 = this.vsName1;
         let vsName2 = this.vsName2;
-        let rollFate = false;
+        let rollFate = this.rollFate;
+        let rollChar = this.rollChar;
+        let rollDiff = false;
+        let pcRollDiff = false;
         let difficulty = this.difficulty;
 
         var sender;
@@ -76,7 +82,10 @@ export default Component.extend({
         this.set('vsName2', null);
         this.set('pcRollAbility', null);
         this.set('pcRollName', null);
-        this.set('pcFate', false);
+        this.set('rollChar', false);
+        this.set('rollFate', false);
+        this.set('rollDiff', false);
+        this.set('pcRollDiff', false);
         this.set('difficulty', null);
         this.set('pcDifficulty', null);
 
@@ -99,8 +108,9 @@ export default Component.extend({
            vs_name2: vsName2,
            pc_name: pcRollName,
            pc_ability: pcRollAbility,
-           fate: this.rollFate,
-           sender: sender }, null)
+           fate: rollFate,
+           cp: rollChar,
+            sender: sender }, null)
         .then( (response) => {
           if (response.error) {
             return;

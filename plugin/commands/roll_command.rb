@@ -3,7 +3,7 @@ module AresMUSH
     class RollCmd
       include CommandHandler
       
-      attr_accessor :name, :roll_str, :difficulty, :fate_roll, :private_roll
+      attr_accessor :name, :roll_str, :difficulty, :fate_roll, :cp_roll, :private_roll
 
       def parse_args
         if (cmd.args =~ /\//)
@@ -19,6 +19,7 @@ module AresMUSH
         end
         self.private_roll = cmd.switch_is?("private")
         self.fate_roll = cmd.switch_is?("fate")
+        self.cp_roll = cmd.switch_is?("cp")
       end
       
       def required_args
@@ -32,6 +33,17 @@ module AresMUSH
         else
           char = Character.named(self.name)
           if (char)
+             if self.cp_roll
+                if (char.xp > 0)
+                   char.update(xp: char.xp - 1)
+                   Achievements.award_achievement(char, "d6_cp_spent")
+                   message = message + t('d6system.spends_char_point',
+                    :name => char.name) + "%r"
+                   self.roll_str = D6System.add_cp_die(self.roll_str)  # modify roll_str, add 1D to it.
+                else
+                   message = message + t('d6system.no_cp_point', :name => char.name) + "%r"
+                end
+             end
              dice_result = D6System.parse_and_roll(char, self.roll_str)
           else
              dice_result = nil
@@ -64,7 +76,6 @@ module AresMUSH
                 char.update(fate_points: char.fate_points - 1)
                 message = message + t('d6system.spends_fate_point', 
                   :name => char ? char.name : "#{self.name} (#{enactor_name})") + "%r"
-                overall_result = overall_result.to_s + " --> " + (2 * overall_result).to_s
              else
                 message = message + t('d6system.no_fate_point', :name => char ? char.name : enactor.name) + "%r"
              end
@@ -77,17 +88,18 @@ module AresMUSH
                 :roll => self.roll_str,
                 :dice => D6System.print_dice(dice_result[:dice_roll]),
                 :details => dice_result[:roll_details],
-                :total => overall_result,
+                :total => self.fate_roll ? overall_result.to_s + " --> " + (2 * overall_result).to_s  : overall_result,
                 :success => success_title
               )         
           else
-              success_title = D6System.get_diff_success_title(overall_result - self.difficulty)
+              overall_total = self.fate_roll ? overall_result * 2 : overall_result
+              success_title = D6System.get_diff_success_title(overall_total - self.difficulty)
               message = message + t('d6system.difficulty_roll_result',
                 :name => char ? char.name : "#{self.name} (#{enactor_name})",
                 :roll => self.roll_str,
                 :dice => D6System.print_dice(dice_result[:dice_roll]),
                 :details => dice_result[:roll_details],
-                :total => overall_result,
+                :total => overall_total,
                 :diff_result => success_title,
                 :difficulty => self.difficulty
               )

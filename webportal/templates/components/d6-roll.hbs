@@ -2,7 +2,7 @@
 
     <p class="hint">You can use a number of dice and a modifier to roll for an NPC. Please enter the total of dice and modifiers, as there won't be any automatic factoring in of average attributes.</p>
     
-    <p class="hint">If you spend a fate point on your roll, the result will be doubled.</p>
+    <p class="hint">If you spend a fate point on your roll, the result will be doubled. Spending a char point on your roll will add another D6 to it.</p>
 
     <p><b>Regular Roll</b></p>
     <p>Select an ability, or type one (plus modifiers, if applicable) in the box.</p>
@@ -12,17 +12,27 @@
       {{/each}}
     </select>
     <Input @type="text" size={{25}} id="rollString" @enter={{action "addRoll"}} @value={{this.rollString}} />
+    <br>
     {{#if this.fatePoints}} 
        Spend a fate point: <Input @type="checkbox" @checked={{this.rollFate}} /> 
    {{/if}}
-    Difficulty (optional): <Input @type="integer" size={{3}} id="difficulty" @enter={{action "addRoll"}} @value={{this.difficulty}} />
+    {{#if this.charPoints}}
+       Spend a char point: <Input @type="checkbox" @checked={{this.rollChar}} />
+   {{/if}}
+    Difficulty <Input @type="checkbox" @checked={{this.rollDiff}} />
+    {{#if this.rollDiff}}
+       <Input @type="integer" size={{3}} id="difficulty" @enter={{action "addRoll"}} @value={{this.difficulty}} />
+   {{/if}}
    <hr>
     <p><b>Roll for Another PC / NPC</b></p>
     
     <p>
       Character: <Input @type="text" size={{15}} id="pcRollName" @enter={{action "addRoll"}} @value={{this.pcRollName}} /> 
-      Ability: <Input @type="text" size={{15}} id="pcRollAbility" @enter={{action "addRoll"}} @value={{this.pcRollAbility}} /><br>
-      Difficulty (optional): <Input @type="integer" size={{3}} id="pcDifficulty" @enter={{action "addRoll"}} @value={{this.pcDifficulty}} />
+      Ability: <Input @type="text" size={{15}} id="pcRollAbility" @enter={{action "addRoll"}} @value={{this.pcRollAbility}} />
+      Difficulty <Input @type="checkbox" @checked={{this.pcRollDiff}} />
+    {{#if this.pcRollDiff}}
+       <Input @type="integer" size={{3}} id="pcDifficulty" @enter={{action "addRoll"}} @value={{this.pcDifficulty}} />
+    {{/if}}
     </p>
       
     <hr>

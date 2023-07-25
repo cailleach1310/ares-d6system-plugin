@@ -9,7 +9,9 @@ In contrast to other systems that calculate successes per die, the D6 system sum
 
 Please note: Effects of advantages, disadvantages and special abilities will have to be added manually as a modifier (dice or pips) if applicable.
 
-Your character may gain fate points over time. You can choose to spend a fate point to double the total of a roll.
+Your character may gain fate points over time. You can choose to spend a fate point to double the total of a roll. 
+
+You can spend a character point on a roll to use one additonal die on it.
 
 ## Ability Rolls
 `roll <ability>` - Rolls an attribute/skill/specialization.
@@ -19,8 +21,11 @@ Your character may gain fate points over time. You can choose to spend a fate po
 ## Spending a Fate Point
 `roll/fate <ability with optional modifiers>` - You can spend a fate point to double the result of a roll.
 
+## Spending a Character Point
+`roll/cp <ability with optional modifiers>` - You can spend a char point to add a +1D modifier to your roll.
+
 ## Rolling for Another Character
-`roll <name>/<ability with optional modifiers>` - You can trigger a roll for another character. Fate won't work in this mode.
+`roll <name>/<ability with optional modifiers>` - You can trigger a roll for another character. Fate or char points can't be used in this mode.
 
 ## NPC Rolls 
 `roll <number of dice>+<modifier>` - For NPC rolls, you'll need to specify the total number of dice and pips for their roll, for example 'roll 2d+1'.
@@ -31,4 +36,7 @@ Your character may gain fate points over time. You can choose to spend a fate po
 
 ## Rolling Against a Difficulty
 `roll <ability with optional modifiers>=<difficulty>` - Check an ability against a difficulty level.
+`roll/fate <ability with optional modifiers>=<difficulty>` - Check an ability against a difficulty level, spending a fate point.
+`roll/cp  <ability with optional modifiers>=<difficulty>` - Check an ability against a difficulty level, spending a char point.
+
 `roll <name>/<ability with optional modifiers>=<difficulty>` - Check an ability level against a difficulty level for another PC.

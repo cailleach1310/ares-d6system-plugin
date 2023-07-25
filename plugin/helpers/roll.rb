@@ -117,6 +117,17 @@ module AresMUSH
       Global.logger.info "D6 roll results: #{message}"
     end
 
+    def self.add_cp_die(roll_str)
+      if (roll_str =~ /\+\d+[d|D]/)  # contains '+<number>D'
+         str = roll_str.gsub(/(\d+)[d|D]/) {|s| (s.to_i + 1).to_s + 'D'}
+      elsif (roll_str =~ /\+\d+/)  # contains '+<number modifier>'
+         str = roll_str.gsub(/(\+\d+)/, '+1D\1')
+      else
+         str = roll_str + "+1D"
+      end
+      return str
+    end
+
     # Returns either { message: roll_result_message }  or  { error: error_message }
     def self.determine_web_roll_result(request, enactor)
       
@@ -129,6 +140,7 @@ module AresMUSH
       pc_name = request.args[:pc_name] || ""
       pc_ability = request.args[:pc_ability] || ""
       fate_roll = request.args[:fate] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      cp_roll = request.args[:cp] == "true"  # the parameter comes as a string and has to be converted to boolean value
 
       # ------------------
       # VS ROLL
@@ -249,6 +261,17 @@ module AresMUSH
       
       else
         message = ""
+        if cp_roll
+           if (enactor.xp > 0)
+              enactor.update(xp: enactor.xp - 1)
+              Achievements.award_achievement(enactor, "d6_cp_spent")
+              message = message + t('d6system.spends_char_point',
+               :name => char ? char.name : enactor.name) + "%r"
+              roll_str = add_cp_die(roll_str)  # modify roll_str, add 1D to it.
+           else
+              message = message + t('d6system.no_cp_point', :name => char ? char.name : enactor.name) + "%r"
+           end
+        end
 
         roll = D6System.parse_and_roll(enactor, roll_str)
         overall_result = get_result(roll[:dice_roll]) + roll[:roll_modifiers]
@@ -259,7 +282,6 @@ module AresMUSH
               Achievements.award_achievement(enactor, "d6_fate_spent")
               message = message + t('d6system.spends_fate_point',
                :name => char ? char.name : enactor.name) + "%r"
-              overall_result = overall_result.to_s + " --> " + (2 * overall_result).to_s
            else
               message = message + t('d6system.no_fate_point', :name => char ? char.name : enactor.name) + "%r"
            end
@@ -271,17 +293,18 @@ module AresMUSH
              :roll => roll_str,
              :dice => D6System.print_dice(roll[:dice_roll]),
              :details => roll[:roll_details],
-             :total => overall_result,
+             :total => fate_roll ? overall_result.to_s + ' --> ' + (overall_result * 2).to_s : overall_result,
              :success => success_title
              )
         else
-           success_title = D6System.get_diff_success_title(overall_result - difficulty)
+           overall_total = fate_roll ? overall_result * 2 : overall_result
+           success_title = D6System.get_diff_success_title(overall_total - difficulty)
            message = message + t('d6system.difficulty_roll_result',
              :name => enactor.name,
              :roll => roll_str,
              :dice => D6System.print_dice(roll[:dice_roll]),
              :details => roll[:roll_details],
-             :total => overall_result,
+             :total => overall_total,
              :diff_result => success_title,
              :difficulty => difficulty
            )

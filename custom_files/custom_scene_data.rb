@@ -3,7 +3,8 @@ module AresMUSH
     
     def self.custom_scene_data(viewer)
       return { char_abilities: D6System.web_abilities(viewer),
-               fate_points: (viewer.fate_points > 0) }
+               fate_points: (viewer.fate_points > 0),
+               char_points: (viewer.xp > 0) }
 
     end
   end

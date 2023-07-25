@@ -47,8 +47,9 @@ en:
         opposed_crushing_victory: "%xh%xyCrushing Victory for %{name}.%xn"
         
         spends_fate_point: "%xc<D6>%xn %{name} spends a fate point to double the following roll."
-        spends_cp_point: "%xc<D6>%xn %{name} spends a character point to add an additional die to a roll."
-        no_fate_point: "%xc<D6>%xn %{name} tries to spend a fate point but has none!"
+        spends_char_point: "%xc<D6>%xn %{name} spends a character point to add an additional die to a roll."
+        no_fate_point: "%xc<D6>%xn %{name} tries to spend a fate point but doesn't have any left!"
+        no_cp_point: "%xc<D6>%xn %{name} tries to spend a char point but doesn't have any left!"
 
         num_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn %r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total}"
         simple_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn (%{details}).%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn %{success} Total result: %{total}"
