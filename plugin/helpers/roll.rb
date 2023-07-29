@@ -49,7 +49,7 @@ module AresMUSH
     end
 
     def self.valid_roll_str(dicestring)
-     return (dicestring.match(/\d+[d|D]6?\+?\d?/) != nil)
+     return (dicestring.match(/^\d+[d|D]6?([\+|\-]\d+)?$/) != nil)
     end
 
     def self.wild_die(prev_dice)
@@ -120,8 +120,11 @@ module AresMUSH
     def self.add_cp_die(roll_str)
       if (roll_str =~ /\+\d+[d|D]/)  # contains '+<number>D'
          str = roll_str.gsub(/(\d+)[d|D]/) {|s| (s.to_i + 1).to_s + 'D'}
-      elsif (roll_str =~ /\+\d+/)  # contains '+<number modifier>'
-         str = roll_str.gsub(/(\+\d+)/, '+1D\1')
+      elsif (roll_str =~ /\-\d+[d|D]/)  # contains '-<number>D'
+         str = roll_str.gsub(/(\d+)[d|D]/) {|s| (s.to_i - 1).to_s + 'D'}
+         str = str.gsub(/\-0[d|D]6?/,"") # remove -0D modifier, if there is one
+      elsif (roll_str =~ /[+|-]\d+/)  # only contains '+/-<number modifier>'
+         str = roll_str.gsub(/([+|-]\d+)/, '+1D\1')  # add +1D modifier before numerical modifier
       else
          str = roll_str + "+1D"
       end
