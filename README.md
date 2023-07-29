@@ -5,17 +5,21 @@ An open d6 system plugin for AresMUSH.
 Lyanna @ AresCentral
 
 ## Overview
-This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be modified to fit various settings and requirements. The system offered here is based on the D6 Adventure sheet (https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf).
+This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be configured to fit various settings and requirements. The system offered here is based on the D6 Adventure sheet (https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf).
 
 You need to disable the fs3 plugin on the ares-webportal before you install this plugin.
 
 ### What this plugin covers
 * Setting attributes, skills, specializations, advantages, disadvantages and special abilities in chargen, both on the game client and on the webportal.
 * Rolling abilities from the game client and the webportal scene system.
+* Enhancing rolls with spending fate and/or character points.
+* Optional: Rolling against a difficulty level.
 * In game sheet command and sheet integration on the character page of the webportal.
+* Optional cron job for regularly awarding character points (similar to how it's done with xp on FS3 Systems).
+* Staff game client commands to manage fate and character points (awarding/removing).
 
 ### This is a work in progress
-This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added.
+This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added, such as post chargen raising / adding abilities (which will have to be handled through admin for now).
 
 ## Screenshots
 
@@ -124,6 +128,19 @@ By default 1.
 
 #### starting_fate_points
 By default 3.
+
+#### cp_cron
+Configuration for the cron job that handles the automatic character points raise of characters.
+
+#### periodic_cp
+Amount of character points that are gained with each run of the cron job.
+
+#### max_char_hoard
+Maximum character points that can be stored on a character.
+
+#### max_fate_hoard
+Maximum fate points that can be stored on a character.
+
 
 ### d6system_attrs.yml
 #### attributes
