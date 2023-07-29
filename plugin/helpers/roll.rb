@@ -284,6 +284,7 @@ module AresMUSH
                :name => char ? char.name : enactor.name) + "%r"
            else
               message = message + t('d6system.no_fate_point', :name => char ? char.name : enactor.name) + "%r"
+              fate_roll = false
            end
         end
         if (difficulty == 0)

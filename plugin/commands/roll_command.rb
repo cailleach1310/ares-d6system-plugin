@@ -18,8 +18,8 @@ module AresMUSH
           self.difficulty = args.arg2 ? integer_arg(args.arg2) : 0
         end
         self.private_roll = cmd.switch_is?("private")
-        self.fate_roll = cmd.switch_is?("fate")
-        self.cp_roll = cmd.switch_is?("cp")
+        self.fate_roll = cmd.switch_is?("fate") || cmd.switch_is?("all")
+        self.cp_roll = cmd.switch_is?("cp") || cmd.switch_is?("all")
       end
       
       def required_args
@@ -78,6 +78,7 @@ module AresMUSH
                   :name => char ? char.name : "#{self.name} (#{enactor_name})") + "%r"
              else
                 message = message + t('d6system.no_fate_point', :name => char ? char.name : enactor.name) + "%r"
+                self.fate_roll = false
              end
            end
 

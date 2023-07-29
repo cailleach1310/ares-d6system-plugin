@@ -73,14 +73,18 @@ module AresMUSH
        end
     end
 
-    def self.other_stats(char)
-      list = []
-      list << { 'name' => 'Body Points', 'rating' => char.body_points }
-      list << { 'name' => 'Fate Points', 'rating' => char.fate_points }
-      list << { 'name' => 'Char Points', 'rating' => char.xp }
-      return list
+    def self.calculate_strength_damage(char)
+       str_dmg = ([ D6System.get_dice(ability_rating(char,"Physique")), D6System.get_dice(ability_rating(char,"Lifting"))].max/2.to_f).ceil
     end
 
+    def self.other_stats(char)
+      list = []
+      list << { 'name' => 'Fate Points', 'rating' => char.fate_points }
+      list << { 'name' => 'Char Points', 'rating' => char.xp }
+      list << { 'name' => 'Body Points', 'rating' => char.body_points }
+      list << { 'name' => 'Strength Damage', 'rating' => calculate_strength_damage(char).to_s + "D" }
+      return list
+    end
 
     def self.attr_names
        D6System.attributes.map { |a| a['name'].titlecase }

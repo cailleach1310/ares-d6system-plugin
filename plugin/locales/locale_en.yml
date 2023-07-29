@@ -2,6 +2,9 @@
 en:
   d6system:
         no_permission_to_view_sheet: "You are not allowed to view that sheet."
+        points_awarded: "You have awarded %{points} %{type} points to %{name}, reason: %{reason}"
+        points_removed: "You have removed %{points} %{type} points from %{name}, reason: %{reason}"
+        invalid_points_award: "Characters can't have points below 0!"
         # Chargen
         attribute_set: "Attribute '%{name}' is now %{rating}."
         skill_set: "Skill '%{name}' is now %{rating}."

@@ -50,11 +50,16 @@ module AresMUSH
         else
           return RollCmd
         end
+      when "fate", "cp"
+        return PointsAwardCmd  
       end
     end
 
     def self.get_event_handler(event_name)
-      nil
+      case event_name
+      when "CronEvent"
+        return CharPointsCronHandler
+      end
     end
 
     def self.get_web_request_handler(request)
@@ -65,6 +70,8 @@ module AresMUSH
         return AddJobRollRequestHandler
       when "addSceneRoll"
         return AddSceneRollRequestHandler
+      when "resetD6Abilities"
+        return ResetAbilitiesRequestHandler
       end
 
     end

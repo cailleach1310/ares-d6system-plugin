@@ -31,7 +31,7 @@
      <p class="cg-tip"><AnsiFormat @text={{char.custom.cg_d6.attrs_blurb}} /></p>
 
      {{#each char.custom.d6.attrs as |att|}}
-     <D6Attrbox @rating={{att.rating}} @updated={{action "abilityChanged"}}>
+     <D6Attrbox @rating={{att.rating}} @maxRating={{char.custom.cg_d6.max_attr_dice}} @updated={{action "abilityChanged"}}>
          <b>{{att.name}}</b> - {{att.desc}}
      </D6Attrbox>
      {{/each}}
@@ -68,11 +68,11 @@
     {{#each char.custom.d6.attrs as |attribute index|}}
      {{#if (eq index 0)}}
      <div role="tabpanel" class="tab-pane active" id="d6{{attribute.name}}">
-        <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @updated={{action "abilityChanged"}}/>
+        <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @max={{char.custom.cg_d6.max_skill_dice}} @updated={{action "abilityChanged"}}/>
     </div>
      {{else}}
      <div role="tabpanel" class="tab-pane" id="d6{{attribute.name}}">
-        <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @updated={{action "abilityChanged"}}/>
+        <D6ChargenSkills @skills={{char.custom.d6.skills}} @attribute={{attribute.name}} @max={{char.custom.cg_d6.max_skill_dice}} @updated={{action "abilityChanged"}}/>
     </div>
    {{/if}}
    {{/each}}

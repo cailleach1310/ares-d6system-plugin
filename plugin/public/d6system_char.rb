@@ -20,5 +20,21 @@ module AresMUSH
       end
     end
 
+    def award_fate(amount)
+      D6System.modify_fate(self, amount)
+    end
+    
+    def spend_fate(amount)
+      D6System.modify_fate(self, -amount)
+    end
+
+    def award_cp(amount)
+      D6System.modify_cp(self, amount)
+    end
+
+    def spend_cp(amount)
+      D6System.modify_cp(self, -amount)
+    end
+
   end
 end

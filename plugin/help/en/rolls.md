@@ -24,6 +24,9 @@ You can spend a character point on a roll to use one additonal die on it.
 ## Spending a Character Point
 `roll/cp <ability with optional modifiers>` - You can spend a char point to add a +1D modifier to your roll.
 
+## Spending both
+`roll/all <ability with optional modifiers>` - You can spend both char point and fate point on a roll. 
+
 ## Rolling for Another Character
 `roll <name>/<ability with optional modifiers>` - You can trigger a roll for another character. Fate or char points can't be used in this mode.
 
@@ -38,5 +41,6 @@ You can spend a character point on a roll to use one additonal die on it.
 `roll <ability with optional modifiers>=<difficulty>` - Check an ability against a difficulty level.
 `roll/fate <ability with optional modifiers>=<difficulty>` - Check an ability against a difficulty level, spending a fate point.
 `roll/cp  <ability with optional modifiers>=<difficulty>` - Check an ability against a difficulty level, spending a char point.
+`roll/all  <ability with optional modifiers>=<difficulty>` - Check an ability against a difficulty level, spending a char and a fate point.
 
 `roll <name>/<ability with optional modifiers>=<difficulty>` - Check an ability level against a difficulty level for another PC.
