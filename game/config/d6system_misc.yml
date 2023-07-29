@@ -8,6 +8,15 @@ d6system:
       type: d6
       message: Spent a fate point when making a roll.
   cg_creation_points: 79
+  cp_cron:
+    day_of_week:
+    - Sat
+    hour:
+    - 21
+    minute:
+    - 0
+  max_char_hoard: 70
+  max_fate_hoard: 10
   sheet_columns:
   - Reflexes Presence
   - Physique Coordination Magic
@@ -15,3 +24,4 @@ d6system:
   show_sheet: true
   starting_char_points: 1
   starting_fate_points: 3
+  periodic_cp: 2
