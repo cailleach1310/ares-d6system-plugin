@@ -28,9 +28,9 @@ module AresMUSH
       D6System.skill_names.each do |a|
         D6Skill.create(character: char, name: a, rating: '0D+0')
       end
-      starting_xp = Global.read_config("d6system","starting_char_points")
+      starting_cp = Global.read_config("d6system","starting_char_points")
       starting_fate = Global.read_config("d6system","starting_fate_points")
-      char.update(xp: starting_xp)
+      char.update(char_points: starting_cp)
       char.update(fate_points: starting_fate)
       char.update(body_points: 26)
     end

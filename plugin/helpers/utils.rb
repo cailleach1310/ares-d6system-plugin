@@ -80,7 +80,7 @@ module AresMUSH
     def self.other_stats(char)
       list = []
       list << { 'name' => 'Fate Points', 'rating' => char.fate_points }
-      list << { 'name' => 'Char Points', 'rating' => char.xp }
+      list << { 'name' => 'Char Points', 'rating' => char.char_points }
       list << { 'name' => 'Body Points', 'rating' => char.body_points }
       list << { 'name' => 'Strength Damage', 'rating' => calculate_strength_damage(char).to_s + "D" }
       return list

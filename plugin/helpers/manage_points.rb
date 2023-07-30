@@ -14,10 +14,10 @@ module AresMUSH
     
     def self.modify_cp(char, amount)
       max_cp = Global.read_config("d6system", "max_char_hoard")
-      cp = char.xp + amount
+      cp = char.char_points + amount
       cp = [max_cp, cp].min
       cp = [0, cp].max
-      char.update(xp: cp)
+      char.update(char_points: cp)
     end
 
   end

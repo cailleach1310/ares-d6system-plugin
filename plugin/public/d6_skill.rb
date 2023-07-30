@@ -1,7 +1,6 @@
 module AresMUSH
   class D6Skill < Ohm::Model
     include ObjectModel
-    include LearnableAbility
     
     reference :character, "AresMUSH::Character"
     attribute :name
