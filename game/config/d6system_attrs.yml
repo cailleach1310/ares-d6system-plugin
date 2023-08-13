@@ -23,9 +23,17 @@ d6system:
     among the seven attributes. The minimum is 1D and the maximum is 5D in all  attributes
     except Extranormal attributes. Extranormal attributes have no minimum  and no
     maximum.
-  max_attr_cg_dice: 18
-  max_attr_dice: 5
-  min_attr_dice: 1
   extranormal_attributes:
   - Magic
   - Psionics
+  extranormal_blurb: Certain abilities are limited to certain concepts and require
+    a justification in the background. As such, extranormal attributes and skills
+    aren't open to all characters, they are therefore set to 0D per default. You can
+    only add dice  to a skill if you have dice in the respective attribute.  Extranormal
+    attributes and skills are also more costly to raise after getting approved. In
+    chargen, limits pertaining to normal attributes and skills do not apply, but creation
+    points spent on learning these count towards the allowed attribute and skill max
+    points.
+  max_attr_cg_dice: 18
+  max_attr_dice: 5
+  min_attr_dice: 1

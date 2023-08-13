@@ -15,16 +15,9 @@ d6system:
     - 21
     minute:
     - 0
-  extranormal_blurb: Certain abilities are limited to certain concepts and require
-    a justification in the background. As such, extranormal attributes and skills
-    aren't open to all characters, they are therefore set to 0D per default. You can
-    only add dice  to a skill if you have dice in the respective attribute.  Extranormal
-    attributes and skills are also more costly to raise after getting approved. In
-    chargen, limits pertaining to normal attributes and skills do not apply, but creation
-    points spent on learning these count towards the allowed attribute and skill max
-    points.
   max_char_hoard: 70
   max_fate_hoard: 10
+  periodic_cp: 2
   sheet_columns:
   - Reflexes Presence
   - Physique Coordination Extranormal
@@ -32,4 +25,3 @@ d6system:
   show_sheet: true
   starting_char_points: 1
   starting_fate_points: 3
-  periodic_cp: 2
