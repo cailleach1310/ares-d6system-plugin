@@ -2,18 +2,23 @@ module AresMUSH
   module D6System
     class AbilitiesRequestHandler
       def handle(request)
-        attrs = D6System.attributes.map { |a| { 
+        attrs = D6System.attributes.select { |s| !D6System.extranormal_attributes.include?(s['name']) }.map { |a| { 
           name: a['name'].titleize,
           desc: a['desc']
         } }
 
-        skills = D6System.skills.select { |s| !s['linked_attr'].include?("Extranormal") }.map { |a| {
+        skills = D6System.skills.select { |s| !D6System.extranormal_attributes.include?(s['linked_attr']) }.map { |a| {
           name: a['name'].titleize,
           linked_attr: a['linked_attr'],
           desc: a['desc']
         }}
 
-        extranormal_skills = D6System.skills.select { |s| s['linked_attr'].include?("Extranormal") }.map { |a| {
+        extranormal_attrs = D6System.attributes.select { |s| D6System.extranormal_attributes.include?(s['name']) }.map { |a| {
+          name: a['name'].titleize,
+          desc: a['desc']
+        }}
+
+        extranormal_skills = D6System.skills.select { |s| D6System.extranormal_attributes.include?(s['linked_attr']) }.map { |a| {
           name: a['name'].titleize,
           linked_attr: a['linked_attr'],
           desc: a['desc']
@@ -40,12 +45,14 @@ module AresMUSH
         {
           attrs_blurb: Website.format_markdown_for_html(D6System.attributes_blurb),
           skills_blurb: Website.format_markdown_for_html(D6System.skills_blurb),
+          extranormal_blurb: Website.format_markdown_for_html(D6System.extranormal_blurb),
           advantages_blurb: Website.format_markdown_for_html(D6System.advantages_blurb),
           disadvantages_blurb: Website.format_markdown_for_html(D6System.disadvantages_blurb),
           special_abilities_blurb: Website.format_markdown_for_html(D6System.specials_blurb),
           
           attrs: attrs,
           skills: skills,
+          extranormal_attrs: extranormal_attrs,
           extranormal_skills: extranormal_skills,
           advantages: advantages,
           disadvantages: disadvantages,

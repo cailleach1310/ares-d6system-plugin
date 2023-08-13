@@ -38,7 +38,15 @@ module AresMUSH
       def build_column(char, attributes)
         column = []
         attributes.each do |attr|
-           column << { attribute: attr, rating: D6System.ability_rating(char, attr), skills: D6System.skill_list(char,attr,false) }
+           if (attr == "Extranormal")
+              D6System.extranormal_attributes.each do |a|
+                 if (D6System.get_dice(D6System.ability_rating(char,a)) > 0)
+                    column << { attribute: a, rating: D6System.ability_rating(char, a), skills: D6System.extranormal_skill_list(char,a) }
+                 end
+              end
+           else
+              column << { attribute: attr, rating: D6System.ability_rating(char, attr), skills: D6System.skill_list(char,attr,false) }
+           end
         end
         return column
       end

@@ -33,6 +33,10 @@ module AresMUSH
       Global.read_config("d6system", "specializations_blurb")
     end
 
+    def self.extranormal_blurb
+      Global.read_config("d6system", "extranormal_blurb")
+    end
+
     def self.advantages_blurb
       Global.read_config("d6system", "advantages_blurb")
     end
@@ -142,6 +146,36 @@ module AresMUSH
       else
         return :specialization
       end        
+    end
+
+    def self.skill_list(char, attr, chargen)
+      abilities = []
+      list = D6System.skills
+      list.each do |m|
+         if (m['linked_attr'] == attr)
+            dice_str = D6System.ability_rating(char, m['name'])
+            if (chargen)
+               abilities << { 'name' => m['name'], 'rating' => dice_str, 'desc' => m['desc'], 'linked_attr' => attr }
+            else
+               abilities << { 'name' => m['name'], 'rating' => dice_str }
+            end
+         end
+      end
+      return abilities.sort_by { |a| a['name'] }
+    end
+
+    def self.extranormal_skill_list(char, attr)
+      abilities = []
+      list = D6System.skills
+      list.each do |m|
+         if (m['linked_attr'] == attr)
+            dice_str = D6System.ability_rating(char, m['name'])
+            if ((D6System.get_dice(dice_str) > 0) || (D6System.get_pips(dice_str) > 0))
+               abilities << { 'name' => m['name'], 'rating' => dice_str }
+            end
+         end
+      end
+      return abilities.sort_by { |a| a['name'] }
     end
 
   end

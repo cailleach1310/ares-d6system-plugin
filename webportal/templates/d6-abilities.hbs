@@ -45,7 +45,29 @@
 </tbody>
 </table>
 
-<h2>Extranormal Skills</h2>
+{{#if this.model.extranormal_attrs}}
+<h2>Extranormal Abilities</h2>
+<AnsiFormat @text={{this.model.extranormal_blurb}} />
+
+<h3>Attributes</h3>
+<table class="table table-striped">
+
+<thead>
+    <th>Attribute</th>
+    <th>Description</th>
+</thead>
+
+<tbody>
+{{#each this.model.extranormal_attrs as |attr| }}
+<tr>
+    <td>{{attr.name}}</td>
+    <td>{{attr.desc}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+<h3>Skills</h3>
 <table class="table table-striped">
 
 <thead>
@@ -64,7 +86,7 @@
 {{/each}}
 </tbody>
 </table>
-
+{{/if}}
 
 <h2>Advantages</h2>
 

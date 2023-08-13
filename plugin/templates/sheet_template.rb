@@ -119,13 +119,28 @@ module AresMUSH
          D6System.skill_list(char,attribute,false).unshift({'name' => attribute.upcase, 'rating' => D6System.ability_rating(char,attribute) })
       end
 
+      def extranormal_attr_skills(char, attribute)
+         D6System.extranormal_skill_list(char,attribute).unshift({'name' => attribute.upcase, 'rating' => D6System.ability_rating(char,attribute) })
+      end
+
       def build_column(char, attributes)
         column = []
         attributes.each do |attr|
-           attribute_skills(char,attr).each do |m|
-              column << m
+           if (attr == "Extranormal")
+              D6System.extranormal_attributes.each do |a|
+                 if (D6System.get_dice(D6System.ability_rating(char,a)) > 0)
+                    extranormal_attr_skills(char,a).each do |m|
+                       column << m
+                    end
+                    column << { 'name' => '<empty>', 'rating' => "" }
+                 end
+              end
+           else
+              attribute_skills(char,attr).each do |m|
+                 column << m
+              end
+              column << { 'name' => '<empty>', 'rating' => "" }
            end
-           column << { 'name' => '<empty>', 'rating' => "" }
         end
         return column
       end
