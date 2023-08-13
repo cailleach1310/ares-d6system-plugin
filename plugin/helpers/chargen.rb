@@ -1,22 +1,6 @@
 module AresMUSH
   module D6System
 
-    def self.skill_list(char, attr, chargen)
-      abilities = []
-      list = D6System.skills
-      list.each do |m|
-         if (m['linked_attr'] == attr)
-            dice_str = D6System.ability_rating(char, m['name'])
-            if (chargen)
-               abilities << { 'name' => m['name'], 'rating' => dice_str, 'desc' => m['desc'], 'linked_attr' => attr }
-            else
-               abilities << { 'name' => m['name'], 'rating' => dice_str }
-            end
-         end
-      end
-      return abilities.sort_by { |a| a['name'] }
-    end
-
     def self.init_abilities(char)
       D6System.attr_names.each do |a|
         if !D6System.extranormal_attributes.include?(a)

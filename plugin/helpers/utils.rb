@@ -157,21 +157,11 @@ module AresMUSH
             if (chargen)
                abilities << { 'name' => m['name'], 'rating' => dice_str, 'desc' => m['desc'], 'linked_attr' => attr }
             else
-               abilities << { 'name' => m['name'], 'rating' => dice_str }
-            end
-         end
-      end
-      return abilities.sort_by { |a| a['name'] }
-    end
-
-    def self.extranormal_skill_list(char, attr)
-      abilities = []
-      list = D6System.skills
-      list.each do |m|
-         if (m['linked_attr'] == attr)
-            dice_str = D6System.ability_rating(char, m['name'])
-            if ((D6System.get_dice(dice_str) > 0) || (D6System.get_pips(dice_str) > 0))
-               abilities << { 'name' => m['name'], 'rating' => dice_str }
+               if !D6System.extranormal_attributes.include?(attr)
+                  abilities << { 'name' => m['name'], 'rating' => dice_str }
+               elsif ((D6System.get_dice(dice_str) > 0) || (D6System.get_pips(dice_str) > 0))
+                  abilities << { 'name' => m['name'], 'rating' => dice_str }
+               end
             end
          end
       end
