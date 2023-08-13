@@ -114,6 +114,9 @@ After installation, you should check the d6system config files below and make ad
 #### achievements
 There are two achievements defined, *d6_roll* for making a roll for the first time, and *d6_fate_spent* for spending a fate point on a roll. 
 
+#### extranormal_blurb
+Chargen info about extranormal attributes and skills.
+
 #### sheet_columns
 This is where you can customize the columns of the sheet, allowing you to arrange attribute-skill-blocks to optimize the look of the sheet. This affects both the in game sheet and the webportal sheet. Please note: Only those extranormal skills and attributes will be listed that have actually been learned. Also: "Extranormal" instead of attribute name will list the extranormal attributes and respective skills as one block.
 
