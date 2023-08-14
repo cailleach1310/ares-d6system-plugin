@@ -1,7 +1,15 @@
 import Component from '@ember/component';
+import EmberObject, { computed } from '@ember/object';
+import { A } from '@ember/array';
 
 export default Component.extend({
-    minRating: 1,
+    minRating: computed('name', function() {
+       if (this.extranormAttrs.includes(this.get('name'))) {
+          return 0;
+       } else {
+          return 1;
+       }
+    }),
     
     actions: { 
         raise() {

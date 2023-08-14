@@ -15,6 +15,7 @@ module AresMUSH
           advantages: D6System.advantages,
           disadvantages: D6System.disadvantages,
           special_abilities: D6System.special_abilities,
+          extranormal_attrs: D6System.extranormal_attributes,
 
           specials_difficulty: Global.read_config("d6system","specials_difficulty"),
           max_attr_dice: Global.read_config("d6system","max_attr_dice"),

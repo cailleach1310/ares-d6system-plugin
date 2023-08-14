@@ -4,9 +4,9 @@ module AresMUSH
     def self.app_review(char)
       overview = points_overview(char)
       msg = ability_points_review(char)
-      if (extranormal_skills_ok(char) != nil)
-         skill_name = extranormal_skills_ok(char)
-         msg = msg + "%r" + t('d6system.extranormal_att_not_set', :skill => skill_name, :attribute => D6System.get_linked_attr(skill_name) )
+      extranormal_check = extranormal_skills_ok(char)
+      if (extranormal_check != "") 
+         msg = msg + extranormal_check
       end
       if (msg == "")
          msg = t('chargen.ok')
@@ -94,15 +94,16 @@ module AresMUSH
     end
 
     def self.extranormal_skills_ok(char)
+      msg = ""
       D6System.extranormal_attributes.each do |att|
          D6System.skill_list(char, att, false).each do |skill|
            if ( ((D6System.get_dice(skill['rating']) > 0) || (D6System.get_pips(skill['rating']) > 0)) &&
                !(D6System.get_dice(D6System.ability_rating(char,att)) > 0) )
-              return skill['name']
+              msg = msg + "%r" + t('d6system.extranormal_att_not_set', :skill => skill['name'], :attribute => D6System.get_linked_attr(skill['name']) )
            end
          end
       end
-      return nil
+      return msg
     end
 
   end

@@ -29,7 +29,7 @@
      <p class="cg-tip"><AnsiFormat @text={{this.cg_info.attrs_blurb}} /></p>
 
      {{#each this.char.attrs as |att|}}
-     <D6Attrbox @rating={{att.rating}} @maxRating={{this.cg_info.max_attr_dice}} @updated={{action "abilityChanged"}}>
+     <D6Attrbox @rating={{att.rating}} @maxRating={{this.cg_info.max_attr_dice}} @name={{att.name}} @extranormAttrs={{this.cg_info.extranormal_attrs}} @updated={{action "abilityChanged"}}>
          <b>{{att.name}}</b> - {{att.desc}}
      </D6Attrbox>
      {{/each}}
