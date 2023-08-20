@@ -265,8 +265,8 @@ module AresMUSH
       else
         message = ""
         if cp_roll
-           if (enactor.xp > 0)
-              enactor.update(xp: enactor.xp - 1)
+           if (enactor.char_points > 0)
+              enactor.update(char_points: enactor.char_points - 1)
               Achievements.award_achievement(enactor, "d6_cp_spent")
               message = message + t('d6system.spends_char_point',
                :name => char ? char.name : enactor.name) + "%r"

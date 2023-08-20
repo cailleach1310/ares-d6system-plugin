@@ -35,7 +35,7 @@ module AresMUSH
       def handle
         ClassTargetFinder.with_a_character(self.name, client, enactor) do |model|
           if (self.type == 'char')
-             points = model.xp
+             points = model.char_points
           elsif (self.type == 'fate')
              points = model.fate_points
           else
