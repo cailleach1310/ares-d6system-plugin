@@ -85,8 +85,8 @@ module AresMUSH
       list = []
       list << { 'name' => 'Fate Points', 'rating' => char.fate_points }
       list << { 'name' => 'Char Points', 'rating' => char.char_points }
-      list << { 'name' => 'Body Points', 'rating' => char.body_points }
       list << { 'name' => 'Strength Damage', 'rating' => calculate_strength_damage(char).to_s + "D" }
+      list << { 'name' => 'Wound Level', 'rating' => char.wound_level }
       return list
     end
 
