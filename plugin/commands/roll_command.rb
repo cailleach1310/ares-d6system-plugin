@@ -34,8 +34,8 @@ module AresMUSH
           char = Character.named(self.name)
           if (char)
              if self.cp_roll
-                if (char.xp > 0)
-                   char.update(xp: char.xp - 1)
+                if (char.char_points > 0)
+                   char.update(char_points: char.char_points - 1)
                    Achievements.award_achievement(char, "d6_cp_spent")
                    message = message + t('d6system.spends_char_point',
                     :name => char.name) + "%r"

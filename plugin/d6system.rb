@@ -52,13 +52,20 @@ module AresMUSH
         end
       when "fate", "cp"
         return PointsAwardCmd  
+      when "heal"
+        return HealWoundCmd
+      when "wound"
+        case cmd.switch
+          when "set"
+            return SetWoundLevelCmd
+        end
       end
     end
 
     def self.get_event_handler(event_name)
       case event_name
       when "CronEvent"
-        return CharPointsCronHandler
+        return D6EventHandler
       end
     end
 

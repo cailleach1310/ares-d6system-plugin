@@ -8,12 +8,14 @@ module AresMUSH
     collection :d6specializations, "AresMUSH::D6Specialization"
     attribute :fate_points, :type => DataType::Integer, :default => 3
     attribute :char_points, :type => DataType::Integer, :default => 1
-    attribute :body_points, :type => DataType::Integer, :default => 0
+    attribute :wound_level
+    attribute :wound_updated
+    collection :healed, "AresMUSH::D6Healed"
 
     before_delete :delete_abilities
     
     def delete_abilities
-      [ self.d6attributes, self.d6skills, self.d6advantages, self.d6disadvantages, self.d6specials, self.d6specializations ].each do |list|
+      [ self.d6attributes, self.d6skills, self.d6advantages, self.d6disadvantages, self.d6specials, self.d6specializations, self.healed ].each do |list|
         list.each do |a|
           a.delete
         end

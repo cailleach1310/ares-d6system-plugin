@@ -1,0 +1,52 @@
+---
+d6system:
+  assist_heal_block: 24
+  assist_healed_cron:
+    minute:
+    - 0
+    - 30
+  heal_skills:
+  - name: Medicine
+    modifier: 0
+  - name: Healing
+    modifier: 0
+  natural_heal_cron:
+    minute:
+    - 15
+    - 45
+  natural_heal_message: You can do this from the job menu of the webportal. You'll
+    have to roll  'Physique' against the difficulty specified above. Please take into
+    account  that to make this roll without negative modifiers, your char would have
+    to  have rested in the required time span. Light activity means a negative  modifier
+    of -1D, full activity a negative   modifier of -2D. Also, if you  have any special
+    abilities, advantages or disadvantages that imply further  modifiers, you can
+    apply them to your roll as well.%r%rIf you need help adding the roll, please contact
+    admin for assistance.
+  wound_levels:
+  - name: Fully Healed
+    effect: Character is at full health.
+  - name: Stunned
+    effect: Add a -1D modifier for this round and the next.
+    rest_period: special
+  - name: Wounded
+    effect: Add a -1D modifier to your rolls.
+    rest_period: 3
+    assist_diff: 15
+    natural_diff: 6
+  - name: Severely Wounded
+    effect: Add a -2D modifier to your rolls.
+    rest_period: 3
+    assist_diff: 15
+    natural_diff: 6
+  - name: Incapacitated
+    effect: Add a -3D modifier to your rolls.
+    rest_period: 14
+    assist_diff: 20
+    natural_diff: 8
+  - name: Mortally Wounded
+    effect: near death and knocked unconscious.
+    rest_period: 5 weeks
+    assist_diff: 35
+    natural_diff: 8
+  - name: Dead
+    effect: As it says in the title.

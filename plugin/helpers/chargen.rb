@@ -16,7 +16,7 @@ module AresMUSH
       starting_fate = Global.read_config("d6system","starting_fate_points")
       char.update(char_points: starting_cp)
       char.update(fate_points: starting_fate)
-      char.update(body_points: 26)
+      char.update(wound_level: D6System.level_names[0])
     end
 
     def self.init_specialization(char, spec, skill)
