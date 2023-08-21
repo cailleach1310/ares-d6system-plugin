@@ -17,9 +17,10 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 * In game sheet command and sheet integration on the character page of the webportal.
 * Optional cron job for regularly awarding character points (similar to how it's done with xp on FS3 Systems).
 * Staff game client commands to manage fate and character points (awarding/removing).
+* A damage system based on wound levels, including an admin command for setting wound levels, player commands for healing other players and cron jobs for natural healing.
 
 ### This is a work in progress
-This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added, such as post chargen raising / adding abilities (which will have to be handled through admin for now).
+This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added, such as post chargen raising / adding abilities (which will have to be handled through requests / admin for now).
 
 ## Screenshots
 
@@ -211,6 +212,28 @@ This is the chargen information on special abilities.
 
 #### specials_difficulty
 This key should be set to 'cost' if you want each subsequent rank of a special ability to cost the same amount of creation points as the 1st rank. Set this to '1' or any other number, if you want a unified (cheaper) cost for ranks greater than 1.
+
+### d6system_damage.yml
+Specifics regarding wound levels and healing can be configured in this particular file.
+
+#### assist_heal_block
+Number of hours, during which a char will be blocked from healing another char after attempting a heal on them.
+
+#### assist_healed_cron
+Times, at which assisted heal blocks will be checked.
+
+#### heal_skills
+Skills that can be used by a healer for healing another char. Each skill can have a modifier configured (usually '0').
+
+#### natural_heal_cron
+Times for the natural heal cron check.
+
+#### natural_heal_message
+Text for the natural heal job that will be triggered by the natural_heal_cron.
+
+#### wound_levels
+Definition of the wound levels, including their name, effect, natural heal difficulty, assisted heal difficulty and resting time (in days).
+
 
 ## Uninstallation
 Removing the plugin requires some code fiddling. See [Uninstalling Plugins](https://www.aresmush.com/tutorials/code/extras.html#uninstalling-plugins).
