@@ -24,7 +24,6 @@ module AresMUSH
           time = Time.now
           approved = Chargen.approved_chars
           approved.each do |a|
-          Character.all.each do |a|
             if (a.healed != nil)
                a.healed.each do |patient|
                   if (Time.at(patient.healed_at.to_time.to_i + assist_heal_time * 3600) < time)
@@ -43,7 +42,6 @@ module AresMUSH
           time = Time.now
           approved = Chargen.approved_chars
           approved.each do |a|
-          Character.all.each do |a|
             if ((a.wound_level != D6System.level_names[0]) && (a.wound_level != "Stunned") )
                natural_heal_days = D6System.wound_levels.find { |l| l['name'] == a.wound_level }['rest_period']
                job_started = Jobs.open_requests(a).select { |j| (j.title.match("Natural Healing Roll") && j.is_active? )} != []
