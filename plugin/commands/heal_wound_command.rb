@@ -18,14 +18,13 @@ module AresMUSH
       def handle
         message = ""
         ClassTargetFinder.with_a_character(self.name, client, enactor) do |model|
-        skill_list = Global.read_config("d6system","heal_skills")
-        heal_skill = D6System.get_highest_skill(enactor, skill_list)
-        rating = D6System.ability_rating(enactor, heal_skill)
 
-        if (rating == "0D")
+        if !D6System.is_healer?(enactor)
            client.emit_failure t('d6system.no_heal_ability')
            return
         else
+           skill_list = Global.read_config("d6system","heal_skills")
+           heal_skill = D6System.get_highest_skill(enactor, skill_list)
            roll_str = heal_skill
         end
 

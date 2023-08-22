@@ -25,3 +25,7 @@ d6system:
   show_sheet: true
   starting_char_points: 1
   starting_fate_points: 3
+  shortcuts:
+    wounds: wound/list
+    wounded: wound/list
+

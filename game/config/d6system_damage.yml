@@ -50,3 +50,16 @@ d6system:
     natural_diff: 8
   - name: Dead
     effect: As it says in the title.
+  wounds_fields:
+  - field: name
+    width: 16
+    title: Name
+  - field: wound_level
+    width: 21
+    title: Wound Level
+  - field: wound_updated
+    width: 23
+    title: Last Updated
+  - field: healed_by
+    width: 16
+    title: Healed by

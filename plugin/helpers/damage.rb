@@ -63,5 +63,49 @@ module AresMUSH
        return max_skill
     end
 
+    def self.is_healer?(char)
+      skill_list = Global.read_config("d6system","heal_skills")
+      heal_skill = D6System.get_highest_skill(char, skill_list)
+      rating = D6System.ability_rating(char, heal_skill)
+      return (rating != "0D")
+    end
+
+    def self.wounded_chars()
+       Character.all.select { |char| (char.wound_level != level_names[0]) && (char.wound_level != "Stunned") }
+    end
+
+    def self.healed_by(char)
+      Character.all.select { |a| is_healer?(a) }.each do |c|
+         patient = c.healed.find(name: char.name).first
+         if (patient)
+            return c.name
+         end
+      end
+      return "N/A"
+    end
+
+    def self.general_field(char, field_type, value)
+      case field_type
+
+      when 'name'
+        Demographics.name_and_nickname(char)
+    
+      when 'handle'
+        char.handle ? "@#{char.handle.name}" : ""
+        
+      when 'wound_level'
+        char.wound_level
+
+      when 'wound_updated'
+        char.wound_updated.to_s.split(" ")[0..1].join(" ")
+
+      when 'healed_by'
+        healed_by(char)
+          
+      else 
+        nil
+      end
+    end
+
   end
 end

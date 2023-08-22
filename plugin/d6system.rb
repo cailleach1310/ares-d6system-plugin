@@ -58,6 +58,8 @@ module AresMUSH
         case cmd.switch
           when "set"
             return SetWoundLevelCmd
+          when "list"
+            return WoundListCmd
         end
       end
     end

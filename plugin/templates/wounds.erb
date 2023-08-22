@@ -1,0 +1,8 @@
+<%= header %>
+<%= center( "Characters with Wounds", 78 ) %>
+<%= divider %>
+%xh<% fields.each do |f| %><%= show_title(f) %> <% end %>%xn
+<% chars_by_handle.each do |c| %>
+<% fields.each do |f| %><%= show_field(c, f)%> <% end %>
+<% end %>
+<%= footer %>
