@@ -69,7 +69,9 @@ module AresMUSH
 
       def stats
         list = []
-        D6System.other_stats(@char).each_with_index do |st, i| 
+        stat_list = D6System.other_stats(@char)
+        stat_list[1], stat_list[2] = stat_list[2], stat_list[1]    #swap char points with strength damage for a better display 
+        stat_list.each_with_index do |st, i| 
           list << format_stat(st, i)
         end
         list.join("")
@@ -77,9 +79,9 @@ module AresMUSH
        
       def format_stat(st, i)
         name = "  %xh#{st['name']}%xn "
-        linebreak = ((i+1) % 3 == 1) ? "%r" : ""
+        linebreak = ((i+1) % 2 == 1) ? "%r" : ""
         rating = " #{st['rating']}"
-        dots = 30 - name.length
+        dots = 43 - name.length
         "#{linebreak}#{name}#{rating.rjust(dots,".")}  "
       end
 
