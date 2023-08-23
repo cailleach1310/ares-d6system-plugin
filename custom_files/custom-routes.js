@@ -3,4 +3,5 @@ export default function setupCustomRoutes(router) {
   // For example:
   // router.route('yourroute');
    router.route('d6-abilities');  
+   router.route('d6-wound-levels');  
 }
