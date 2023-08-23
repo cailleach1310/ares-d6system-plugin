@@ -81,8 +81,9 @@ module AresMUSH
         return AddSceneRollRequestHandler
       when "resetD6Abilities"
         return ResetAbilitiesRequestHandler
+      when "woundLevels"
+        return WoundLevelsRequestHandler
       end
-
     end
 
   end

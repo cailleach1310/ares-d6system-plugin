@@ -1,0 +1,34 @@
+{{page-title 'D6 Wound Levels'}}
+<h1>D6 Wound Levels</h1>
+
+<AnsiFormat @text={{this.model.wound_levels_blurb}} />
+<br>
+<br>
+<table class="table table-striped">
+
+<thead>
+    <th>Name</th>
+    <th>Effect</th>
+    <th>Assisted Heal Difficulty</th>
+    <th>Natural Heal Difficulty</th>
+    <th>Rest Period</th>
+</thead>
+
+<tbody>
+{{#each this.model.wound_levels as |level| }}
+<tr>
+    <td>{{level.name}}</td> 
+    <td>{{level.effect}}</td>
+    <td>{{level.assist_diff}}</td>
+    <td>{{level.natural_diff}}</td>
+    {{#if (eq level.rest_period "-")}}
+       <td>-</td>
+    {{else}}
+       <td>{{level.rest_period}} days</td>
+    {{/if}}
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+{{outlet}}
