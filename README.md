@@ -108,6 +108,22 @@ Add the following lines to 'stages' in the chargen.yml, i.e. inbetween 'ranks' a
        specials:
          help: special abilities
 
+## Adding Menu Items to the Webportal
+#### /aresmush/game/config/website.yml
+Add routes to the top bar menu under 'System' for the configured abilities and wound levels.
+
+      top_navbar:
+    (...)
+    - title: System
+      menu:
+    (...)
+        - title: Abilities List
+          route: d6-abilities
+        - title: Wound Levels
+          route: d6-wound-levels
+    (...)
+
+
 ## Configuration
 After installation, you should check the d6system config files below and make adjustments where necessary. The keys in the configuration files are explained below.
 
@@ -234,6 +250,11 @@ Text for the natural heal job that will be triggered by the natural_heal_cron.
 #### wound_levels
 Definition of the wound levels, including their name, effect, natural heal difficulty, assisted heal difficulty and resting time (in days).
 
+#### wound_level_blurb
+General information about wound levels for the wound level route.
+
+#### wounds_fields
+Definition of fields for the wound/list admin command.
 
 ## Uninstallation
 Removing the plugin requires some code fiddling. See [Uninstalling Plugins](https://www.aresmush.com/tutorials/code/extras.html#uninstalling-plugins).
