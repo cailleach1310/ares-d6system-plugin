@@ -18,6 +18,7 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 * Optional cron job for regularly awarding character points (similar to how it's done with xp on FS3 Systems).
 * Staff game client commands to manage fate and character points (awarding/removing).
 * A damage system based on wound levels, including an admin command for setting wound levels, player commands for healing other players and cron jobs for natural healing.
+* The possibility to define starting abilities based on the group values of a char, which will be automatically applied when resetting during chargen. These will also be checked against in the app review.
 
 ### This is a work in progress
 This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added, such as post chargen raising / adding abilities (which will have to be handled through requests / admin for now).
@@ -140,15 +141,6 @@ This is where you can customize the columns of the sheet, allowing you to arrang
 #### show_sheet
 Here you can toggle visibility of the sheet for other players.
 
-#### cg_creation_points
-Here you can set the max amount of creation points for character generation.
-
-#### starting_char_points
-By default 1.
-
-#### starting_fate_points
-By default 3.
-
 #### cp_cron
 Configuration for the cron job that handles the automatic character points raise of characters.
 
@@ -169,27 +161,10 @@ Each attribute has a name and a desc. The attribute list can be adjusted here.
 #### attributes_blurb
 This is the respective info for chargen.
 
-#### max_attr_cg_dice
-Maximum number of dice you can distribute on attributes in chargen. Default is 18.
-
-#### max_attr_dice
-Maximum value of dice for attributes in chargen.
-
-#### min_attr_dice
-Minimum value of dice for attributes in chargen.
-
 #### extranormal_attributes
 Extranormal attributes are listed here, as some of the limitations are not valid for them. If you don't have any extranormal attributes on your game, set this to '{}'.
 
 ### d6system_skills.rb
-#### max_skill_cg_dice
-Maximum number of dice you can distribute on skills in chargen. Default is 7.
-
-#### max_skill_dice
-Maximum value of dice for skills in chargen.
-
-#### min_skill_dice
-Minimum value of dice for skills in chargen.
 
 #### skills
 Each skill has a name, a linked_attr and a desc. The skill list can be adjusted here.
@@ -217,9 +192,6 @@ This is where you would adjust the list of disadvantages for your game.
 This is the chargen information on disadvantages.
 
 ### d6system_specials
-#### max_rank_specials
-Maximum rank for special abilities in chargen.
-
 #### special_abilities
 Special abilities have a name, a desc and a cost. Cost defines the cost for the 1st rank of the ability. This is where you would add or remove special abilities for your game.
 
@@ -228,6 +200,62 @@ This is the chargen information on special abilities.
 
 #### specials_difficulty
 This key should be set to 'cost' if you want each subsequent rank of a special ability to cost the same amount of creation points as the 1st rank. Set this to '1' or any other number, if you want a unified (cheaper) cost for ranks greater than 1.
+
+### d6system_chargen.yml
+Anything pertaining to character generation, such as chargen limits and starting abilities.
+
+#### creation_points
+Here you can set the max amount of creation points for character generation.
+
+#### max_attr_dice_total
+Maximum number of dice you can distribute on attributes in chargen. Default is 18.
+
+#### max_attr_dice
+Maximum value of dice for an attribute in chargen.
+
+#### min_attr_dice
+Minimum value of dice an attribute in chargen.
+
+#### max_skill_dice_total
+Maximum number of dice you can distribute on skills in chargen. Default is 7.
+
+#### max_skill_dice
+Maximum value of dice for a skill in chargen.
+
+#### min_skill_dice
+Minimum value of dice for a skill in chargen.
+
+#### max_advantage_rating
+Maximum rank for an advantage in chargen.
+
+#### max_disadvantage_points
+Maximum points you can gain from taking disadvantages in chargen.
+
+#### max_rank_specials
+Maximum rank for special abilities in chargen.
+
+#### starting_abilities
+Group based starting abilities (similar to starting skills in fs3skills). You can define attributes, skills and specializations with their minimum ratings. For specializations you have to add the respective skill in brackets after the name of the specialization, as shown in the example below.
+
+       Faction:
+         Noble:
+           abilities:
+             Knowledge: 3D
+       Vocation:
+         Warrior:
+           abilities:
+             Melee Combat: 2D
+             Reflexes: 4D
+             Physique: 4D+1
+             Coordination: 3D
+             Sword (Melee Combat): 0D+2
+
+#### starting_char_points
+By default 1.
+
+#### starting_fate_points
+By default 3.
+
 
 ### d6system_damage.yml
 Specifics regarding wound levels and healing can be configured in this particular file.
