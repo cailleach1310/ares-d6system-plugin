@@ -1,6 +1,5 @@
 ---
 d6system:
-  max_rank_specials: 5
   special_abilities:
   - name: Accelerated Healing
     desc: The character gains a +1D per rank to his Physique for all natural healing
@@ -364,4 +363,4 @@ d6system:
     cost: 1
   specials_blurb: Special Abilities are optional and can grant benefits. The cost
     equals creation points or dice.
-  specials_difficulty: cost
+  specials_difficulty: 1

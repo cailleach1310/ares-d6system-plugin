@@ -8,12 +8,16 @@ module AresMUSH
       if (extranormal_check != "") 
          msg = msg + extranormal_check
       end
+      starting_abilities_check = starting_abilities_check(char)
+      if (starting_abilities_check != "")
+         msg = msg + "%r%rStarting Abilities:%r" + starting_abilities_check
+      end
       if (msg == "")
          msg = t('chargen.ok')
       else
          msg = "%xh%xr< See issues below >%xn%r" + msg
       end
-      return Chargen.format_review_status "Checking D6 abilities.", msg + "%r%r" + overview
+      return Chargen.format_review_status "Checking D6 sheet.", msg + "%r%r" + overview
     end
 
     def self.abilities_not_set(char)
@@ -40,15 +44,15 @@ module AresMUSH
           msg = msg + "%r" + t('d6system.abilities_not_set')
        end
        # check points_max
-       cp = Global.read_config("d6system","cg_creation_points")
+       cp = Global.read_config("d6system","creation_points")
        if (spent_total(char) > cp)
           msg = msg + "%r" + t('d6system.too_many_points_spent', :total => spent_total(char), :max => cp )
        end
-       max_attr_dice = Global.read_config("d6system","max_attr_cg_dice")
+       max_attr_dice = Global.read_config("d6system","max_attr_dice_total")
        if (dice_spent(char.d6attributes) > max_attr_dice)
           msg = msg + "%r" + t('d6system.too_many_attr_dice', :total => dice_spent(char.d6attributes), :max => max_attr_dice )
        end
-       max_skill_dice = Global.read_config("d6system","max_skill_cg_dice")
+       max_skill_dice = Global.read_config("d6system","max_skill_dice_total")
        if (dice_spent(char.d6skills) > max_skill_dice)
           msg = msg + "%r" + t('d6system.too_many_skill_dice', :total => dice_spent(char.d6skills), :max => max_skill_dice )
        end
@@ -104,6 +108,24 @@ module AresMUSH
          end
       end
       return msg
+    end
+
+    def self.starting_abilities_check(char)
+      message = t('d6system.starting_abilities_check')
+      missing = []
+      starting_abilities = StartingAbilities.get_abilities_for_char(char)
+      starting_abilities.each do |ability, rating|
+        name = (ability =~ /\(/) ? ability.split("(")[0].rstrip : ability
+        if (D6System.ability_rating(char, name) < rating )
+          missing << t('d6system.missing_starting_ability', :ability => ability, :rating => rating) 
+        end
+      end
+      
+      if (missing.count == 0)
+        return ""
+      else
+        return missing.collect { |m| "%T#{m}" }.join("%R")
+      end
     end
 
   end

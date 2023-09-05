@@ -7,7 +7,6 @@ d6system:
     d6_fate_spent:
       type: d6
       message: Spent a fate point when making a roll.
-  cg_creation_points: 79
   cp_cron:
     day_of_week:
     - Sat
@@ -22,10 +21,8 @@ d6system:
   - Reflexes Presence
   - Physique Coordination Extranormal
   - Knowledge Perception
-  show_sheet: true
-  starting_char_points: 1
-  starting_fate_points: 3
   shortcuts:
     wounds: wound/list
     wounded: wound/list
-
+  show_sheet: true
+  roll_max_dice: 10

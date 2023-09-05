@@ -1,0 +1,27 @@
+---
+d6system:
+  creation_points: 130
+  max_disadvantage_points: 10
+  max_advantage_rating: 4
+  max_attr_dice_total: 18
+  max_attr_dice: 5
+  max_rank_specials: 5
+  max_skill_dice_total: 7
+  max_skill_dice: 3
+  min_attr_dice: 1
+  min_skill_dice: 0
+  starting_abilities:
+    Faction:
+      Noble:
+        abilities:
+          Knowledge: 3D
+    Vocation:
+      Warrior:
+        abilities:
+          Melee Combat: 2D
+          Reflexes: 4D
+          Physique: 4D+1
+          Coordination: 3D
+          Sword (Melee Combat): 0D+2
+  starting_char_points: 1
+  starting_fate_points: 3

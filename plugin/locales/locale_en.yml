@@ -36,7 +36,8 @@ en:
         too_many_skill_dice: "%xh%xr< You can't spend more than %{max} dice on skills. You've spent %{total} dice. >%xn"
         too_many_disadvantage_points_spent: "You can't gain more than %{max} disadvantage points in chargen. You've gained %{total} points."
         extranormal_att_not_set: "%xh%xr< Taking extranormal skill %{skill} requires attribute %{attribute} to be at least at 1D! >%xn"
-
+        missing_starting_ability: "%xh%xy< Missing %{ability} at rating %{rating} or higher. >%xn"
+        
         # Rolls
         failure: "%xrFailure%xn"
         minimal_success: "%xgMinimal Success%xn"

@@ -34,6 +34,3 @@ d6system:
     chargen, limits pertaining to normal attributes and skills do not apply, but creation
     points spent on learning these count towards the allowed attribute and skill max
     points.
-  max_attr_cg_dice: 18
-  max_attr_dice: 5
-  min_attr_dice: 1

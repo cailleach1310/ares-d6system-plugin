@@ -1,24 +1,6 @@
 module AresMUSH
   module D6System
 
-    def self.init_abilities(char)
-      D6System.attr_names.each do |a|
-        if !D6System.extranormal_attributes.include?(a)
-           D6Attribute.create(character: char, name: a, rating: '1D+0')
-        else
-           D6Attribute.create(character: char, name: a, rating: '0D+0')
-        end
-      end
-      D6System.skill_names.each do |a|
-        D6Skill.create(character: char, name: a, rating: '0D+0')
-      end
-      starting_cp = Global.read_config("d6system","starting_char_points")
-      starting_fate = Global.read_config("d6system","starting_fate_points")
-      char.update(char_points: starting_cp)
-      char.update(fate_points: starting_fate)
-      char.update(wound_level: D6System.level_names[0])
-    end
-
     def self.init_specialization(char, spec, skill)
       D6Specialization.create(character: char, name: spec, skill: skill, rating: '0D+1')
     end
@@ -107,7 +89,39 @@ module AresMUSH
       char.d6disadvantages.each { |s| s.delete }
       char.d6specials.each { |s| s.delete }
 
-      D6System.init_abilities(char)        
+      D6System.attr_names.each do |a|
+        if !D6System.extranormal_attributes.include?(a)
+           set_ability(char, a, '1D')
+        else
+           set_ability(char, a, '0D')
+        end
+      end
+      D6System.skill_names.each do |a|
+        set_ability(char, a, '0D+0')
+      end
+
+      starting_abilities = StartingAbilities.get_groups_for_char(char)
+        
+      starting_abilities.each do |k, v|
+        set_starting_abilities(char, k, v)
+      end
+
+      starting_cp = Global.read_config("d6system","starting_char_points")
+      starting_fate = Global.read_config("d6system","starting_fate_points")
+      char.update(char_points: starting_cp)
+      char.update(fate_points: starting_fate)
+      char.update(wound_level: D6System.level_names[0])
+    end
+
+    def self.set_starting_abilities(char, group, ability_config)
+      return if !ability_config  
+
+      abilities = ability_config["abilities"]
+      return if !abilities
+
+      abilities.each do |k, v|
+        D6System.set_ability(char, k, v)
+      end
     end
 
     def self.get_max_value(ability_type)

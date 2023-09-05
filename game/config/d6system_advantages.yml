@@ -43,7 +43,6 @@ d6system:
       that will keep him comfortable for a good long time. Alternatively,  the character
       could be minor nobility, have a large trust fund, or be married  to the owner
       of a large corporation.
-    ranks: 1
+    ranks: 1/2/3
   advantages_blurb: Advantages are optional and can grant benefits. They cost 1 creation
     point per rank.
-  max_advantage_rating: 4

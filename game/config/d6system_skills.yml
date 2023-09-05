@@ -1,8 +1,5 @@
 ---
 d6system:
-  max_skill_cg_dice: 7
-  max_skill_dice: 3
-  min_skill_dice: 0
   skills:
   - name: Acrobatics
     desc: Performing feats of gymnastics, extraordinary balance, and dance (and related
