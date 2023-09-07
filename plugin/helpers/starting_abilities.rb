@@ -5,6 +5,31 @@ module AresMUSH
         Global.read_config("d6system", "starting_abilities") || {}
       end
       
+      def self.check_config
+        msg = ""
+        config.each do |group_type, groups|
+          groups.each do |group_name, group_config| 
+            abilities = group_config["abilities"]
+              abilities.each do |ability, rating|
+              if !is_ability(ability)
+                msg = msg + "%r" + t('d6system.starting_ability_config_error', :group => group_type, :group_name => group_name, :ability => ability)
+              end
+            end
+          end
+        end
+        if (msg != "")
+           msg = "%xh%xr" + msg + "%xn"
+        else
+           msg = "%r%xh%xgOK!%xn"
+        end
+        msg = "Checking starting abilities." + msg
+        return msg
+      end
+
+      def self.is_ability(ability)
+         return (D6System.get_ability_type(ability) != :specialization) || ((ability =~ /\(/) != nil)
+      end
+
       def self.get_abilities_for_char(char)
         abilities = {}
         
