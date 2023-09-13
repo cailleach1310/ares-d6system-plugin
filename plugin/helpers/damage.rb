@@ -71,11 +71,11 @@ module AresMUSH
     end
 
     def self.wounded_chars()
-       Character.all.select { |char| (char.wound_level != level_names[0]) && (char.wound_level != "Stunned") }
+       Chargen.approved_chars.select { |char| (char.wound_level != level_names[0]) && (char.wound_level != "Stunned") }
     end
 
     def self.healed_by(char)
-      Character.all.select { |a| is_healer?(a) }.each do |c|
+      Chargen.approved_chars.select { |a| is_healer?(a) }.each do |c|
          patient = c.healed.find(name: char.name).first
          if (patient)
             return c.name
