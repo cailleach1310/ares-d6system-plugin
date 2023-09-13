@@ -21,7 +21,8 @@ module AresMUSH
       
       apt_rating = linked_attr ? D6System.ability_rating(char, linked_attr) : '0D+0'
       
-      dice = add_dice(skill_rating, apt_rating, roll_params.dice)
+      max_dice = Global.read_config("d6system", "roll_max_dice")
+      dice = ( max_dice == {} ) || !dice_gt_max(add_dice(skill_rating, apt_rating, 0), max_dice) ? add_dice(skill_rating, apt_rating, roll_params.dice) : add_dice(max_dice, "0D+0", roll_params.dice)
       Global.logger.debug "#{char.name} rolling #{ability} dice=#{roll_params.dice} pips=#{roll_params.pips} skill=#{skill_rating} linked_attr=#{linked_attr} apt=#{apt_rating}"
       
       dice
@@ -32,6 +33,43 @@ module AresMUSH
        pips_sum = dice1.split("+")[1].to_i + dice2.split("+")[1].to_i
        dice_sum = dice_sum + pips_sum / 3 + modifier
        return dice_sum.to_s + "D+" + (pips_sum % 3).to_s
+    end
+
+    def self.dice_gt_max(sum, max)
+       compare_dice = D6System.get_dice(max) - D6System.get_dice(sum)
+       return compare_dice != 0 ? compare_dice < 0 : D6System.get_pips(max) < D6System.get_pips(sum)
+    end
+
+    def self.get_spec_skill(char, ability)
+        spec = find_ability(char, ability)
+        return spec.skill
+    end
+
+    # Checks for dice limit in rolls (house rules)
+    # Sorry, not that pretty.
+    def self.exceeds_roll_limit(char, roll_str)
+      max_dice = Global.read_config("d6system", "roll_max_dice")
+      return false if ( max_dice == {} )
+      roll_params = parse_roll_params(char, roll_str)
+      ability = roll_params.ability
+      ability_type = D6System.get_ability_type(ability)
+      skill_rating = D6System.ability_rating(char, ability)
+      if (ability_type == :specialization)
+        skill = get_spec_skill(char, ability)
+        skill_rating = add_dice(skill_rating, D6System.ability_rating(char, skill),0)  # spec rating + base skill rating
+      else
+        skill = ability
+      end
+      linked_attr = roll_params.linked_attr || D6System.get_linked_attr(skill)
+
+      if (ability_type == :attribute && !linked_attr)
+        skill_rating = "0D+0"
+        linked_attr = ability
+      end
+
+      apt_rating = linked_attr ? D6System.ability_rating(char, linked_attr) : '0D+0'
+
+      return dice_gt_max(add_dice(skill_rating, apt_rating, 0), max_dice)
     end
 
     # Takes a roll string, like Athletics+Body+2, or just Athletics, parses it to figure
@@ -59,6 +97,10 @@ module AresMUSH
       return nil if !match
       
       ability = match[:ability].strip
+      if !find_ability(char, ability)
+        return nil
+      end
+
       linked_attr = match[:attr].nil? ? nil : match[:attr][1..-1].strip
       dice = match[:dice].nil? ? 0 : match[:dice].gsub(/[\s+|d|D]6?/, "").to_i  # convert '+2d6' to 2
       pips = match[:pips].nil? ? 0 : match[:pips].gsub(/\s+/, "").to_i
@@ -73,14 +115,5 @@ module AresMUSH
       return RollParams.new(ability, dice, pips, linked_attr)
     end
     
- #   def self.is_specialty(char,ability_name)
- #      char.d6specialties.each do |spec|
- #         if (spec.name == ability_name)
- #            return true
- #         end
- #      end
- #      return false
- #   end
-
   end
 end

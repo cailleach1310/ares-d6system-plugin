@@ -133,19 +133,19 @@ module AresMUSH
 
     def self.get_ability_type(ability)
       ability = ability.titlecase
-      if (attr_names.include?(ability))
+      if attr_names.include?(ability)
         return :attribute
-      elsif (skill_names.include?(ability))
+      elsif skill_names.include?(ability)
         return :skill
-      elsif (advantage_names.include?(ability))
+      elsif advantage_names.include?(ability)
         return :advantage
-      elsif (disadvantage_names.include?(ability))
+      elsif disadvantage_names.include?(ability)
         return :disadvantage
-      elsif (special_ability_names.include?(ability))
+      elsif special_ability_names.include?(ability)
         return :special_ability
       else
         return :specialization
-      end        
+      end
     end
 
     def self.skill_list(char, attr, chargen)

@@ -6,10 +6,6 @@ export default Component.extend({
     flashMessages: service(),
     tagName: '',
     selectAddRoll: false,
-    vsRoll1: null,
-    vsRoll2: null,
-    vsName1: null,
-    vsName2: null,
     pcRollAbility: null,
     pcRollName: null,
     pcDifficulty: null,
@@ -40,10 +36,6 @@ export default Component.extend({
         let pcRollAbility = this.pcRollAbility;
         let pcRollName = this.pcRollName;
         let pcDifficulty = this.pcDifficulty
-        let vsRoll1 = this.vsRoll1;
-        let vsRoll2 = this.vsRoll2;
-        let vsName1 = this.vsName1;
-        let vsName2 = this.vsName2;
         let rollFate = this.rollFate;
         let rollChar = this.rollChar;
         let rollDiff = false;
@@ -55,7 +47,7 @@ export default Component.extend({
           sender = this.get('scene.poseChar.name');
         }
           
-        if (!rollString && !vsRoll1 && !pcRollAbility) {
+        if (!rollString && !pcRollAbility) {
           this.flashMessages.danger("You haven't selected an ability to roll.");
           return;
         }
@@ -67,19 +59,8 @@ export default Component.extend({
           }
         }
 
-        if (vsRoll1 || vsRoll2 || vsName1 || vsName2) {
-          if (!vsRoll2 || !vsName1 || !vsName2) {
-            this.flashMessages.danger("You have to provide all opposed skill information.");
-            return;
-          }
-        }
-
         this.set('selectAddRoll', false);
         this.set('rollString', null);
-        this.set('vsRoll1', null);
-        this.set('vsRoll2', null);
-        this.set('vsName1', null);
-        this.set('vsName2', null);
         this.set('pcRollAbility', null);
         this.set('pcRollName', null);
         this.set('rollChar', false);
@@ -102,10 +83,10 @@ export default Component.extend({
         api.requestOne(command, { id: destinationId,
            roll_string: rollString,
            difficulty: difficulty || pcDifficulty,
-           vs_roll1: vsRoll1,
-           vs_roll2: vsRoll2,
-           vs_name1: vsName1,
-           vs_name2: vsName2,
+           vs_roll1: null,
+           vs_roll2: null,
+           vs_name1: null,
+           vs_name2: null,
            pc_name: pcRollName,
            pc_ability: pcRollAbility,
            fate: rollFate,

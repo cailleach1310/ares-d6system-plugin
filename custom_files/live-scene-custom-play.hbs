@@ -1,3 +1,5 @@
 <li><a href="#" {{action (mut this.selectAddRoll) true}} class="dropdown-item">Ability Roll</a></li>
-
+<li><a href="#" {{action (mut this.selectAddOpposed) true}} class="dropdown-item">Opposed Roll</a></li>
 <D6Roll @scene={{this.scene}} @destinationType="scene" @abilities={{this.custom.char_abilities}} @fatePoints={{this.custom.fate_points}} @charPoints={{this.custom.char_points}} @selectAddRoll={{this.selectAddRoll}} />
+<D6OpposedRoll @scene={{this.scene}} @destinationType="scene" @selectAddOpposed={{this.selectAddOpposed}} />
+

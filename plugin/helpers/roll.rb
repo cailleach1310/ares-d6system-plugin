@@ -144,6 +144,7 @@ module AresMUSH
       pc_ability = request.args[:pc_ability] || ""
       fate_roll = request.args[:fate] == "true"  # the parameter comes as a string and has to be converted to boolean value
       cp_roll = request.args[:cp] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      message = ""
 
       # ------------------
       # VS ROLL
@@ -151,51 +152,60 @@ module AresMUSH
       if (!vs_roll1.blank?)
         result = ClassTargetFinder.find(vs_name1, Character, enactor)
         model1 = result.target
-        if (!model1 && !valid_roll_str(vs_roll1))
-          vs_roll1 = "2D+0"
-        end
+        return { error: t('d6system.numbers_only_for_npc_skills') } if (!model1 && !valid_roll_str(vs_roll1))
                               
         result = ClassTargetFinder.find(vs_name2, Character, enactor)
         model2 = result.target
+        return { error: t('d6system.numbers_only_for_npc_skills') } if (!model2 && !valid_roll_str(vs_roll2))
         vs_name2 = model2 ? model2.name : vs_name2
-                              
-        if (!model2 && !valid_roll_str(vs_roll2))
-          vs_roll2 = "2D+0"
-        end
         
         if !model1
           die_result1 = D6System.parse_and_roll(enactor, vs_roll1)
+          return { error: t('d6system.unknown_roll_params') } if !die_result1 
           total1 = D6System.get_result(die_result1[:dice_roll]) + D6System.get_pips(vs_roll1)
         else
           die_result1 = D6System.parse_and_roll(model1, vs_roll1)
+          return { error: t('d6system.unknown_roll_params') } if !die_result1
           total1 = D6System.get_result(die_result1[:dice_roll]) + die_result1[:roll_modifiers]
+          if D6System.exceeds_roll_limit(model1, vs_roll1)
+              message = message + t('d6system.exceeds_roll_limit',
+                 :name => model1.name,
+                 :max => Global.read_config("d6system", "roll_max_dice")
+              ) + "%r"
+          end
         end
 
         if !model2
-          die_result2 = D6System.parse_and_roll(enactor, vs_roll1)
+          die_result2 = D6System.parse_and_roll(enactor, vs_roll2)
+          return { error: t('d6system.unknown_roll_params') } if !die_result2
           total2 = D6System.get_result(die_result2[:dice_roll]) + D6System.get_pips(vs_roll2)
         else
-          die_result2 = D6System.parse_and_roll(model1, vs_roll2)
+          die_result2 = D6System.parse_and_roll(model2, vs_roll2)
+          return { error: t('d6system.unknown_roll_params') } if !die_result2
           total2 = D6System.get_result(die_result2[:dice_roll]) + die_result2[:roll_modifiers]
+          if D6System.exceeds_roll_limit(model2, vs_roll2)
+              message = message + t('d6system.exceeds_roll_limit',
+                 :name => vs_name2,
+                 :max => Global.read_config("d6system", "roll_max_dice")
+              ) + "%r"
+          end
         end
 
-        if (!die_result1 || !die_result2)
-          return { error: t('d6system.unknown_roll_params') }
-        end
-        
         success_title1 = D6System.get_success_title(die_result1[:dice_roll])
         success_title2 = D6System.get_success_title(die_result2[:dice_roll])
           
         results = D6System.opposed_result_title(vs_name1, total1, vs_name2, total2)
         
-        message = t('d6system.opposed_roll_result', 
+        message = message + t('d6system.opposed_roll_result', 
            :name1 => !model1 ? t('d6system.npc', :name => vs_name1) : model1.name,
            :name2 => !model2 ? t('d6system.npc', :name => vs_name2) : model2.name,
            :roll1 => vs_roll1,
            :roll2 => vs_roll2,
-           :dice1 => D6System.print_dice(die_result1[:dice_roll]),
+           :dice1 => D6System.print_dice(die_result1[:dice_roll]).ljust(36 - die_result1[:dice_roll].length," "),    # manual fidgeting for prettiness' sake.
            :dice2 => D6System.print_dice(die_result2[:dice_roll]),
-           :total1 => total1,
+           :details1 => !model1 ? vs_roll1 : die_result1[:roll_details],
+           :details2 => !model2 ? vs_roll2 : die_result2[:roll_details],
+           :total1 => total1.to_s.ljust(27 - success_title1.length - total1.to_s.length," "),                        # manual fidgeting for prettiness' sake.
            :total2 => total2,
            :success1 => success_title1,
            :success2 => success_title2,
@@ -210,12 +220,9 @@ module AresMUSH
       elsif (!pc_name.blank?)
         char = Character.find_one_by_name(pc_name)
 
-        if (!char && !valid_roll_str(pc_ability) )
-          pc_ability = "1D+0"
-        end
-
         # NPC roll 
         if !char
+           return { error: t('d6system.numbers_only_for_npc_skills') } if !valid_roll_str(pc_ability)
            roll = D6System.parse_and_roll(enactor, pc_ability)
            overall_result = get_result(roll[:dice_roll]) + get_pips(pc_ability)
            success_title = get_success_title(roll[:dice_roll])
@@ -231,10 +238,18 @@ module AresMUSH
         else
           if (pc_ability != "")
              roll = D6System.parse_and_roll(char, pc_ability)
+             return { error: t('d6system.unknown_roll_params') } if !roll
              overall_result = get_result(roll[:dice_roll]) + roll[:roll_modifiers]
+             if D6System.exceeds_roll_limit(char, pc_ability)
+                message = message + t('d6system.exceeds_roll_limit',
+                   :name => char.name,
+                   :max => Global.read_config("d6system", "roll_max_dice")
+                ) + "%r"
+             end
+
              if (difficulty == 0)
                 success_title = D6System.get_success_title(roll[:dice_roll])
-                return { message: t('d6system.simple_roll_result',
+                return { message: message + t('d6system.simple_roll_result',
                   :name => "#{pc_name} (#{enactor.name})",
                   :roll => pc_ability,
                   :dice => D6System.print_dice(roll[:dice_roll]),
@@ -243,7 +258,7 @@ module AresMUSH
                   :success => success_title) }
              else
                 success_title = D6System.get_diff_success_title(overall_result - difficulty)
-                return { message: t('d6system.difficulty_roll_result',
+                return { message: message + t('d6system.difficulty_roll_result',
                   :name => "#{pc_name} (#{enactor.name})",
                   :roll => pc_ability,
                   :dice => D6System.print_dice(roll[:dice_roll]),
@@ -277,6 +292,7 @@ module AresMUSH
         end
 
         roll = D6System.parse_and_roll(enactor, roll_str)
+        return { error: t('d6system.unknown_roll_params') } if !roll
         overall_result = get_result(roll[:dice_roll]) + roll[:roll_modifiers]
 
         if fate_roll
@@ -290,6 +306,14 @@ module AresMUSH
               fate_roll = false
            end
         end
+
+        if D6System.exceeds_roll_limit(enactor, roll_str)
+           message = message + t('d6system.exceeds_roll_limit',
+              :name => enactor.name,
+              :max => Global.read_config("d6system", "roll_max_dice")
+           ) + "%r"
+        end
+
         if (difficulty == 0)
            success_title = D6System.get_success_title(roll[:dice_roll])
            message = message + t('d6system.simple_roll_result',

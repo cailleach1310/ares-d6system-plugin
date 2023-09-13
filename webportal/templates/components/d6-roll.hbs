@@ -1,11 +1,5 @@
 <BsModalSimple @title="Add Ability Roll" @closeTitle="Cancel" @submitTitle="Roll" @size={{null}} @fade={{true}} @open={{this.selectAddRoll}} @onSubmit={{action "addRoll"}} @onHide={{action (mut this.selectAddRoll) false}}>
-
-    <p class="hint">You can use a number of dice and a modifier to roll for an NPC. Please enter the total of dice and modifiers, as there won't be any automatic factoring in of average attributes.</p>
-    
-    <p class="hint">If you spend a fate point on your roll, the result will be doubled. Spending a char point on your roll will add another D6 to it.</p>
-
     <p><b>Regular Roll</b></p>
-    <p>Select an ability, or type one (plus modifiers, if applicable) in the box.</p>
     <select onchange={{action (mut this.rollString) value="target.value"}}>
       {{#each this.abilities as |ability|}}
         <option value={{ability}}>{{ability}}</option>
@@ -13,8 +7,8 @@
     </select>
     <Input @type="text" size={{25}} id="rollString" @enter={{action "addRoll"}} @value={{this.rollString}} />
     <br>
-    {{#if this.fatePoints}} 
-       Spend a fate point: <Input @type="checkbox" @checked={{this.rollFate}} /> 
+    {{#if this.fatePoints}}
+       Spend a fate point: <Input @type="checkbox" @checked={{this.rollFate}} />
    {{/if}}
     {{#if this.charPoints}}
        Spend a char point: <Input @type="checkbox" @checked={{this.rollChar}} />
@@ -23,9 +17,10 @@
     {{#if this.rollDiff}}
        <Input @type="integer" size={{3}} id="difficulty" @enter={{action "addRoll"}} @value={{this.difficulty}} />
    {{/if}}
+    <br><br>
+    <p class="hint">Select an ability, or type one (plus modifiers, if applicable) in the box. If roll options are available, they can be activated in the area below the box.</p>
    <hr>
     <p><b>Roll for Another PC / NPC</b></p>
-    
     <p>
       Character: <Input @type="text" size={{15}} id="pcRollName" @enter={{action "addRoll"}} @value={{this.pcRollName}} /> 
       Ability: <Input @type="text" size={{15}} id="pcRollAbility" @enter={{action "addRoll"}} @value={{this.pcRollAbility}} />
@@ -34,16 +29,5 @@
        <Input @type="integer" size={{3}} id="pcDifficulty" @enter={{action "addRoll"}} @value={{this.pcDifficulty}} />
     {{/if}}
     </p>
-      
-    <hr>
-    <p><b>Opposed Roll</b></p>
-    <p>Enter two character and ability names.</p>
-    <p>
-      Character: <Input @type="text" size={{15}} id="vsName1" @enter={{action "addRoll"}} @value={{this.vsName1}} /> 
-      Ability: <Input @type="text" size={{15}} id="vsRoll1" @enter={{action "addRoll"}} @value={{this.vsRoll1}} /><br>
-     vs<br>
-      Character: <Input @type="text" size={{15}} id="vsName2" @enter={{action "addRoll"}} @value={{this.vsName2}} /> 
-      Ability: <Input @type="text" size={{15}} id="vsRoll2" @enter={{action "addRoll"}} @value={{this.vsRoll2}} /><br>
-    </p>
-
+    <p class="hint">When you are rolling for an NPC, just enter a name and the total number of dice and modifiers.</p>
   </BsModalSimple>

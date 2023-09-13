@@ -82,6 +82,13 @@ module AresMUSH
              end
            end
 
+           if D6System.exceeds_roll_limit(char, self.roll_str)
+              message = message + t('d6system.exceeds_roll_limit', 
+                 :name => char ? char.name : enactor.name, 
+                 :max => Global.read_config("d6system", "roll_max_dice") 
+              ) + "%r"
+           end 
+
            if (self.difficulty == 0)
               success_title = D6System.get_success_title(dice_result[:dice_roll])
               message = message + t('d6system.simple_roll_result', 
