@@ -19,9 +19,10 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 * Staff game client commands to manage fate and character points (awarding/removing).
 * A damage system based on wound levels, including an admin command for setting wound levels, player commands for healing other players and cron jobs for natural healing.
 * The possibility to define starting abilities based on the group values of a char, which will be automatically applied when resetting during chargen. These will also be checked against in the app review.
+* Optional dice limit for rolls (combined dice of specialization, skill and attribute). Additional modifiers will still apply.
 
 ### This is a work in progress
-This isn't complete yet, stuff is still subject to change. No warranty whatsoever. Certain features still have to be added, such as post chargen raising / adding abilities (which will have to be handled through requests / admin for now).
+Code may change due to adding new features and bug hunting. No warranty whatsoever. Certain features aren't covered yet, such as post chargen raising / adding abilities (which will have to be handled through requests / admin).
 
 ## Screenshots
 
@@ -29,10 +30,10 @@ This isn't complete yet, stuff is still subject to change. No warranty whatsoeve
 ![roll examples](/images/game_ability_roll_examples.PNG)
 
 ### Webportal Roll Ability Window
-![webportal_roll](/images/webportal_ability_roll.PNG)
+![webportal_roll](/images/ability_roll_web.PNG)
 
-### Webportal Roll Result
-![webportal_roll2](/images/webportal_ability_roll2.PNG)
+### Webportal Opposed Roll Window
+![webportal_roll](/images/ability_opposed_roll_web.PNG)
 
 ### Webportal Chargen - Attributes
 ![roll examples](/images/webportal_chargen_attributes.PNG)
@@ -128,30 +129,33 @@ Add routes to the top bar menu under 'System' for the configured abilities and w
 ## Configuration
 After installation, you should check the d6system config files below and make adjustments where necessary. The keys in the configuration files are explained below.
 
-### d6system_misc.yml 
+### d6system_misc.yml
 #### achievements
-There are two achievements defined, *d6_roll* for making a roll for the first time, and *d6_fate_spent* for spending a fate point on a roll. 
-
-#### extranormal_blurb
-Chargen info about extranormal attributes and skills.
-
-#### sheet_columns
-This is where you can customize the columns of the sheet, allowing you to arrange attribute-skill-blocks to optimize the look of the sheet. This affects both the in game sheet and the webportal sheet. Please note: Only those extranormal skills and attributes will be listed that have actually been learned. Also: "Extranormal" instead of attribute name will list the extranormal attributes and respective skills as one block.
-
-#### show_sheet
-Here you can toggle visibility of the sheet for other players.
+There are three achievements defined, *d6_roll* for making a roll for the first time, *d6_fate_spent* for spending a fate point on a roll, and *d6_cp_spent* for spending a char point to add another die to the roll. 
 
 #### cp_cron
 Configuration for the cron job that handles the automatic character points raise of characters.
 
-#### periodic_cp
-Amount of character points that are gained with each run of the cron job.
+#### extranormal_blurb
+Chargen info about extranormal attributes and skills.
 
 #### max_char_hoard
 Maximum character points that can be stored on a character.
 
 #### max_fate_hoard
 Maximum fate points that can be stored on a character.
+
+#### periodic_cp
+Amount of character points that are gained with each run of the cron job.
+
+#### roll_max_dice
+If you want to have a house rule on your game, limiting dice for ability roles, you need to enter the limit here. Examples: "10D" or "6D+2". If you don't want to have a limit, leave this entry at the default "{}". Additional modifiers will still apply.
+
+#### sheet_columns
+This is where you can customize the columns of the sheet, allowing you to arrange attribute-skill-blocks to optimize the look of the sheet. This affects both the in game sheet and the webportal sheet. Please note: Only those extranormal skills and attributes will be listed that have actually been learned. Also: "Extranormal" instead of attribute name will list the extranormal attributes and respective skills as one block.
+
+#### show_sheet
+Here you can toggle visibility of the sheet for other players.
 
 
 ### d6system_attrs.yml
