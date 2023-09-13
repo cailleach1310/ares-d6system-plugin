@@ -7,6 +7,9 @@ d6system:
     d6_fate_spent:
       type: d6
       message: Spent a fate point when making a roll.
+    d6_cp_spent:
+      type: d6
+      message: Spent a char point when making a roll.
   cp_cron:
     day_of_week:
     - Sat
@@ -17,6 +20,7 @@ d6system:
   max_char_hoard: 70
   max_fate_hoard: 10
   periodic_cp: 2
+  roll_max_dice: {}
   sheet_columns:
   - Reflexes Presence
   - Physique Coordination Extranormal
@@ -25,4 +29,3 @@ d6system:
     wounds: wound/list
     wounded: wound/list
   show_sheet: true
-  roll_max_dice: 10
