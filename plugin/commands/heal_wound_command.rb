@@ -19,14 +19,19 @@ module AresMUSH
         message = ""
         ClassTargetFinder.with_a_character(self.name, client, enactor) do |model|
 
+        if !enactor.is_approved?
+           client.emit_failure t('dispatcher.not_allowed')
+           return
+        end
+
         if !D6System.is_healer?(enactor)
            client.emit_failure t('d6system.no_heal_ability')
            return
-        else
-           skill_list = Global.read_config("d6system","heal_skills")
-           heal_skill = D6System.get_highest_skill(enactor, skill_list)
-           roll_str = heal_skill
         end
+
+        skill_list = Global.read_config("d6system","heal_skills")
+        heal_skill = D6System.get_highest_skill(enactor, skill_list)
+        roll_str = heal_skill
 
         wound_level = model.wound_level
         if (wound_level == D6System.level_names[0])
