@@ -97,7 +97,7 @@
      {{#each this.char.specializations as |spec|}}
      {{#if (eq spec.rating "0D+0")}}
      {{else}}
-       <D6Skillbox @rating={{spec.rating}} @maxRating={{5}} @updated={{action "abilityChanged"}}>
+       <D6Skillbox @rating={{spec.rating}} @maxRating={{this.cg_info.max_skill_dice}} @updated={{action "abilityChanged"}}>
           <b>{{spec.name}}</b>
        </D6Skillbox>
      {{/if}}
