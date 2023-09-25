@@ -59,16 +59,25 @@ module AresMUSH
           overall_result = D6System.get_result(dice_result[:dice_roll]) + D6System.get_pips(self.roll_str)
            if (self.difficulty == 0)
               success_title = D6System.get_success_title(dice_result[:dice_roll])
+              message = message + t('d6system.num_roll_result',
+                :name => self.name ? "#{self.name} (#{enactor.name})" : enactor.name,
+                :roll => self.roll_str,
+                :dice => D6System.print_dice(dice_result[:dice_roll]),
+                :total => overall_result,
+                :success => success_title
+              )
            else
               success_title = D6System.get_diff_success_title(overall_result - self.difficulty)
+              message = message + t('d6system.difficulty_roll_result',
+                :name => self.name ? "#{self.name} (#{enactor_name})" : self.name,
+                :roll => self.roll_str,
+                :dice => D6System.print_dice(dice_result[:dice_roll]),
+                :details => self.roll_str,
+                :total => overall_result,
+                :diff_result => success_title,
+                :difficulty => self.difficulty
+              )
            end
-          message = message + t('d6system.num_roll_result',
-          :name => enactor.name,
-          :roll => self.roll_str,
-          :dice => D6System.print_dice(dice_result[:dice_roll]),
-          :total => overall_result,
-          :success => success_title
-        )
         else
            overall_result = D6System.get_result(dice_result[:dice_roll]) + dice_result[:roll_modifiers]
            if self.fate_roll

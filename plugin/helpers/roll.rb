@@ -225,14 +225,25 @@ module AresMUSH
            return { error: t('d6system.numbers_only_for_npc_skills') } if !valid_roll_str(pc_ability)
            roll = D6System.parse_and_roll(enactor, pc_ability)
            overall_result = get_result(roll[:dice_roll]) + get_pips(pc_ability)
-           success_title = get_success_title(roll[:dice_roll])
-           return { message: t('d6system.num_roll_result',
-            :name => "#{pc_name} (#{enactor.name})",
-            :roll => pc_ability,
-            :dice => D6System.print_dice(roll[:dice_roll]),
-            :total => overall_result,
-            :success => success_title
-          ) }
+           if (difficulty == 0)
+              success_title = get_success_title(roll[:dice_roll])     
+              message = t('d6system.num_roll_result',
+                :name => "#{pc_name} (#{enactor.name})",
+                :roll => pc_ability,
+                :dice => D6System.print_dice(roll[:dice_roll]),
+                :total => overall_result,
+                :success => success_title)
+           else
+              success_title = D6System.get_diff_success_title(overall_result - difficulty)
+              message = t('d6system.difficulty_roll_result',
+                :name => "#{pc_name} (#{enactor.name})",
+                :roll => pc_ability,
+                :dice => D6System.print_dice(roll[:dice_roll]),
+                :details => pc_ability,
+                :total => overall_result,
+                :diff_result => success_title,
+                :difficulty => difficulty)
+           end
 
         # PC roll
         else
@@ -265,8 +276,7 @@ module AresMUSH
                   :details => roll[:roll_details],
                   :total => overall_result,
                   :diff_result => success_title,
-                  :difficulty => difficulty
-                ) }
+                  :difficulty => difficulty) }
              end
           else
              return { error: "That is not a valid roll." }
