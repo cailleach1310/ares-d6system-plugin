@@ -9,12 +9,15 @@ module AresMUSH
         if (cmd.args =~ /\//)
           args = cmd.parse_args(/(?<arg1>[^\/\=]+)\/(?<arg2>[^\=]+)\=?(?<arg3>.+)?/)  # arg1_slash_arg2_equals_optional_arg3        
           self.name = titlecase_arg(args.arg1)
+          if !Character.named(self.name)
+             self.name = t('d6system.npc', :name => self.name)
+          end
           self.roll_str = titlecase_arg(args.arg2)
           self.difficulty = args.arg3 ? integer_arg(args.arg3) : 0
         else
           args = cmd.parse_args(ArgParser.arg1_equals_optional_arg2)
-          self.name = enactor.name        
-          self.roll_str = titlecase_arg(args.arg1)
+          self.name = enactor.name
+          self.roll_str = args.arg1
           self.difficulty = args.arg2 ? integer_arg(args.arg2) : 0
         end
         self.private_roll = cmd.switch_is?("private")
@@ -28,101 +31,59 @@ module AresMUSH
       
       def handle
         message = ""
-        if self.roll_str.match(/^\d+[d|D]6?\+?\d?/)
-           dice_result = D6System.parse_and_roll(enactor, self.roll_str)
-        else
-          char = Character.named(self.name)
-          if (char)
-             if self.cp_roll
-                if (char.char_points > 0)
-                   char.update(char_points: char.char_points - 1)
-                   Achievements.award_achievement(char, "d6_cp_spent")
-                   message = message + t('d6system.spends_char_point',
-                    :name => char.name) + "%r"
-                   self.roll_str = D6System.add_cp_die(self.roll_str)  # modify roll_str, add 1D to it.
-                else
-                   message = message + t('d6system.no_cp_point', :name => char.name) + "%r"
-                end
-             end
-             dice_result = D6System.parse_and_roll(char, self.roll_str)
-          else
-             dice_result = nil
-          end
-        end
-        
-        if !dice_result
-          client.emit_failure t('d6system.unknown_roll_params')
-          return
-        end
-        
-        if self.roll_str.match(/^\d+[d|D]6?\+?\d?/)
-          overall_result = D6System.get_result(dice_result[:dice_roll]) + D6System.get_pips(self.roll_str)
-           if (self.difficulty == 0)
-              success_title = D6System.get_success_title(dice_result[:dice_roll])
-              message = message + t('d6system.num_roll_result',
-                :name => self.name ? "#{self.name} (#{enactor.name})" : enactor.name,
-                :roll => self.roll_str,
-                :dice => D6System.print_dice(dice_result[:dice_roll]),
-                :total => overall_result,
-                :success => success_title
-              )
-           else
-              success_title = D6System.get_diff_success_title(overall_result - self.difficulty)
-              message = message + t('d6system.difficulty_roll_result',
-                :name => self.name ? "#{self.name} (#{enactor_name})" : self.name,
-                :roll => self.roll_str,
-                :dice => D6System.print_dice(dice_result[:dice_roll]),
-                :details => self.roll_str,
-                :total => overall_result,
-                :diff_result => success_title,
-                :difficulty => self.difficulty
-              )
+        char = Character.named(self.name)
+
+        if (char)
+           # roll limit
+           if ( !D6System.valid_num_roll_str(self.roll_str) && D6System.exceeds_roll_limit(char, self.roll_str) )
+              message = message + t('d6system.exceeds_roll_limit',
+                :name => self.name ? self.name : enactor.name,
+                :max => Global.read_config("d6system", "roll_max_dice")
+              ) + "%r"
            end
-        else
-           overall_result = D6System.get_result(dice_result[:dice_roll]) + dice_result[:roll_modifiers]
-           if self.fate_roll
+
+           # cp roll
+           if (self.cp_roll && (char == enactor))
+              if (char.char_points > 0)
+                 char.update(char_points: char.char_points - 1)
+                 Achievements.award_achievement(char, "d6_cp_spent")
+                 message = message + t('d6system.spends_char_point', :name => char.name) + "%r"
+                 self.roll_str = D6System.add_cp_die(self.roll_str)       # modify roll_str, add 1D to it.
+              else
+                 message = message + t('d6system.no_cp_point', :name => char.name) + "%r"
+              end
+           end
+
+          # fate roll
+          if (self.fate_roll && (char == enactor))
              if (char.fate_points > 0)
                 char.update(fate_points: char.fate_points - 1)
-                message = message + t('d6system.spends_fate_point', 
-                  :name => char ? char.name : "#{self.name} (#{enactor_name})") + "%r"
+                message = message + t('d6system.spends_fate_point',
+                  :name => (char == enactor) ? char.name : "#{self.name} (#{enactor.name})") + "%r"
              else
                 message = message + t('d6system.no_fate_point', :name => char ? char.name : enactor.name) + "%r"
                 self.fate_roll = false
              end
-           end
-
-           if D6System.exceeds_roll_limit(char, self.roll_str)
-              message = message + t('d6system.exceeds_roll_limit', 
-                 :name => char ? char.name : enactor.name, 
-                 :max => Global.read_config("d6system", "roll_max_dice") 
-              ) + "%r"
-           end 
-
-           if (self.difficulty == 0)
-              success_title = D6System.get_success_title(dice_result[:dice_roll])
-              message = message + t('d6system.simple_roll_result', 
-                :name => char ? char.name : "#{self.name} (#{enactor_name})",
-                :roll => self.roll_str,
-                :dice => D6System.print_dice(dice_result[:dice_roll]),
-                :details => dice_result[:roll_details],
-                :total => self.fate_roll ? overall_result.to_s + " --> " + (2 * overall_result).to_s  : overall_result,
-                :success => success_title
-              )         
           else
-              overall_total = self.fate_roll ? overall_result * 2 : overall_result
-              success_title = D6System.get_diff_success_title(overall_total - self.difficulty)
-              message = message + t('d6system.difficulty_roll_result',
-                :name => char ? char.name : "#{self.name} (#{enactor_name})",
-                :roll => self.roll_str,
-                :dice => D6System.print_dice(dice_result[:dice_roll]),
-                :details => dice_result[:roll_details],
-                :total => overall_total,
-                :diff_result => success_title,
-                :difficulty => self.difficulty
-              )
+             self.fate_roll = false
           end
-
+        else
+           if !D6System.valid_num_roll_str(self.roll_str)
+              client.emit_failure t('d6system.numbers_only_for_npc_skills')
+              return
+           end  
         end
+      
+        if (self.difficulty == 0)
+           roll_msg = D6System.emit_simple_roll(self.name, self.roll_str, enactor, self.fate_roll)
+        else
+           roll_msg = D6System.emit_difficulty_roll(self.name, self.roll_str, enactor, self.difficulty, self.fate_roll)
+        end
+        if !roll_msg
+           client.emit_failure t('d6system.unknown_roll_params')
+           return
+        end
+        message = message + roll_msg
         Achievements.award_achievement(enactor, "d6_roll")
         D6System.emit_results message, client, enactor_room, self.private_roll
       end

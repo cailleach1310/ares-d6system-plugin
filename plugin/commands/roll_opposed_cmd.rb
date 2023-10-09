@@ -1,5 +1,4 @@
 module AresMUSH
-
   module D6System
     class OpposedRollCmd
       include CommandHandler
@@ -21,86 +20,39 @@ module AresMUSH
       
       def handle
         message = ""
-        result = ClassTargetFinder.find(self.name1, Character, enactor)
-        model1 = result.target
-        if (!model1 && !D6System.valid_roll_str(self.roll_str1))
-          client.emit_failure t('d6system.numbers_only_for_npc_skills')
-          return
-        end
-                                
-        if (self.name2)
-          result = ClassTargetFinder.find(self.name2, Character, enactor)
-          model2 = result.target
-          self.name2 = !model2 ? self.name2 : model2.name
-        end
-                                
-        if (!model2 && !D6System.valid_roll_str(self.roll_str2))
+        char1 = Character.named(self.name1)
+        char2 = Character.named(self.name2)
+
+        if ( (!char1 && !D6System.valid_num_roll_str(self.roll_str1)) || 
+             (!char2 && !D6System.valid_num_roll_str(self.roll_str2)) )
           client.emit_failure t('d6system.numbers_only_for_npc_skills')
           return
         end
 
-        if !model1
-          die_result1 = D6System.parse_and_roll(enactor, self.roll_str1)
-          total1 = D6System.get_result(die_result1[:dice_roll]) + D6System.get_pips(self.roll_str1)
-        else
-          die_result1 = D6System.parse_and_roll(model1, self.roll_str1)
-          if !die_result1
-            client.emit_failure t('d6system.unknown_roll_params')
-            return
-          end
-
-          total1 = D6System.get_result(die_result1[:dice_roll]) + die_result1[:roll_modifiers]
-          if D6System.exceeds_roll_limit(model1, self.roll_str1)
+        if (char1)
+          if D6System.exceeds_roll_limit(char1, self.roll_str1)
               message = message + t('d6system.exceeds_roll_limit',
-                 :name => model1.name,
+                 :name => char1.name,
                  :max => Global.read_config("d6system", "roll_max_dice")
               ) + "%r"
           end
         end
 
-        if !model2
-          die_result2 = D6System.parse_and_roll(enactor, self.roll_str2)
-          total2 = D6System.get_result(die_result2[:dice_roll]) + D6System.get_pips(self.roll_str2)
-        else
-          die_result2 = D6System.parse_and_roll(model2, self.roll_str2)
-          if !die_result2
-            client.emit_failure t('d6system.unknown_roll_params')
-            return
-          end
-          total2 = D6System.get_result(die_result2[:dice_roll]) + die_result2[:roll_modifiers]
-          if D6System.exceeds_roll_limit(model2, self.roll_str2)
+        if (char2)
+          if D6System.exceeds_roll_limit(char2, self.roll_str2)
               message = message + t('d6system.exceeds_roll_limit',
-                 :name => model2.name,
+                 :name => char2.name,
                  :max => Global.read_config("d6system", "roll_max_dice")
               ) + "%r"
           end
         end
           
-        if (!die_result1 || !die_result2)
+        roll_msg = D6System.emit_opposed_roll(self.name1, self.roll_str1, self.name2, self.roll_str2, enactor)
+        if !roll_msg
           client.emit_failure t('d6system.unknown_roll_params')
           return
         end
-          
-        success_title1 = D6System.get_success_title(die_result1[:dice_roll])
-        success_title2 = D6System.get_success_title(die_result2[:dice_roll])
-
-        results = D6System.opposed_result_title(self.name1, total1, self.name2, total2)
-          
-        message = message + t('d6system.opposed_roll_result',
-           :name1 => !model1 ? t('d6system.npc', :name => self.name1) : model1.name,
-           :name2 => !model2 ? t('d6system.npc', :name => self.name2) : model2.name,
-           :roll1 => self.roll_str1,
-           :roll2 => self.roll_str2,
-           :dice1 => D6System.print_dice(die_result1[:dice_roll]).ljust(36 - die_result1[:dice_roll].length," "),    # manual fidgeting for prettiness' sake.
-           :dice2 => D6System.print_dice(die_result2[:dice_roll]),
-           :details1 => !model1 ? self.roll_str1 : die_result1[:roll_details],
-           :details2 => !model2 ? self.roll_str2 : die_result2[:roll_details],
-           :total1 => total1.to_s.ljust(27 - success_title1.length - total1.to_s.length," "),                        # manual fidgeting for prettiness' sake.
-           :total2 => total2,
-           :success1 => success_title1,
-           :success2 => success_title2,
-           :result => results)
-
+        message = message + roll_msg
         D6System.emit_results message, client, enactor_room, self.private_roll
       end
     end

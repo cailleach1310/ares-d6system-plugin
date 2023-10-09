@@ -61,13 +61,13 @@ en:
         exceeds_roll_limit: "%xc<D6>%xn Enforcing house rule: %{name}'s roll dice are reduced to dice max %{max}."
 
         num_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn %r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total}"
-        simple_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn (%{details}).%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn %{success} Total result: %{total}"
-        difficulty_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn (%{details}) against difficulty %{difficulty}.%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total} --> %{diff_result}"
-        opposed_roll_result: "%xc<D6>%xn %{name1} rolls %xc%{roll1}%xn (%{details1}) vs %{name2}'s %xc%{roll2}%xn (%{details2})%R%xc<D6>%xn %{dice1}   vs   %{dice2}%R%xc<D6>%xn %{success1} Result: %{total1}   vs   %{success2} Result: %{total2}%R%xc<D6>%xn%T%T%{result}"
+        simple_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn%{details}.%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn %{success} Total result: %{total}"
+        difficulty_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn%{details} against difficulty %{difficulty}.%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total} --> %{diff_result}"
+        opposed_roll_result: "%xc<D6>%xn %{name1} rolls %xc%{roll1}%xn%{details1} vs %{name2}'s %xc%{roll2}%xn%{details2}%R%xc<D6>%xn %{dice1}   vs   %{dice2}%R%xc<D6>%xn %{success1} Result: %{total1}   vs   %{success2} Result: %{total2}%R%xc<D6>%xn%T%T%{result}"
                 
         unknown_roll_params: "Can't figure out what you're trying to roll. You can specify a single ability, an optional ruling attribute, and an optional modifier.  See 'help roll' for more details."
         numbers_only_for_npc_skills: "NPC roll ability can only be number of dice + combined modifiers."
-        npc: "%{name} (NPC)"
+        npc: "NPC %{name}"
 
         # Healing
         no_heal_ability: "You don't have any healing skills."

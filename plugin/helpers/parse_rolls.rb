@@ -49,34 +49,34 @@ module AresMUSH
     # Sorry, not that pretty.
     def self.exceeds_roll_limit(char, roll_str)
       max_dice = Global.read_config("d6system", "roll_max_dice")
-      return false if ( max_dice == {} )
+      return false if ( (max_dice == {} ) || D6System.valid_num_roll_str(roll_str) )
       roll_params = parse_roll_params(char, roll_str)
+      return nil if !roll_params
       ability = roll_params.ability
       ability_type = D6System.get_ability_type(ability)
       skill_rating = D6System.ability_rating(char, ability)
       if (ability_type == :specialization)
-        skill = get_spec_skill(char, ability)
-        skill_rating = add_dice(skill_rating, D6System.ability_rating(char, skill),0)  # spec rating + base skill rating
+         skill = get_spec_skill(char, ability)
+         skill_rating = add_dice(skill_rating, D6System.ability_rating(char, skill),0)  # spec rating + base skill rating
       else
         skill = ability
       end
-      linked_attr = roll_params.linked_attr || D6System.get_linked_attr(skill)
 
+      linked_attr = roll_params.linked_attr || D6System.get_linked_attr(skill)
       if (ability_type == :attribute && !linked_attr)
         skill_rating = "0D+0"
         linked_attr = ability
       end
 
       apt_rating = linked_attr ? D6System.ability_rating(char, linked_attr) : '0D+0'
-
-      return dice_gt_max(add_dice(skill_rating, apt_rating, 0), max_dice)
+      dice_total = add_dice(skill_rating, apt_rating, 0)
+      return dice_gt_max(dice_total, max_dice)
     end
 
     # Takes a roll string, like Athletics+Body+2, or just Athletics, parses it to figure
     # out the pieces, and then makes the roll.
     def self.parse_and_roll(char, roll_str)
-      values = []
-      if (roll_str.match(/^\d+[d|D]6?\+?\d?/) != nil)
+      if valid_num_roll_str(roll_str)
         return { dice_roll: D6System.rolling_str(char, roll_str) }
       else
         roll_params = D6System.parse_roll_params(char, roll_str)
