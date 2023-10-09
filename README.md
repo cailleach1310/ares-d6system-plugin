@@ -26,6 +26,9 @@ This plugin has yet to be tested on a live game, so there may be bugs and glitch
 
 ## Screenshots
 
+### Game Sheet
+![sheet example](/images/game_sheet.png)
+
 ### Game Client Roll Examples
 ![roll examples](/images/game_ability_roll_examples.PNG)
 
