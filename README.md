@@ -5,7 +5,7 @@ An open d6 system plugin for AresMUSH.
 Lyanna @ AresCentral
 
 ## Overview
-This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be configured to fit various settings and requirements. The system offered here is based on the D6 Adventure sheet (https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf).
+This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be configured to fit various settings and requirements. The system offered here is based on the [D6 Adventure sheet](https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf).
 
 You need to disable the fs3 plugin on the ares-webportal before you install this plugin.
 
