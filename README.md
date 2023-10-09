@@ -5,7 +5,7 @@ An open d6 system plugin for AresMUSH.
 Lyanna @ AresCentral
 
 ## Overview
-This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be configured to fit various settings and requirements. The system offered here is based on the [D6 Adventure sheet](https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf).
+This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be configured to fit various settings and requirements. The system offered here is based on the [D6 Adventure sheet](https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf). It covers most areas, such as chargen, rolls and a damage system, whereas post chargen raising/adding abilities will have to be handled through requests/admin.
 
 You need to disable the fs3 plugin on the ares-webportal before you install this plugin.
 
@@ -21,8 +21,8 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 * The possibility to define starting abilities based on the group values of a char, which will be automatically applied when resetting during chargen. These will also be checked against in the app review.
 * Optional dice limit for rolls (combined dice of specialization, skill and attribute). Additional modifiers will still apply.
 
-### This is a work in progress
-Code may change due to adding new features and bug hunting. No warranty whatsoever. Certain features aren't covered yet, such as post chargen raising / adding abilities (which will have to be handled through requests / admin).
+### There may be bugs
+This plugin has yet to be tested on a live game, so there may be bugs and glitches. If you find any, please let me know. I'm Lyanna on the AresMUSH discord server. Also, I'll gladly help when you need assistance with installation, configuration etc.
 
 ## Screenshots
 
