@@ -15,14 +15,6 @@ module AresMUSH
         Chargen.approval_status(@char)
       end
       
-      def show_section(section)
-        sections = ['abilities', 'specializations', 'advantages', 'disadvantages', 'special_abilities', 'stats']
-        return true if self.section.blank?
-        return true if !sections.include?(section)
-        return true if !sections.include?(self.section)
-        return section == self.section
-      end
-      
       def abilities
        list = []
         char_sorted_attr_lists(@char).each_with_index do |a, i|
@@ -34,9 +26,11 @@ module AresMUSH
       end
 
       def specializations
-       list = []        
+       list = []
+#       length = @char.d6specializations.count
         @char.d6specializations.each_with_index do |a, i| 
           if (a)
+#             (i == (length-1) ) && length.odd? ? list << format_specialization(a, i) + "%r" : list << format_specialization(a, i) 
              list << format_specialization(a, i)
           end
         end   
@@ -110,7 +104,7 @@ module AresMUSH
       end
 
       def format_option(a)
-        return "  %xh#{a.name}%xn(R#{a.rank}): #{a.details}"
+        return "  %xh#{a.name}%xn(R#{a.rank}): #{a.details}%r"
       end
 
       def section_line(title)

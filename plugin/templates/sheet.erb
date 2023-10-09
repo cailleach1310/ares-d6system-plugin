@@ -1,42 +1,35 @@
 %lh
 %xh<%= char.name %>%xn <%= center( approval_status, 23 ) %>
-<% if show_section('abilities') -%>
 %r<%= section_line 'Abilities' -%>
 
 <% abilities.each do |a| -%>
 <%= a -%>
 <% end %> 
-<% end -%>
-<% if show_section('specializations') -%>
+<% if specializations.length > 0 -%>
 %r<%= section_line 'Specializations' -%>
 <% specializations.each do |e| -%>
 <%= e -%>
 <% end %>
-<% end -%><% if show_section('advantages') -%>
+<% end -%><% if advantages.length > 0 -%>
 %r<%= section_line 'Advantages' -%>
 <% advantages.each do |k| -%>
 <%= k -%>
-<% end %>  
-
+<% end %>
 <% end -%>
-<% if show_section('disadvantages') -%>
+<% if disadvantages.length > 0 -%>
 %r<%= section_line 'Disadvantages' -%>
 <% disadvantages.each do |f| -%>
 <%= f -%>
 <% end %>
-
 <% end -%>
-<% if show_section('special_abilities') -%>
+<% if special_abilities.length > 0 -%>
 %r<%= section_line 'Special Abilities' -%>
 <% special_abilities.each do |f| -%>
 <%= f -%>
 <% end %>
-
 <% end -%>
-<% if show_section('stats') -%>
 %r<%= section_line 'Other Stats' -%>
 <%= stats -%>
 
-<% end -%>
 
 %lf
