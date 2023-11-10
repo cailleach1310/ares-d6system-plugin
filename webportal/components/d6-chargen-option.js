@@ -2,6 +2,7 @@ import EmberObject, { computed } from '@ember/object';
 import { A } from '@ember/array';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import { capitalize } from '@ember/string'; // ember 4
 
 export default Component.extend({
   tagName: '',
@@ -76,7 +77,8 @@ export default Component.extend({
      if (this.type == 'special ability') {
        return 'Special Abilities';
      } else {
-       return this.type.capitalize() + "s";
+       return capitalize(this.type) + "s"; // ember 4
+     // return this.type.capitalize() + "s"; // ember < 4
     }
    }),
 
@@ -84,7 +86,8 @@ export default Component.extend({
      if (this.type == 'special ability') {
        return 'Special Ability';
      } else {
-         return this.type.capitalize();
+         return capitalize(this.type); // ember 4
+     // return this.type.capitalize() + "s"; // ember < 4
     }
    }),
 
