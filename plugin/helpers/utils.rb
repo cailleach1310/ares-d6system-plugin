@@ -58,7 +58,7 @@ module AresMUSH
     end
 
     def self.can_view_sheets?(actor)
-      return true if Global.read_config("d6system", "public_sheets")
+      return true if Global.read_config("d6system", "show_sheet")
       return false if !actor
       actor.has_permission?("view_sheets")
     end

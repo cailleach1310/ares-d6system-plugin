@@ -12,7 +12,7 @@ module AresMUSH
       def check_permission
         return nil if self.target == enactor_name
         return nil if enactor.is_admin?
-        return nil if Global.read_config("d6system", "public_sheets")
+        return nil if D6System.can_view_sheets?(enactor)
         return t('d6system.no_permission_to_view_sheet')
       end
       
