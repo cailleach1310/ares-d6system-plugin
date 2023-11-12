@@ -21,7 +21,7 @@ Add the attribute custom as lined out below:.
           is_open: job.is_open?,
           is_job_admin: is_job_admin,
           fs3_enabled: FS3Skills.is_enabled?,
-          **custom: Jobs.custom_job_check(enactor),**
+          custom: Jobs.custom_job_check(enactor),
           is_category_admin: Jobs.can_access_category?(enactor, job.job_category),
           is_approval_job: job.author && !job.author.is_approved? && (job.author.approval_job == job),
           is_roster_job: roster_char && job.is_open?,
@@ -60,6 +60,8 @@ Create this file in the specified folder and copy/paste the contents of job-add-
 Create this file in the specified folder and copy/paste the contents of job-add-custom-check.js in this folder (non_custom).
 
 #### Modifying /ares-webportal/app/templates/job.hbs
+Add the if clause regarding this.model.job.custom as lined out below. This needs to be adjusted in two places, because there is a job menu at the top and one at the bottom.
+
       <div class="display-job-controls">
        {{#if this.model.job.is_open }}
 
@@ -72,9 +74,9 @@ Create this file in the specified folder and copy/paste the contents of job-add-
                 {{#if this.model.job.fs3_enabled}}
                   <li><a href="#" {{action (mut this.selectSkillRoll) true}} class="dropdown-item">Add Ability Roll</a></li>
                 {{/if}}
-               **{{#if this.model.job.custom}}**
-                 **<JobAddCustomCheck @job={{this.model.job}} @custom={{this.model.job.custom}}/>**
-                **{{/if}}**
+                {{#if this.model.job.custom}}
+                  <JobAddCustomCheck @job={{this.model.job}} @custom={{this.model.job.custom}}/>
+                {{/if}}
                 {{#if this.model.job.is_approval_job}}
                   <li><LinkTo @route="app-review" @model={{this.model.job.author.id}} class="dropdown-item">App Review for {{this.model.job.author.name}}</LinkTo></li>
                   <li><LinkTo @route="char" @model={{this.model.job.author.name}} class="dropdown-item">Profile for {{this.model.job.author.name}}</LinkTo></li>
@@ -88,5 +90,4 @@ Create this file in the specified folder and copy/paste the contents of job-add-
       {{/if}}
       </div>
 
-^^ This needs to be adjusted in two places, because there is a job menu at the top and at the bottom.
 
