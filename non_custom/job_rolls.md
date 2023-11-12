@@ -59,7 +59,7 @@ Create this file in the specified folder and copy/paste the contents of job-add-
 ### Creating /ares-webportal/app/components/job-add-custom-check.js
 Create this file in the specified folder and copy/paste the contents of job-add-custom-check.js in this folder (non_custom).
 
-#### Modifying /ares-webportal/app/templates/job.hbs
+### Modifying /ares-webportal/app/templates/job.hbs
 Add the if clause regarding this.model.job.custom as lined out below. This needs to be adjusted in two places, because there is a job menu at the top and one at the bottom.
 
       <div class="display-job-controls">
