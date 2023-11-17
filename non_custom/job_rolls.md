@@ -7,7 +7,7 @@ This is how you can enable adding ability rolls to jobs from the webportal, simi
 Create this file in the specified folder and copy/paste the contents of custom_job_check.rb in this folder (non_custom).
 
 ### Modify /aresmush/plugins/jobs/web/job_request_handler.rb
-Add the attribute custom as lined out below:.
+Insert the line 'custom: Jobs.custom_job_check(enactor),' as lined out below:
 
      module AresMUSH
        module Jobs
@@ -64,7 +64,14 @@ Create this file in the specified folder and copy/paste the contents of job-add-
 Create this file in the specified folder and copy/paste the contents of job-add-custom-check.js in this folder (non_custom).
 
 ### Modifying /ares-webportal/app/templates/job.hbs
-Add the if clause regarding this.model.job.custom as lined out below. This needs to be adjusted in two places, because there is a job menu at the top and one at the bottom.
+Add the following code to the file:
+
+      {{#if this.model.job.custom}}
+        <JobAddCustomCheck @job={{this.model.job}} @custom={{this.model.job.custom}}/>
+      {{/if}}
+
+
+Add the code as lined out below. This needs to be adjusted in two places, because there is a job menu at the top and one at the bottom.
 
       <div class="display-job-controls">
        {{#if this.model.job.is_open }}
