@@ -27,7 +27,7 @@ module AresMUSH
         advantages = D6System.advantages.sort_by { |a| a['name'] }.map { |a| {
           name: a['name'].titleize,
           desc: a['desc'],
-          max_rank: a['max_rank']
+          ranks: a['ranks']
         }}
 
         disadvantages = D6System.disadvantages.sort_by { |a| a['name'] }.map { |a| {
