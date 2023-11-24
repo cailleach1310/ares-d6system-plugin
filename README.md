@@ -137,7 +137,7 @@ Add routes to the top bar menu under 'System' for the configured abilities and w
 This option requires core code modifications. If you want to enable this feature, see [this file](/non_custom/job_rolls.md) for instructions.
 
 ## Optional: Alternate template for the d6-abilities route
-If you feel that the traditional d6-abilities route looks too cluttered, there is this [alternate template](\alternate_abilities_template\d6-abilities.hbs) available. Simply replace the old file in the folder /ares-webportal/apps/templates with this file. This template uses tabs.
+If you feel that the traditional d6-abilities route looks too cluttered, there is this [alternate template](/alternate_abilities_template/d6-abilities.hbs) available. Simply replace the old file in the folder /ares-webportal/apps/templates with this file. This template uses tabs.
 
 ## Configuration
 After installation, you should check the d6system config files below and make adjustments where necessary. The keys in the configuration files are explained below.
