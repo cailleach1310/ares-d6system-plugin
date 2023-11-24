@@ -25,7 +25,7 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 This plugin has yet to be tested on a live game, so there may be bugs and glitches. If you find any, please let me know. I'm Lyanna on the AresMUSH discord server. Also, I'll gladly help when you need assistance with installation, configuration etc.
 
 ### Compatibility
-This plugin is compatible with AresMUSH v1.0.9. When upgrading from a previous plugin installation, you'll need to adjust your profile-custom-tabs.hbs and chargen-custom.hbs with the latest version. Also, d6-chargen-option.js will have to be replaced with the newest version (this can also be achieved through a re-installation of the plugin from the game client). Make sure to redeploy the webportal after the update.
+This plugin is compatible with AresMUSH v1.0.9 (ember 4). When upgrading from a previous plugin installation, you'll need to adjust your profile-custom-tabs.hbs and chargen-custom.hbs with the latest version. Also, d6-chargen-option.js will have to be replaced with the newest version (this can also be achieved through a re-installation of the plugin from the game client). Make sure to redeploy the webportal after the update.
 
 If you want to use this plugin but you are running on AresMUSH < 1.0.9, you may have to have a look at d6-chargen-option.js and comment out / remove the new code ( marked as 'ember 4' in the comments ) and uncomment the code for older ember versions.
 
@@ -133,6 +133,11 @@ Add routes to the top bar menu under 'System' for the configured abilities and w
           route: d6-wound-levels
     (...)
 
+## Optional: Adding rolls to jobs from the webportal
+This option requires core code modifications. If you want to enable this feature, see [this file](/non_custom/job_rolls.md) for instructions.
+
+## Optional: Alternate template for the d6-abilities route
+If you feel that the traditional d6-abilities route looks too cluttered, there is this alternate template available: \alternate_abilities_template\d6-abilities.hbs. Simply replace the old file in the folder /ares-webportal/apps/templates with this file. This template uses tabs.
 
 ## Configuration
 After installation, you should check the d6system config files below and make adjustments where necessary. The keys in the configuration files are explained below.
