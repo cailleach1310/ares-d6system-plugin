@@ -18,16 +18,22 @@ export default Component.extend({
      }
     }),
 
+    optionRanks: computed('name',function() {
+      let list = this.list;
+      let item = list.findBy('name', this.name);
+      if (item) {
+        return item.ranks;
+      } else {
+        return null;
+     }
+    }),
+
     actions: { 
         edit() {
-            if (this.ranks) {
-               this.set('editOption', true);
-               this.set('optionRating', this.rating);
-               this.set('optionDetails', this.details);
-               this.updated();
-            } else {
-               this.flashMessages.danger("You have to save and reload before you can edit this option.");
-            }
+            this.set('editOption', true);
+            this.set('optionRating', this.rating);
+            this.set('optionDetails', this.details);
+            this.updated();
         },
     
         update() {
@@ -38,7 +44,7 @@ export default Component.extend({
         },
 
         raise() {
-            var ranks = this.ranks;
+            var ranks = this.optionRanks;
             var index = ranks.indexOf(this.optionRating);
             if (index == -1) {
                 this.set('optionRating', ranks[0]);
@@ -48,18 +54,13 @@ export default Component.extend({
         },
 
         lower() {
-            var ranks = this.ranks;
+            var ranks = this.optionRanks;
             var index = ranks.indexOf(this.optionRating);
             if (index > 0) {
                 this.set('optionRating', ranks[index - 1]);
             } else {
                 this.set('optionRating', 0);
             }
-        },
-
-         remove() {
-            this.set('rating', 0);
-            this.updated();
         }
     }
 });

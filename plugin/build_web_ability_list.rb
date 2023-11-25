@@ -97,10 +97,7 @@ module AresMUSH
         cg_list.each do |a|
            ability = D6System.find_ability(char, a['name'])
            if (ability)
-             max = Global.read_config('d6system', 'max_rank_specials')
-             cost = (D6System.get_ability_type(a['name']) == :special_ability) ? a['cost'] : nil
-             ranks = (D6System.get_ability_type(a['name']) == :special_ability) ? (1..max).to_a : D6System.option_ranks(a)
-             list << { name: a['name'], rating: ability.rank, details: ability.details, ranks: ranks, cost: cost }
+             list << { name: a['name'], rating: ability.rank, details: ability.details }
            end
         end
         return list

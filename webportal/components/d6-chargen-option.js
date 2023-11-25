@@ -77,7 +77,7 @@ export default Component.extend({
      let list = this.opList;
      let item = list.findBy('name', this.optionString);
      if (item) {
-       return parseInt(item.ranks[0]);
+       return item.ranks[0];
      } else {
        return null;
     }
