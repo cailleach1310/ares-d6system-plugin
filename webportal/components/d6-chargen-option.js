@@ -73,6 +73,16 @@ export default Component.extend({
     }
    }),
 
+   optionMin: computed('optionString',function() {
+     let list = this.opList;
+     let item = list.findBy('name', this.optionString);
+     if (item) {
+       return parseInt(item.ranks[0]);
+     } else {
+       return null;
+    }
+   }),
+
    typePlural: computed('type',function() {
      if (this.type == 'special ability') {
        return 'Special Abilities';
@@ -107,6 +117,7 @@ export default Component.extend({
       let option_list = this.opList.mapBy('name');
       let optionString = this.optionString || option_list[0];
       let optionDetails = this.optionDetails || null;
+      let optionMin = 1;
       if (!optionString) {
         this.flashMessages.danger("You have to specify a valid " + this.type + ".");
         this.set('selectOption', false);
@@ -117,6 +128,7 @@ export default Component.extend({
            optionDetails = this.optionDesc;
          }
       } else {
+         optionMin = this.optionMin;
          if (!optionDetails) {
             this.flashMessages.danger("You have to specify details for the " + this.type + ".");
             this.set('selectOption', false);
@@ -125,7 +137,7 @@ export default Component.extend({
       }
       this.set('optionDetails', null);
       this.set('selectOption', false);
-      this.get('charList').pushObject( EmberObject.create( { name: optionString, rating: 1, details: optionDetails }) );
+      this.get('charList').pushObject( EmberObject.create( { name: optionString, rating: optionMin, details: optionDetails }) );
       this.validateChar();
     }
 
