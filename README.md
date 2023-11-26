@@ -5,7 +5,7 @@ An open d6 system plugin for AresMUSH.
 Lyanna @ AresCentral
 
 ## Overview
-This plugin can be used as an alternative to the fs3 system. It is based on the open D6 system and can be configured to fit various settings and requirements. The system offered here is based on the [D6 Adventure sheet](https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf). It covers most areas, such as chargen, rolls and a damage system, whereas post chargen raising/adding abilities will have to be handled through requests/admin.
+This plugin can be used as an alternative to the fs3 system. It is based on the D6 system published by West End Games and can be configured to fit various settings and requirements. The system offered here is based on the [D6 Adventure sheet](https://ogc.rpglibrary.org/images/1/1b/D6_Adventure_v2.0_weg51011OGL.pdf). It covers most areas, such as chargen, rolls and a damage system, whereas post chargen raising/adding abilities will have to be handled through requests/admin.
 
 You need to disable the fs3 plugin on the ares-webportal before you install this plugin.
 
@@ -77,7 +77,7 @@ Update with: custom_files/custom_scene_data.rb
 Update with: custom_files/chargen-custom.hbs
 
 #### ares-webportal/app/components/chargen-custom.js
-Update with: custom_files/chargen-custom.hbs
+Update with: custom_files/chargen-custom.js
 
 #### ares-webportal/app/templates/components/chargen-custom-tabs.hbs
 Update with: custom_files/chargen-custom-tabs.hbs
