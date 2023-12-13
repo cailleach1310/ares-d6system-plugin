@@ -15,7 +15,7 @@ module AresMUSH
           advantages: create_option_list("advantage"),
           disadvantages: create_option_list("disadvantage"),
           special_abilities: create_option_list("special_ability"),
-          extranormal_attrs: D6System.extranormal_attributes,
+          extranormal_attrs: D6System.extranormal_attributes == {} ? [] : D6System.extranormal_attributes,
 
           specials_difficulty: Global.read_config("d6system","specials_difficulty"),
           max_attr_dice: Global.read_config("d6system","max_attr_dice"),
