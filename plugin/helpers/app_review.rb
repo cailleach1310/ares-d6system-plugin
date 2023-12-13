@@ -27,6 +27,7 @@ module AresMUSH
 
     def self.points_overview(char)
        msg = ""
+       max = Global.read_config("d6system", "creation_points")
        msg = msg + "Spent points:"
        msg = msg + "%r* Attributes: ".ljust(23," ") + (dice_spent(char.d6attributes)*4).to_s.rjust(3," ")
        msg = msg + "%r* Skills: ".ljust(23," ") + dice_spent(char.d6skills).to_s.rjust(3," ")
@@ -34,7 +35,7 @@ module AresMUSH
        msg = msg + "%r* Advantages: ".ljust(23," ") + count_points(char.d6advantages).to_s.rjust(3," ")
        msg = msg + "%r* Disadvantages: ".ljust(23," ") + (count_points(char.d6disadvantages)* (-1)).to_s.rjust(3," ")
        msg = msg + "%r* Special Abilities: ".ljust(23," ") + count_specials_points(char).to_s.rjust(3," ")
-       msg = msg + "%r* Total: ".ljust(23," ") + spent_total(char).to_s.rjust(3," ")
+       msg = msg + "%r* Total: ".ljust(23," ") + spent_total(char).to_s.rjust(3," ") + " / " + max.to_s
        return msg
     end
 
