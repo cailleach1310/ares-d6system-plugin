@@ -96,7 +96,7 @@ module AresMUSH
       match = /^(?<ability>[^\+\-]+)\s*(?<attr>[\+][^\d]+)?\s*(?<dice>[\+\-]\s*\d+[d|D]6?)?\s*(?<pips>[\+\-]\d+)?$/.match(str)
       return nil if !match
       
-      ability = match[:ability].strip
+      ability = match[:ability].strip.titlecase
       if !find_ability(char, ability)
         return nil
       end

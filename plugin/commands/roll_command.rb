@@ -17,7 +17,7 @@ module AresMUSH
         else
           args = cmd.parse_args(ArgParser.arg1_equals_optional_arg2)
           self.name = enactor.name
-          self.roll_str = args.arg1
+          self.roll_str = titlecase_arg(args.arg1)
           self.difficulty = args.arg2 ? integer_arg(args.arg2) : 0
         end
         self.private_roll = cmd.switch_is?("private")
