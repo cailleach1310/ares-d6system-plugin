@@ -12,6 +12,7 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 ### What this plugin covers
 * Setting attributes, skills, specializations, advantages, disadvantages and special abilities in chargen, both on the game client and on the webportal.
 * Rolling abilities from the game client and the webportal scene system.
+* Rolling abilities from the webportal job menu to add a roll to a job.
 * Enhancing rolls with spending fate and/or character points.
 * Optional: Rolling against a difficulty level.
 * In game sheet command and sheet integration on the character page of the webportal.
@@ -73,6 +74,9 @@ Update with: custom_files/custom_app_review.rb
 #### aresmush/plugins/scenes/custom_scene_data.rb
 Update with: custom_files/custom_scene_data.rb
 
+#### aresmush/plugins/jobs/custom_job_data.rb
+Update with: custom_files/custom_job_data.rb
+
 #### ares-webportal/app/templates/components/chargen-custom.hbs
 Update with: custom_files/chargen-custom.hbs
 
@@ -99,6 +103,12 @@ Update with: custom_files/live-scene-custom-play.hbs
 
 #### ares-webportal/app/components/live-scene-custom-play.js
 Update with: custom_files/live-scene-custom-play.js
+
+#### ares-webportal/app/templates/components/job-menu-custom.hbs
+Update with: custom_files/job-menu-custom.hbs
+
+#### ares-webportal/app/components/job-menu-custom.js
+Update with: custom_files/job-menu-custom.js
 
 ## Adding Chargen Stages
 Add the following lines to 'stages' in the chargen.yml, i.e. inbetween 'ranks' and 'background':
