@@ -78,7 +78,9 @@ module AresMUSH
     end
 
     def self.calculate_strength_damage(char)
-       str_dmg = ([ D6System.get_dice(ability_rating(char,"Physique")), D6System.get_dice(ability_rating(char,"Lifting"))].max/2.to_f).ceil
+       physique_rating = ability_rating(char,"Physique")
+       lifting_rating = ability_rating(char,"Lifting")
+       str_dmg = ([ D6System.get_dice(physique_rating), D6System.get_dice(D6System.add_dice(physique_rating, lifting_rating, 0))].max/2.to_f).ceil
     end
 
     def self.other_stats(char)
