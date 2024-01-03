@@ -63,7 +63,7 @@ If you want to use this plugin but you are running on AresMUSH < 1.0.9, you may 
 In the game, run: plugin/install https://github.com/cailleach1310/ares-d6system-plugin
 
 ### Updating Custom Files
-If you do not have any existing edits to these custom files, you can use the files in the custom_files folder of this repository as-is. If you do, then you may use them as templates to add the lines of code needed for the economy plugin.
+If you do not have any existing edits to these custom files, you can use the files in the custom_files folder of this repository as-is. If you do, then you may use them as templates to add the lines of code needed for the d6system plugin.
 
 #### aresmush/plugins/profile/custom_char_fields.rb
 Update with: custom_files/custom_char_fields.rb
