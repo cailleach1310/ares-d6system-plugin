@@ -1,4 +1,4 @@
-# Optional: Add Roll Ability to the Webportal Job Menu 
+# Optional: Add Roll Ability to the Webportal Job Menu -- No longer needed in AresMUSH v1.2.0 upwards!
 This is how you can enable adding ability rolls to jobs from the webportal, similar to how it can be done with fs3 rolls. As there is no custom job menu as of yet, this means that the steps outlined below require adjustments of non-custom code parts. Future upgrades of AresMUSH might run into merge conflicts, so these upgrades require extra attention.
 
 ## Creating and Modifying Files in the Jobs Plugin (aresmush)
