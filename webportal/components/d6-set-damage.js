@@ -23,12 +23,12 @@ export default Component.extend({
       
       setDamage() {
         let api = this.gameApi;
-        let defaultDamage = this.damageLevels ? this.damageLevels[0] : '';
+        let defaultDamage = this.woundLevels ? this.woundLevels[0] : '';
       
         // Needed because the onChange event doesn't get triggered when the list is 
         // first loaded, so the roll string is empty.
         let damageString = this.damageString || defaultDamage;
-        let nameString = this.nameString;
+        let nameString = this.nameString || this.scene.participants[0].name;
         
         var sender;
         if (this.scene) {
