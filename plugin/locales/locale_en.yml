@@ -2,6 +2,7 @@
 en:
   d6system:
         no_permission_to_view_sheet: "You are not allowed to view that sheet."
+        no_such_char: "There is no character called %{name}"
         points_awarded: "You have awarded %{points} %{type} points to %{name}, reason: %{reason}"
         points_removed: "You have removed %{points} %{type} points from %{name}, reason: %{reason}"
         invalid_points_award: "Characters can't have points below 0!"
@@ -39,6 +40,10 @@ en:
         extranormal_att_not_set: "%xh%xr< Taking extranormal skill %{skill} requires attribute %{attribute} to be at least at 1D! >%xn"
         missing_starting_ability: "%xh%xy< Missing %{ability} at rating %{rating} or higher. >%xn"
         
+        # Ability Raises
+        cp_ability_raised: "You've raised %{name}'s %{ability} to %{rating} at the cost of %{cost} char points."
+        not_enough_cp: "%{name} needs %{cost} char points to raise %{ability} but has only %{points} points left."
+
         # Rolls
         failure: "%xrFailure%xn"
         minimal_success: "%xgMinimal Success%xn"
@@ -65,7 +70,7 @@ en:
         difficulty_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn%{details} against difficulty %{difficulty}.%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total} --> %{diff_result}"
         opposed_roll_result: "%xc<D6>%xn %{name1} rolls %xc%{roll1}%xn%{details1} vs %{name2}'s %xc%{roll2}%xn%{details2}%R%xc<D6>%xn %{dice1}   vs   %{dice2}%R%xc<D6>%xn %{success1} Result: %{total1}   vs   %{success2} Result: %{total2}%R%xc<D6>%xn%T%T%{result}"
                 
-        unknown_roll_params: "Can't figure out what you're trying to roll. See 'help rolls' for valid roll parameters."
+        unknown_roll_params: "Can't figure out what you're trying to roll. You can specify a single ability, an optional ruling attribute, and an optional modifier.  See 'help roll' for more details."
         numbers_only_for_npc_skills: "NPC roll ability can only be number of dice + combined modifiers."
         npc: "NPC %{name}"
 

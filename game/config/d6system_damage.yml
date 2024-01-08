@@ -22,6 +22,8 @@ d6system:
     abilities, advantages or disadvantages that imply further  modifiers, you can
     apply them to your roll as well.%r%rIf you need help adding the roll, please contact
     admin for assistance.
+  permissions:
+    manage_damage: Can set wound levels on characters.
   wound_levels:
   - name: Fully Healed
     effect: Character is at full health.

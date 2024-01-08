@@ -50,8 +50,15 @@ module AresMUSH
         else
           return RollCmd
         end
-      when "fate", "cp"
+      when "fate"
         return PointsAwardCmd  
+      when "cp"
+        case cmd.switch
+          when "award", "remove"
+            return PointsAwardCmd
+          when "raise"
+            return CpRaiseCmd
+        end
       when "heal"
         return HealWoundCmd
       when "wound"
@@ -79,6 +86,10 @@ module AresMUSH
         return AddJobRollRequestHandler
       when "addSceneRoll"
         return AddSceneRollRequestHandler
+      when "healSceneChar"
+        return HealCharRequestHandler
+      when "setSceneDamage"
+        return SetSceneDamageRequestHandler
       when "resetD6Abilities"
         return ResetAbilitiesRequestHandler
       when "woundLevels"

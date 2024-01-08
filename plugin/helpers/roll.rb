@@ -114,7 +114,7 @@ module AresMUSH
         end
         
       end
-      Global.logger.info "D6 roll results: #{message}"
+      Global.logger.info "D6System: #{message}"
     end
 
     def self.add_cp_die(roll_str)

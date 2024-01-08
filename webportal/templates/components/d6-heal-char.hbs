@@ -1,0 +1,20 @@
+<BsModalSimple @title="Heal Char" @closeTitle="Cancel" @submitTitle="Heal" @size={{null}} @fade={{true}} @open={{this.selectHeal}} @onSubmit={{action "healChar"}} @onHide={{action (mut this.selectHeal) false}}>
+
+    <p><b>Heal another Character</b></p>
+       <p>Select a character or type the name into the box.</p>
+
+       <br>Character to heal: 
+       <select onchange={{action (mut this.healName) value="target.value"}}>
+       {{#each this.scene.participants as |char|}}
+           <option value={{char.name}}>{{char.name}}</option>
+       {{/each}}
+       </select>
+    <Input @type="text" size={{25}} id="healName" @enter={{action "healChar"}} @value={{this.healName}} />
+    <br><br>
+    {{#if this.fatePoints}}
+       Spend a fate point: <Input @type="checkbox" @checked={{this.healFate}} />
+   {{/if}}
+    {{#if this.charPoints}}
+       Spend a char point: <Input @type="checkbox" @checked={{this.healCp}} />
+   {{/if}}
+ </BsModalSimple>
