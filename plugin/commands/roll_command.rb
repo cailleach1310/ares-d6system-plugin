@@ -42,13 +42,24 @@ module AresMUSH
               ) + "%r"
            end
 
+           # wound modifier
+           modifier = D6System.get_wound_modifier(char)
+           if (modifier != 0)
+              self.roll_str = D6System.add_modifier_dice(self.roll_str, modifier)
+              message = message + t('d6system.wound_modifier',
+                :name => char.name,
+                :level => char.wound_level.downcase,
+                :modifier => modifier
+              ) + "%r"              
+           end
+
            # cp roll
            if (self.cp_roll && (char == enactor))
               if (char.char_points > 0)
                  char.update(char_points: char.char_points - 1)
                  Achievements.award_achievement(char, "d6_cp_spent")
                  message = message + t('d6system.spends_char_point', :name => char.name) + "%r"
-                 self.roll_str = D6System.add_cp_die(self.roll_str)       # modify roll_str, add 1D to it.
+                 self.roll_str = D6System.add_modifier_dice(self.roll_str, 1)       # modify roll_str, add 1D to it.
               else
                  message = message + t('d6system.no_cp_point', :name => char.name) + "%r"
               end

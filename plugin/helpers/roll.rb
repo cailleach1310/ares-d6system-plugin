@@ -117,16 +117,26 @@ module AresMUSH
       Global.logger.info "D6System: #{message}"
     end
 
-    def self.add_cp_die(roll_str)
-      if (roll_str =~ /\+\d+[d|D]/)  # contains '+<number>D'
-         str = roll_str.gsub(/(\d+)[d|D]/) {|s| (s.to_i + 1).to_s + 'D'}
-      elsif (roll_str =~ /\-\d+[d|D]/)  # contains '-<number>D'
-         str = roll_str.gsub(/(\d+)[d|D]/) {|s| (s.to_i - 1).to_s + 'D'}
-         str = str.gsub(/\-0[d|D]6?/,"") # remove -0D modifier, if there is one
-      elsif (roll_str =~ /[+|-]\d+/)  # only contains '+/-<number modifier>'
-         str = roll_str.gsub(/([+|-]\d+)/, '+1D\1')  # add +1D modifier before numerical modifier
-      else
-         str = roll_str + "+1D"
+    def self.add_modifier_dice(roll_str, modifier)
+      # extract dice from roll_str
+      if (roll_str =~ /[\+|-]\d+[d|D]/)  # contains '+ or -<number>D'
+         dice_substr = roll_str.match(/(?<factor>[\+|-])(?<dicenum>\d+)[d|D]/)
+         dice = (dice_substr[:factor] == "-") ? dice_substr[:dicenum].to_i * (-1) : dice_substr[:dicenum].to_i
+         str = roll_str.gsub(/([\+|-]\d+[d|D])/, "")   # <-- this is the stripped string without the dice substring, to be used later
+      else 
+         dice = 0
+         str = roll_str
+      end
+      # calculate new modifier dice
+      result = dice + modifier
+      if (result != 0)
+         operand = (result > 0) ? "+" : ""    # when negative, the '-' is already part of the result
+      # build result roll string
+         if (str =~ /[+|-]\d+/)  # contains '+/-<numerical modifier>'
+            str = str.gsub(/([+|-]\d+)/, operand + result.to_s + 'D\1')  # add +1D modifier before numerical modifier
+         else
+            str = str + operand + result.to_s + "D"
+         end
       end
       return str
     end
@@ -252,6 +262,15 @@ module AresMUSH
                  :max => Global.read_config("d6system", "roll_max_dice")
               ) + "%r"
           end
+          modifier1 = D6System.get_wound_modifier(char1)
+          if (modifier1 != 0)
+              vs_roll1 = D6System.add_modifier_dice(vs_roll1, modifier1)
+              message = message + t('d6system.wound_modifier',
+                :name => char1.name,
+                :level => char1.wound_level.downcase,
+                :modifier => modifier1
+              ) + "%r"
+          end
         end
 
         if (char2)
@@ -261,10 +280,20 @@ module AresMUSH
                  :max => Global.read_config("d6system", "roll_max_dice")
               ) + "%r"
           end
+          modifier2 = D6System.get_wound_modifier(char2)
+          if (modifier2 != 0)
+              vs_roll2 = D6System.add_modifier_dice(vs_roll2, modifier2)
+              message = message + t('d6system.wound_modifier',
+                :name => char2.name,
+                :level => char2.wound_level.downcase,
+                :modifier => modifier2
+              ) + "%r"
+          end
         end
 
-        message = emit_opposed_roll(vs_name1, vs_roll1, vs_name2, vs_roll2, enactor)
-        return { error: "That is not a valid roll." } if !message
+        message_roll = emit_opposed_roll(vs_name1, vs_roll1, vs_name2, vs_roll2, enactor)
+        return { error: "That is not a valid roll." } if !message_roll
+        message = message + message_roll
 
       # ------------------
       # SIMPLE ROLL 
@@ -284,13 +313,24 @@ module AresMUSH
                  :max => Global.read_config("d6system", "roll_max_dice")
               ) + "%r"
            end
+
+           modifier = D6System.get_wound_modifier(char)
+           if (modifier != 0)
+               pc_ability = D6System.add_modifier_dice(pc_ability, modifier)
+               message = message + t('d6system.wound_modifier',
+                 :name => char.name,
+                 :level => char.wound_level.downcase,
+                 :modifier => modifier
+               ) + "%r"
+           end
+
            if cp_roll
               if ( (char.char_points > 0) && (char == enactor) )
                  char.update(char_points: char.char_points - 1)
                  Achievements.award_achievement(char, "d6_cp_spent")
                  message = message + t('d6system.spends_char_point',
                   :name => char ? char.name : enactor.name) + "%r"
-                 pc_ability = add_cp_die(pc_ability)  # modify roll_str, add 1D to it.
+                 pc_ability = add_modifier_dice(pc_ability, 1)  # modify roll_str, add 1D to it.
               else
                  message = message + t('d6system.no_cp_point', :name => char ? char.name : enactor.name) + "%r"
               end

@@ -29,6 +29,7 @@ module AresMUSH
           return
         end
 
+        # roll limit
         if (char1)
           if D6System.exceeds_roll_limit(char1, self.roll_str1)
               message = message + t('d6system.exceeds_roll_limit',
@@ -37,7 +38,6 @@ module AresMUSH
               ) + "%r"
           end
         end
-
         if (char2)
           if D6System.exceeds_roll_limit(char2, self.roll_str2)
               message = message + t('d6system.exceeds_roll_limit',
@@ -47,6 +47,26 @@ module AresMUSH
           end
         end
           
+        # wound modifier
+        modifier1 = D6System.get_wound_modifier(char1)
+        if (modifier1 != 0)
+           self.roll_str1 = D6System.add_modifier_dice(self.roll_str1, modifier1)
+           message = message + t('d6system.wound_modifier',
+             :name => char1.name,
+             :level => char1.wound_level.downcase,
+             :modifier => modifier1
+           ) + "%r"
+        end
+        modifier2 = D6System.get_wound_modifier(char2)
+        if (modifier2 != 0)
+           self.roll_str2 = D6System.add_modifier_dice(self.roll_str2, modifier2)
+           message = message + t('d6system.wound_modifier',
+             :name => char2.name,
+             :level => char2.wound_level.downcase,
+             :modifier => modifier2
+           ) + "%r"
+        end
+
         roll_msg = D6System.emit_opposed_roll(self.name1, self.roll_str1, self.name2, self.roll_str2, enactor)
         if !roll_msg
           client.emit_failure t('d6system.unknown_roll_params')

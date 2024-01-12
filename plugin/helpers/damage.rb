@@ -84,6 +84,13 @@ module AresMUSH
       return "N/A"
     end
 
+    def self.get_wound_modifier(char)
+       i = level_names.index(char.wound_level)
+       effect = wound_levels[i]["effect"]
+       mod = ((effect =~ /-\d[d|D]/) == nil) ? 0 : effect.match(/-(?<num>\d)[d|D]/)[:num]
+       return mod.to_i * (-1)
+    end
+
     def self.general_field(char, field_type, value)
       case field_type
 

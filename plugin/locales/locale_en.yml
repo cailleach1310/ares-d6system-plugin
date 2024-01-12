@@ -64,6 +64,7 @@ en:
         no_fate_point: "%xc<D6>%xn %{name} tries to spend a fate point but doesn't have any left!"
         no_cp_point: "%xc<D6>%xn %{name} tries to spend a char point but doesn't have any left!"
         exceeds_roll_limit: "%xc<D6>%xn Enforcing house rule: %{name}'s roll dice are reduced to dice max %{max}."
+        wound_modifier: "%xc<D6>%xn %{name} is %{level}, a modifier of %{modifier}D will be applied to the roll."
 
         num_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn %r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn Total result: %{total}"
         simple_roll_result: "%xc<D6>%xn %{name} checks %xc%{roll}%xn%{details}.%r%xc<D6>%xn %{name} rolls %{dice}%r%xc<D6>%xn %{success} Total result: %{total}"
