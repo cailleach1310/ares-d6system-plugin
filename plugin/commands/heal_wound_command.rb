@@ -48,6 +48,18 @@ module AresMUSH
 
         # get difficulty of wound level
         assist_diff = D6System.get_assisted_difficulty(wound_level)
+
+        # apply wound modifiers - in case the healer is not at full health
+        modifier = D6System.get_wound_modifier(enactor)
+        if (modifier != 0)
+           roll_str = D6System.add_modifier_dice(roll_str, modifier)
+           message = message + t('d6system.wound_modifier',
+             :name => enactor.name,
+             :level => enactor.wound_level.downcase,
+             :modifier => modifier
+           ) + "%r"              
+        end
+
         # char point spent?
         if self.cp_roll
            if (enactor.char_points > 0)
@@ -55,7 +67,7 @@ module AresMUSH
               Achievements.award_achievement(enactor, "d6_cp_spent")
               message = message + t('d6system.spends_char_point',
                 :name => enactor.name) + "%r"
-              roll_str = D6System.add_cp_die(roll_str)  # modify roll_str, add 1D to it.
+              roll_str = D6System.add_modifier_dice(roll_str, 1)  # modify roll_str, add 1D to it.
            else
               message = message + t('d6system.no_cp_point', :name => enactor.name) + "%r"
            end
