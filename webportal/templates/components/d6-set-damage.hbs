@@ -4,11 +4,13 @@
        <p>Select a character and a wound level, or type the info into the boxes.</p>
 
        <br>Character: 
+       {{#if this.scene}}
        <select onchange={{action (mut this.nameString) value="target.value"}}>
        {{#each this.scene.participants as |char|}}
            <option value={{char.name}}>{{char.name}}</option>
        {{/each}}
        </select>
+       {{/if}}
     <Input @type="text" size={{25}} id="nameString" @enter={{action "setDamage"}} @value={{this.nameString}} />
 
      <br>Wound Level:

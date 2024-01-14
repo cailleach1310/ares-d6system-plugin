@@ -114,13 +114,13 @@ module AresMUSH
       end
     end
 
-    def self.set_scene_damage_web(request, enactor)
-      scene = Scene[request.args[:id]]
+    def self.set_damage_web(request, enactor, type)
+      target =  (type == 'scene') ? Scene[request.args[:id]] : Job[request.args[:id]]
       char_name = request.args[:char_name]
       wound_level = request.args[:wound_level] 
       return { error: t('dispatcher.not_allowed') } if !enactor.has_permission?("manage_damage")
       
-      if (!scene)
+      if (!target)
         return { error: t('webportal.not_found') }
       end
 
@@ -133,6 +133,73 @@ module AresMUSH
        D6System.wound_set(char, wound_level)
        message = "#{enactor.name} sets #{char.name}'s wound level to #{char.wound_level}."
        return { message: message }
+    end
+
+    def self.web_natural_heal(request, enactor)
+      job = Job[request.args[:id]]
+      char_name = enactor.name
+      wound_level = enactor.wound_level
+      fate_roll = request.args[:fate] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      cp_roll = request.args[:cp] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      message = ""
+      natural_diff = D6System.get_natural_difficulty(wound_level)
+      roll_str = request.args[:roll_str]
+      # char point spent?
+      if cp_roll
+         if (enactor.char_points > 0)
+            enactor.update(char_points: enactor.char_points - 1)
+            Achievements.award_achievement(enactor, "d6_cp_spent")
+            message = message + t('d6system.spends_char_point',
+              :name => enactor.name) + "%r"
+            roll_str = D6System.add_modifier_dice(roll_str, 1)  # modify roll_str, add 1D to it.
+         else
+            message = message + t('d6system.no_cp_point', :name => enactor.name) + "%r"
+         end
+      end
+      # calculate roll
+      dice_result = D6System.parse_and_roll(enactor, roll_str)
+      overall_result = D6System.get_result(dice_result[:dice_roll])
+
+      # fate roll ?
+      if fate_roll
+         if (enactor.fate_points > 0)
+            enactor.update(fate_points: enactor.fate_points - 1)
+            message = message + t('d6system.spends_fate_point',
+              :name => enactor.name) + "%r"
+         else
+            message = message + t('d6system.no_fate_point', :name => enactor.name) + "%r"
+            fate_roll = false
+         end
+      end
+
+      overall_total = fate_roll ? overall_result * 2 : overall_result
+      simple_success = D6System.get_success_title(dice_result[:dice_roll])
+      success_title = (simple_success != "%xrCritical Failure!%xn") ? D6System.get_diff_success_title(overall_total - natural_diff) : simple_success
+      Global.logger.debug "success title: #{success_title}, overall total: #{overall_total}, natural_diff: #{natural_diff}"
+      message = message + t('d6system.difficulty_roll_result',
+        :name => enactor.name,
+        :roll => roll_str,
+        :dice => D6System.print_dice(dice_result[:dice_roll]),
+        :details => dice_result[:roll_details],
+        :total => overall_total,
+        :diff_result => success_title,
+        :difficulty => natural_diff
+        )
+      # evaluate result
+      if (success_title == "%xrCritical Failure!%xn")
+         D6System.wound_worsen(enactor)
+         Global.logger.info "#{enactor.name} critically fails the natural healing roll. New wound level is #{enactor.wound_level}."
+         message = message + "%r" + t('d6system.natural_heal_crit_fail', :name => enactor.name, :wound_level => enactor.wound_level.downcase)
+      elsif (overall_total >= natural_diff)
+         D6System.wound_heal(enactor)
+         Global.logger.info "#{enactor.name} recovers from natural healing to wound level #{enactor.wound_level}."
+         message = message + "%r" + t('d6system.natural_char_healed', :name => enactor.name, :wound_level => enactor.wound_level.downcase)
+      else
+         Global.logger.info "#{enactor.name} tries to recover from natural healing but fails."
+         message = message + "%r" + t('d6system.natural_heal_failed', :name => enactor.name, :wound_level => enactorr.wound_level.downcase)
+      end
+
+      return { message: message }
     end
 
     def self.web_heal(request, enactor)
@@ -171,6 +238,16 @@ module AresMUSH
 
       # get difficulty of wound level
       assist_diff = D6System.get_assisted_difficulty(wound_level)
+      # healer has wound level modifier?
+      modifier = D6System.get_wound_modifier(enactor)
+      if (modifier != 0)
+         roll_str = D6System.add_modifier_dice(roll_str, modifier)
+         message = message + t('d6system.wound_modifier',
+           :name => enactor.name,
+           :level => enactor.wound_level.downcase,
+           :modifier => modifier
+         ) + "%r"              
+      end
       # char point spent?
       if cp_roll
          if (enactor.char_points > 0)
@@ -178,7 +255,7 @@ module AresMUSH
             Achievements.award_achievement(enactor, "d6_cp_spent")
             message = message + t('d6system.spends_char_point',
               :name => enactor.name) + "%r"
-            roll_str = D6System.add_cp_die(roll_str)  # modify roll_str, add 1D to it.
+            roll_str = D6System.add_modifier_dice(roll_str, 1)  # modify roll_str, add 1D to it.
          else
             message = message + t('d6system.no_cp_point', :name => enactor.name) + "%r"
          end

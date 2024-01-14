@@ -32,7 +32,7 @@ module AresMUSH
           return { error: t('scenes.scene_already_completed') }
         end
         
-        result = D6System.set_scene_damage_web(request, sender)
+        result = D6System.set_damage_web(request, sender, 'scene')
         
         return result if result[:error]
 

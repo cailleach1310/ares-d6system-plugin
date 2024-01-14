@@ -81,4 +81,7 @@ en:
         char_healed: "%{enactor} heals %{name}, improving %{name}'s wound level to %{wound_level}."
         heal_failed: "%{enactor} tries to heal %{name} but fails."
         heal_crit_fail: "%{enactor} worsens %{name}'s wound level to %{wound_level}."
+        natural_char_healed: "%{name} recovers and is now %{wound_level}."
+        natural_heal_failed: "%{name} tries to recover but fails, remaining %{wound_level}."
+        natural_heal_crit_fail: "%{name}'s state worsens to %{wound_level}."
         wait_heal: "You have to wait at least %{hours} hours after your last healing attempt on %{name} until you can try again."

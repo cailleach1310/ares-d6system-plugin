@@ -1,0 +1,12 @@
+<BsModalSimple @title="Natural Healing" @closeTitle="Cancel" @submitTitle="Roll Natural Heal" @size={{null}} @fade={{true}} @open={{this.selectNaturalHeal}} @onSubmit={{action "rollNaturalHeal"}} @onHide={{action (mut this.selectNaturalHeal) false}}>
+ <p>Use this option for the Natural Healing Roll job. Specify any modifiers (not wound modifiers!) in the box below.</p>
+  <b>Roll Specifics</b>: 
+   <Input @type="text" size={{25}} id="rollString" @enter={{action "rollNaturalHeal"}} @value={{this.rollString}} />
+<br><br>
+    {{#if this.fatePoints}}
+       Spend a fate point: <Input @type="checkbox" @checked={{this.healFate}} />
+   {{/if}}
+    {{#if this.charPoints}}
+       Spend a char point: <Input @type="checkbox" @checked={{this.healCp}} />
+   {{/if}}
+ </BsModalSimple>
