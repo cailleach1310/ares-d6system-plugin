@@ -39,6 +39,7 @@ module AresMUSH
     end
 
     def self.get_natural_difficulty(level)
+       return nil if !level
        i = level_names.index(level)
        return wound_levels[i]["natural_diff"]
     end
