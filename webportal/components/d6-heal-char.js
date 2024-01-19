@@ -14,7 +14,8 @@ export default Component.extend({
 
     didInsertElement: function() {
       this._super(...arguments);
-      let defaultName = this.scene.participants[0].name;
+      let defaultChar = this.scene ? this.scene.participants[0] : null;
+      let defaultName = defaultChar ? defaultChar.name : null;
       this.set('healName', defaultName);
     },
 
@@ -23,8 +24,8 @@ export default Component.extend({
       
       healChar() {
         let api = this.gameApi;
-        let defaultName = this.scene.participants[0];
-      
+        let defaultChar = this.scene ? this.scene.participants[0] : null;
+        let defaultName = defaultChar ? defaultChar.name : null;
         // Needed because the onChange event doesn't get triggered when the list is 
         // first loaded, so the roll string is empty.
         let healName = this.healName || defaultName;

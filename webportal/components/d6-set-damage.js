@@ -15,9 +15,12 @@ export default Component.extend({
       this._super(...arguments);
       let defaultDamage = this.woundLevels ? this.woundLevels[0] : '';
       this.set('damageString', defaultDamage);
-      let defaultName = this.scene ? this.scene.participants[0].name : null;
+      let defaultChar = this.scene ? this.scene.participants[0] : null;
+      let defaultName = defaultChar ? defaultChar.name : null;
       this.set('nameString', defaultName);
     },
+
+
 
 
     actions: { 
@@ -25,7 +28,8 @@ export default Component.extend({
       setDamage() {
         let api = this.gameApi;
         let defaultDamage = this.woundLevels ? this.woundLevels[0] : '';
-        let defaultName = this.scene ? this.scene.participants[0].name : null;
+        let defaultChar = this.scene ? this.scene.participants[0] : null;
+        let defaultName = defaultChar ? defaultChar.name : null;
       
         // Needed because the onChange event doesn't get triggered when the list is 
         // first loaded, so the roll string is empty.

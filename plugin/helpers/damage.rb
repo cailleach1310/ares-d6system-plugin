@@ -159,6 +159,7 @@ module AresMUSH
       end
       # calculate roll
       dice_result = D6System.parse_and_roll(enactor, roll_str)
+      return { error: "That is not a valid roll." } if !dice_result
       overall_result = D6System.get_result(dice_result[:dice_roll])
 
       # fate roll ?
@@ -197,7 +198,7 @@ module AresMUSH
          message = message + "%r" + t('d6system.natural_char_healed', :name => enactor.name, :wound_level => enactor.wound_level.downcase)
       else
          Global.logger.info "#{enactor.name} tries to recover from natural healing but fails."
-         message = message + "%r" + t('d6system.natural_heal_failed', :name => enactor.name, :wound_level => enactorr.wound_level.downcase)
+         message = message + "%r" + t('d6system.natural_heal_failed', :name => enactor.name, :wound_level => enactor.wound_level.downcase)
       end
 
       return { message: message }
