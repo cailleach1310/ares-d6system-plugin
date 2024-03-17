@@ -33,6 +33,13 @@ This plugin is compatible with AresMUSH v1.0.9 (ember 4) upwards. When upgrading
 
 If you want to use this plugin but you are running on AresMUSH < 1.0.9, you may have to have a look at d6-chargen-option.js and comment out / remove the new code ( marked as 'ember 4' in the comments ) and uncomment the code for older ember versions.
 
+### Migrating Chars from a Previous Plugin Install
+If you are updating your plugin to this version, make sure to have a recent AresMUSH backup of your game, in case things go wrong. Run the following command from the game client after re-installing the plugin, using an admin or coder bit:
+
+       ruby D6System.migrate_all()
+       
+Check the output, to make sure all ratings were transformed correctly.
+
 ## Screenshots
 
 ### Game Sheet
