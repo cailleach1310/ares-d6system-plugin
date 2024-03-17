@@ -2,18 +2,28 @@ module AresMUSH
   module D6System
 
     def self.migrate_all()
-       summary = "Starting migration..."
        Global.logger.info "Starting migration of characters to new D6System combined ratings."
        Character.all.each do |c|
          if !is_migrated(c.name)
             char_migration_message = migrate_char(c.name)
             Global.logger.info char_migration_message
-            summary = summary + "%r" + char_migration_message
-         else
-           Global.logger.info "Skipping #{c.name}, already migrated."
-         end
+        else
+          Global.logger.info "Skipping #{c.name}, already migrated."
+        end
+      end 
+    end
+
+    def self.test_migration(char_name)
+       summary = "Listing skills:%r"
+       char = Character.named(char_name)
+       return "Character not found." if !char
+       char.d6skills.each do |skill|
+          summary = summary + "%r * #{skill.name}: #{skill.rating}"
        end
-       return summary 
+       char.d6specializations.each do |skill|
+          summary = summary + "%r * #{skill.name}: #{skill.rating}"
+       end
+       return summary
     end
 
     def self.is_migrated(char_name)
@@ -23,6 +33,13 @@ module AresMUSH
           if (skill.rating == "0D+0")
              return false
           end
+       end
+       char.d6specializations.each do |spec|
+          spec_rating = ability_rating(char, spec.name)
+          skill_rating = ability_rating(char, spec.skill)
+          if skill_rating >= spec_rating
+             return false
+          end  
        end
        return true
     end

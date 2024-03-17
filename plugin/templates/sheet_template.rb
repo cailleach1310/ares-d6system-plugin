@@ -26,13 +26,9 @@ module AresMUSH
       end
 
       def specializations
-       list = []
-#       length = @char.d6specializations.count
-        @char.d6specializations.each_with_index do |a, i| 
-          if (a)
-#             (i == (length-1) ) && length.odd? ? list << format_specialization(a, i) + "%r" : list << format_specialization(a, i) 
-             list << format_specialization(a, i)
-          end
+        list = []
+        @char.d6specializations.each_with_index do |a,i| 
+           list << format_specialization(a,i)
         end   
         list     
       end

@@ -41,7 +41,7 @@ en:
         missing_starting_ability: "%xh%xy< Missing %{ability} at rating %{rating} or higher. >%xn"
         
         # Ability Raises
-        cp_ability_raised: "You've raised %{name}'s %{ability} to %{rating} at the cost of %{cost} char points."
+        cp_ability_raised: "%{enactor} has raised %{name}'s %{ability} to %{rating} at the cost of %{cost} char points."
         not_enough_cp: "%{name} needs %{cost} char points to raise %{ability} but has only %{points} points left."
 
         # Rolls

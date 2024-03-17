@@ -66,11 +66,11 @@
     {{#each this.char.attrs as |attribute index|}}
      {{#if (eq index 0)}}
      <div role="tabpanel" class="tab-pane active" id="d6{{attribute.name}}">
-        <D6ChargenSkills @skills={{this.char.skills}} @attribute={{attribute.name}} @max={{this.cg_info.max_skill_dice}} @updated={{action "abilityChanged"}}/>
+        <D6ChargenSkills @skills={{this.char.skills}} @attribute={{attribute.name}} @attrRating={{attribute.rating}} @max={{this.cg_info.max_skill_dice}} @updated={{action "abilityChanged"}}/>
     </div>
      {{else}}
      <div role="tabpanel" class="tab-pane" id="d6{{attribute.name}}">
-        <D6ChargenSkills @skills={{this.char.skills}} @attribute={{attribute.name}} @max={{this.cg_info.max_skill_dice}} @updated={{action "abilityChanged"}}/>
+        <D6ChargenSkills @skills={{this.char.skills}} @attribute={{attribute.name}} @attrRating={{attribute.rating}} @max={{this.cg_info.max_skill_dice}} @updated={{action "abilityChanged"}}/>
     </div>
    {{/if}}
    {{/each}}
@@ -95,9 +95,9 @@
      <br>
 
      {{#each this.char.specializations as |spec|}}
-     {{#if (eq spec.rating "0D+0")}}
+     {{#if (eq spec.rating spec.base_rating)}}
      {{else}}
-       <D6Skillbox @rating={{spec.rating}} @maxRating={{this.cg_info.max_skill_dice}} @updated={{action "abilityChanged"}}>
+       <D6Skillbox @rating={{spec.rating}} @baseRating={{spec.base_rating}} @maxDice={{this.cg_info.max_skill_dice}} @updated={{action "abilityChanged"}}>
           <b>{{spec.name}}</b>
        </D6Skillbox>
      {{/if}}
@@ -138,5 +138,6 @@
        {{/each}}
        </select>
     <Input @type="text" size={{25}} id="specSkillString" @enter={{action "addSpecialization"}} @value={{this.specSkillString}} />
+    Base rating: {{this.getSpecBase}}
   </BsModalSimple>
 
