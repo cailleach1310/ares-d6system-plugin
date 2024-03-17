@@ -56,34 +56,10 @@ module AresMUSH
             client.emit_failure error
           end
         end
-        if (ability_type == :attribute)    # When raising or lowering attributes, make sure to adjust related skills and specializations
-          # adjust all learned skills 
-          related_skills = D6System.skill_list(enactor, self.name, false)
-          related_skills.each do |skill|
-             client.emit "Adjusting " + skill['name']
-             new_rating = D6System.change_ability(skill['rating'], cmd.root)
-             D6System.set_ability(enactor, skill['name'], new_rating)
-          end
-          # adjust specializations of all linked skills (not just those that have been learned)
-          linked_skills = D6System.skills.select { |s| (s['linked_attr'] == self.name) }.map { |skill| skill['name'] }
-          linked_skills.each do |skill|
-             related_specs = D6System.related_specs(enactor, skill)
-             related_specs.each do |spec|
-                client.emit "Adjusting " + spec.name
-                new_rating = D6System.change_ability(spec.rating, cmd.root)
-                D6System.set_ability(enactor, spec.name, new_rating)
-             end
-          end
-        else
-          if (ability_type == :skill)    # When raising or lowering skills, make sure to adjust related specializations
-             # adjust linked specializations
-             related_specs = D6System.related_specs(enactor, self.name)
-             related_specs.each do |spec|
-                client.emit "Adjusting " + spec.name
-                new_rating = D6System.change_ability(spec.rating, cmd.root)
-                D6System.set_ability(enactor, spec.name, new_rating)
-             end
-          end
+        related_abilities = D6System.get_related_list(enactor, self.name)
+        related_abilities.each do |a|
+          new_rating = D6System.change_ability(D6System.ability_rating(enactor, a), cmd.root)
+          D6System.set_ability(enactor, a, new_rating)
         end
         client.emit_success D6System.ability_raised_text(enactor, self.name)
       end
