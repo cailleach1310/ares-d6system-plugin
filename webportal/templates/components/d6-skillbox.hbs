@@ -5,13 +5,17 @@
 
   <div class="col col-sm-5">
     <div class="fs3-rating-control">
+   {{#if (eq this.rating '0D+0') }}
+      <button class="fs3-skillbutton" {{action "learn"}}>learn</button>
+    {{else}}
       <button class="fs3-skillbutton" {{action "lower"}}>-</button>
 
       <div class="fs3-rating-display">
-        {{this.rating}}
+         {{this.combinedRating}} ({{this.rating}})
       </div>
 
       <button class="fs3-skillbutton" {{action "raise"}}>+</button>
+    {{/if}}
     </div>
     
   </div>

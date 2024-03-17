@@ -5,24 +5,24 @@ module AresMUSH
       ability = roll_params.ability
       ability_type = D6System.get_ability_type(ability)
       skill_rating = D6System.ability_rating(char, ability)
+      apt_rating = "0D+0"
       if (ability_type == :specialization)
         spec = find_ability(char, ability)
         skill = spec.skill
-        skill_rating = add_dice(skill_rating, D6System.ability_rating(char, skill),0)  # spec rating + base skill rating
       else
         skill = ability 
       end
-      linked_attr = roll_params.linked_attr || D6System.get_linked_attr(skill)
-      
-      if (ability_type == :attribute && !linked_attr)
-        skill_rating = "0D+0"
-        linked_attr = ability
+      if roll_params.linked_attr
+         linked_attr = D6System.get_linked_attr(skill)
+         if (linked_attr != roll_params.linked_attr)
+            skill_rating = sub_dice(skill_rating, D6System.ability_rating(char, linked_attr))   # remove linked_attr dice from the rating
+            apt_rating = D6System.ability_rating(char, roll_params.linked_attr)                 # add attribute speficied in the roll 
+         end 
       end
       
-      apt_rating = linked_attr ? D6System.ability_rating(char, linked_attr) : '0D+0'
-      
       max_dice = Global.read_config("d6system", "roll_max_dice")
-      dice = ( max_dice == {} ) || !dice_gt_max(add_dice(skill_rating, apt_rating, 0), max_dice) ? add_dice(skill_rating, apt_rating, roll_params.dice) : add_dice(max_dice, "0D+0", roll_params.dice)
+      rating = add_dice(skill_rating, apt_rating, 0)
+      dice = ( max_dice == {} ) || !dice_gt_max(rating, max_dice) ? add_dice(skill_rating, apt_rating, roll_params.dice) : add_dice(max_dice, "0D+0", roll_params.dice)
       Global.logger.debug "#{char.name} rolling #{ability} dice=#{roll_params.dice} pips=#{roll_params.pips} skill=#{skill_rating} linked_attr=#{linked_attr} apt=#{apt_rating}"
       
       dice
@@ -33,6 +33,14 @@ module AresMUSH
        pips_sum = dice1.split("+")[1].to_i + dice2.split("+")[1].to_i
        dice_sum = dice_sum + pips_sum / 3 + modifier
        return dice_sum.to_s + "D+" + (pips_sum % 3).to_s
+    end
+
+    def self.sub_dice(dice1, dice2)
+       dice_diff = dice1.split("D")[0].to_i - dice2.split("D")[0].to_i
+       pips_diff = dice1.split("+")[1].to_i - dice2.split("+")[1].to_i
+       dice_diff = (pips_diff < 0) ? dice_diff - 1 : dice_diff
+       pips_diff = (pips_diff < 0) ? pips_diff + 3 : pips_diff 
+       return dice_diff.to_s + "D+" + pips_diff.to_s
     end
 
     def self.dice_gt_max(sum, max)
@@ -102,7 +110,7 @@ module AresMUSH
       end
 
       linked_attr = match[:attr].nil? ? nil : match[:attr][1..-1].strip
-      dice = match[:dice].nil? ? 0 : match[:dice].gsub(/[\s+|d|D]6?/, "").to_i  # convert '+2d6' to 2
+      dice = match[:dice].nil? ? 0 : match[:dice].gsub(/[\s+|d|D]6?/, "").to_i  # for example convert '+2d6' to 2
       pips = match[:pips].nil? ? 0 : match[:pips].gsub(/\s+/, "").to_i
 
       if (linked_attr)

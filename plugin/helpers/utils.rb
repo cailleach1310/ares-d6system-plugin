@@ -113,6 +113,7 @@ module AresMUSH
     end
 
     def self.find_ability(char, ability_name)
+      return nil if !ability_name
       ability_name = ability_name.titlecase
       ability_type = get_ability_type(ability_name)
       case ability_type
@@ -159,15 +160,37 @@ module AresMUSH
             if (chargen)
                abilities << { 'name' => m['name'], 'rating' => dice_str, 'desc' => m['desc'], 'linked_attr' => attr }
             else
-               if !D6System.extranormal_attributes.include?(attr)
-                  abilities << { 'name' => m['name'], 'rating' => dice_str }
-               elsif ((D6System.get_dice(dice_str) > 0) || (D6System.get_pips(dice_str) > 0))
+               if ((D6System.get_dice(dice_str) > 0) || (D6System.get_pips(dice_str) > 0))
                   abilities << { 'name' => m['name'], 'rating' => dice_str }
                end
             end
          end
       end
       return abilities.sort_by { |a| a['name'] }
+    end
+
+    def self.change_ability(rating, mode)
+      dice = D6System.get_dice(rating)
+      pips = D6System.get_pips(rating)
+ 
+     if (mode == "raise")
+       if (pips == 2)
+         new_dice = dice + 1
+         new_pips = 0
+       else
+         new_pips = pips + 1
+         new_dice = dice
+       end
+     elsif (mode == "lower")
+       if (pips == 0)
+          new_dice = dice - 1
+          new_pips = 2
+       else
+          new_pips = pips - 1
+          new_dice = dice
+       end
+     end
+     return new_dice.to_s + 'D+' + new_pips.to_s       
     end
 
   end

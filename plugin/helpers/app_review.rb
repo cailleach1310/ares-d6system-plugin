@@ -22,20 +22,19 @@ module AresMUSH
 
     def self.abilities_not_set(char)
        normal_attributes = D6System.attributes.size - D6System.extranormal_attributes.size
-       return char.d6attributes.empty? || (D6System.dice_spent(char.d6attributes) < normal_attributes)
+       return char.d6attributes.empty? || (D6System.dice_spent(char, char.d6attributes, "attributes") < normal_attributes)
     end
 
     def self.points_overview(char)
        msg = ""
-       max = Global.read_config("d6system", "creation_points")
        msg = msg + "Spent points:"
-       msg = msg + "%r* Attributes: ".ljust(23," ") + (dice_spent(char.d6attributes)*4).to_s.rjust(3," ")
-       msg = msg + "%r* Skills: ".ljust(23," ") + dice_spent(char.d6skills).to_s.rjust(3," ")
-       msg = msg + "%r* Specializations: ".ljust(23," ") + (dice_spent(char.d6specializations)/3.to_f).ceil.to_s.rjust(3," ")
+       msg = msg + "%r* Attributes: ".ljust(23," ") + (dice_spent(char, char.d6attributes, "attributes")*4).to_s.rjust(3," ")
+       msg = msg + "%r* Skills: ".ljust(23," ") + dice_spent(char, char.d6skills, "skills").to_s.rjust(3," ")
+       msg = msg + "%r* Specializations: ".ljust(23," ") + (dice_spent(char, char.d6specializations, "specializations")/3.to_f).ceil.to_s.rjust(3," ")
        msg = msg + "%r* Advantages: ".ljust(23," ") + count_points(char.d6advantages).to_s.rjust(3," ")
        msg = msg + "%r* Disadvantages: ".ljust(23," ") + (count_points(char.d6disadvantages)* (-1)).to_s.rjust(3," ")
        msg = msg + "%r* Special Abilities: ".ljust(23," ") + count_specials_points(char).to_s.rjust(3," ")
-       msg = msg + "%r* Total: ".ljust(23," ") + spent_total(char).to_s.rjust(3," ") + " / " + max.to_s
+       msg = msg + "%r* Total: ".ljust(23," ") + spent_total(char).to_s.rjust(3," ") + " / " + Global.read_config("d6system","creation_points").to_s
        return msg
     end
 
@@ -50,20 +49,20 @@ module AresMUSH
           msg = msg + "%r" + t('d6system.too_many_points_spent', :total => spent_total(char), :max => cp )
        end
        max_attr_dice = Global.read_config("d6system","max_attr_dice_total")
-       if (dice_spent(char.d6attributes) > max_attr_dice)
-          msg = msg + "%r" + t('d6system.too_many_attr_dice', :total => dice_spent(char.d6attributes), :max => max_attr_dice )
+       if (dice_spent(char, char.d6attributes, "attributes") > max_attr_dice)
+          msg = msg + "%r" + t('d6system.too_many_attr_dice', :total => dice_spent(char, char.d6attributes, "attributes"), :max => max_attr_dice )
        end
        max_skill_dice = Global.read_config("d6system","max_skill_dice_total")
-       if (dice_spent(char.d6skills) > max_skill_dice)
-          msg = msg + "%r" + t('d6system.too_many_skill_dice', :total => dice_spent(char.d6skills), :max => max_skill_dice )
+       if (dice_spent(char, char.d6skills, "skills") > max_skill_dice)
+          msg = msg + "%r" + t('d6system.too_many_skill_dice', :total => dice_spent(char, char.d6skills, "skills"), :max => max_skill_dice )
        end
        return msg
      end
 
     def self.spent_total(char)
-      attr_total_dice = dice_spent(char.d6attributes)
-      skill_total_dice = dice_spent(char.d6skills)
-      spec_total_dice = dice_spent(char.d6specializations)
+      attr_total_dice = dice_spent(char, char.d6attributes, "attributes")
+      skill_total_dice = dice_spent(char, char.d6skills, "skills")
+      spec_total_dice = dice_spent(char, char.d6specializations, "specializations")
       adv_total = count_points(char.d6advantages)
       dis_total = count_points(char.d6disadvantages)
       spec_abilities_total = count_specials_points(char)
@@ -71,10 +70,18 @@ module AresMUSH
       return sum
     end
 
-    def self.dice_spent(list)
+    def self.dice_spent(char, list, type)
       total_dice = '0D+0'
       list.each do |a|
-        total_dice = D6System.add_dice(total_dice, a.rating, 0)
+        case type
+        when "attributes"
+          rating = a.rating
+        when "skills"
+          rating = D6System.sub_dice(a.rating, D6System.ability_rating(char, D6System.get_linked_attr(a.name)))
+        when "specializations"
+          rating = D6System.sub_dice(a.rating, D6System.ability_rating(char, a.skill))
+        end
+        total_dice = D6System.add_dice(total_dice, rating, 0)
       end
       dice_spent = (D6System.get_pips(total_dice) > 0) ? D6System.get_dice(total_dice) + 1 : D6System.get_dice(total_dice)
     end

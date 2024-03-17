@@ -58,6 +58,8 @@ module AresMUSH
             return PointsAwardCmd
           when "raise"
             return CpRaiseCmd
+          when "spec"
+            return CpAddSpecCmd
         end
       when "heal"
         return HealWoundCmd
@@ -90,6 +92,10 @@ module AresMUSH
         return HealCharRequestHandler
       when "setSceneDamage"
         return SetSceneDamageRequestHandler
+      when "setJobDamage"
+        return SetJobDamageRequestHandler
+      when "rollNaturalHealJob"
+        return NaturalHealJobRequestHandler
       when "resetD6Abilities"
         return ResetAbilitiesRequestHandler
       when "woundLevels"
