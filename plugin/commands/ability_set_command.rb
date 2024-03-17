@@ -37,7 +37,7 @@ module AresMUSH
            return
         end
 
-        error = D6System.check_dice(self.name, self.dice, self.pips)
+        error = D6System.check_dice(enactor, self.name, self.dice, self.pips)
         if (error)
           client.emit_failure error
           return

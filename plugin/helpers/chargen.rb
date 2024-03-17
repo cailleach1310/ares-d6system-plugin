@@ -2,7 +2,11 @@ module AresMUSH
   module D6System
 
     def self.init_specialization(char, spec, skill)
-      D6Specialization.create(character: char, name: spec, skill: skill, rating: '0D+1')
+      rating = ability_rating(char, skill)
+      rating = (rating != '0D') ? rating : linked_rating(char, skill)
+      start_rating = D6System.add_dice(rating, "0D+1", 0)
+      Global.logger.debug "Creating #{spec} as specialization of #{skill} at rating #{start_rating}"
+      D6Specialization.create(character: char, name: spec, skill: skill, rating: start_rating)
     end
 
     # use this for setting attributes, skills and existing specializations
@@ -54,16 +58,15 @@ module AresMUSH
       return nil
     end
 
-    def self.check_dice(ability_name, dice, pips)
+    def self.check_dice(char, ability_name, dice, pips)
       # extranormal being the exception for both attributes and skills
       return nil if (D6System.extranormal_attributes.include?(ability_name) || D6System.extranormal_attributes.include?(D6System.get_linked_attr(ability_name)))  
-      ability_type = D6System.get_ability_type(ability_name)
-      min_dice = D6System.get_min_value(ability_type)
-      max_dice = D6System.get_max_value(ability_type)
+      test_dice = dice.to_s + "D+" + pips.to_s
+      min_dice = D6System.get_min_value(char, ability_name)
+      max_dice = D6System.get_max_value(char, ability_name)
 
-      return t('d6system.max_dice_is', :name => ability_name, :max => max_dice) if (dice > max_dice)
-      return t('d6system.max_dice_is', :name => ability_name, :max => max_dice) if ((dice == max_dice) && (pips > 0))
-      return t('d6system.min_dice_is', :name => ability_name, :min => min_dice) if (dice < min_dice)
+      return t('d6system.max_dice_is', :name => ability_name, :max => max_dice) if (test_dice > max_dice)
+      return t('d6system.min_dice_is', :name => ability_name, :min => min_dice) if (test_dice < min_dice)
       return nil
     end
     
@@ -96,9 +99,6 @@ module AresMUSH
            set_ability(char, a, '0D')
         end
       end
-      D6System.skill_names.each do |a|
-        set_ability(char, a, '0D+0')
-      end
 
       starting_abilities = StartingAbilities.get_groups_for_char(char)
         
@@ -124,27 +124,49 @@ module AresMUSH
       end
     end
 
-    def self.get_max_value(ability_type)
+    def self.get_max_value(char, ability_name)
+      ability_type = D6System.get_ability_type(ability_name)
+      if (ability_type == :skill)
+        base_rating = D6System.ability_rating(char, D6System.get_linked_attr(ability_name))
+      elsif (ability_type == :specialization)
+        spec = D6System.find_ability(char, ability_name)
+        if (spec)
+           base_rating = D6System.ability_rating(char, spec.skill)
+        else
+           return "0D"
+        end
+      end
       case ability_type
       when :skill, :specialization
-        return Global.read_config("d6system", "max_skill_dice")
+        return D6System.add_dice(base_rating, Global.read_config("d6system", "max_skill_dice").to_s + "D+0", 0)
       when :attribute
-        return Global.read_config("d6system", "max_attr_dice")
+        return Global.read_config("d6system", "max_attr_dice").to_s + "D+0"
       when :advantage, :disadvantage
         return Global.read_config("d6system", "max_advantage_rating")
       else
-        return 0
+        return "0D"
       end
     end
 
-    def self.get_min_value(ability_type)
+    def self.get_min_value(char, ability_name)
+      ability_type = D6System.get_ability_type(ability_name)
+      if (ability_type == :skill)
+        base_rating = D6System.ability_rating(char, D6System.get_linked_attr(ability_name))
+      elsif (ability_type == :specialization)
+        spec = D6System.find_ability(char, ability_name)
+        if (spec)
+           base_rating = D6System.ability_rating(char, spec.skill)
+        else
+           return "0D"
+        end
+      end
       case ability_type
-      when :skill
-        return Global.read_config("d6system", "min_skill_dice")
       when :attribute
-        return Global.read_config("d6system", "min_attr_dice")
+         return Global.read_config("d6system", "min_attr_dice").to_s + "D"
+      when :skill, :specialization
+         return base_rating
       else
-        return 0
+        return "0D"
       end
     end
 
@@ -196,15 +218,15 @@ module AresMUSH
 
 # Saving abilities from web chargen
     def self.save_abilities(char, chargen_data)
-       save_ability_list(char, chargen_data[:custom][:attrs])
-       save_ability_list(char, chargen_data[:custom][:skills])
-       save_specializations(char, chargen_data[:custom][:specializations])
+       save_attributes(char, chargen_data[:custom][:attrs])
+       save_other_abilities(char, chargen_data[:custom][:skills])
+       save_other_abilities(char, chargen_data[:custom][:specializations])
        save_option_list(char, chargen_data[:custom][:advantages])
        save_option_list(char, chargen_data[:custom][:disadvantages])
        save_option_list(char, chargen_data[:custom][:special_abilities])
     end
 
-    def self.save_ability_list(char, list)
+    def self.save_attributes(char, list)
       alerts = []
       (list || {}).each do |a, b|
         error = set_ability(char, a, b)
@@ -215,11 +237,43 @@ module AresMUSH
      return alerts
     end
 
-    def self.save_specializations(char, list)
+    def self.linked_rating(char, ability_name)
+      type = D6System.get_ability_type(ability_name)
+      if (type == :skill )
+        linked_attr = D6System.get_linked_attr(ability_name)
+        if linked_attr
+          return D6System.ability_rating(char, linked_attr)
+        else
+          return nil
+        end
+      elsif (type == :specialization )
+        if ability_name.include?("(")
+          skill = ability_name.split("(")[1].chomp(")")
+          ability = find_ability(char, skill)
+        else
+          ability = find_ability(char, ability_name)
+          return nil if !ability
+          skill = ability.skill
+        end
+        ability = find_ability(char, skill)
+        if !ability
+          linked_attr = D6System.get_linked_attr(skill)
+          if linked_attr
+             return D6System.ability_rating(char, linked_attr)
+          end
+        else
+          return D6System.ability_rating(char, skill)
+        end
+      end
+      return '0D+0'
+    end 
+
+    def self.save_other_abilities(char, list)
       alerts = []
       (list || {}).each do |a, b|
         if (b != "0D+0")
-           error = set_ability(char, a, b ) 
+           combined_rating = D6System.add_dice(b, linked_rating(char, a), 0)
+           error = set_ability(char, a, combined_rating ) 
            if (error)
               alerts << t('d6system.error_saving_ability', :name => a, :error => error)
            end
@@ -227,6 +281,7 @@ module AresMUSH
           name = a.split("(")[0].rstrip
           ability = find_ability(char, name)
           if (ability)
+            Global.logger.debug "would delete ability #{ability.name}"
             ability.delete
           end
         end

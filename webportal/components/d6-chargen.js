@@ -14,6 +14,7 @@ export default Component.extend({
   didInsertElement: function() {
     this._super(...arguments);
     let self = this;
+    let specSkillString = this.specSkillString || this.char.skills[0].name; 
     this.set('updateCallback', function() { return self.onUpdate(); } );
    },
 
@@ -21,7 +22,7 @@ export default Component.extend({
     let total = this.countDiceInGroup(this.get('char.attrs')) * 4;
     return total;
   }),
-    
+
   attrDice: computed('char.attrs.@each.rating', function() {
     let total = this.countDiceInGroup(this.get('char.attrs'));
     return total;
@@ -46,6 +47,25 @@ export default Component.extend({
     let total = this.countDiceInGroup(this.get('char.specializations'));
     return total;
   }),
+
+  getSpecBase: computed('specSkillString', function() {
+    let skillName = this.get('specSkillString');
+    let item = this.get('char.skills').findBy('name', skillName);
+    if (item) {
+       let attr = this.get('char.attrs').findBy('name', item.linked_attr);
+       if (attr) {
+          let combDice = parseInt(item.rating.split("D")[0]) + parseInt(attr.rating.split("D")[0]);
+          let combPips = parseInt(item.rating.split("+")[1]) + parseInt(attr.rating.split("+")[1]);
+          if (combPips > 2) {
+             combDice = combDice + 1;
+             combPips = combPips - 3;
+          }
+          return combDice.toString() + "D+" + combPips.toString();
+       }
+    }
+    return '0D+0';
+  }),
+
 
    countDiceInGroup: function(list) {
     if (!list) {
@@ -103,6 +123,7 @@ export default Component.extend({
       let specSkillString = this.specSkillString || skill_list[0];
       let spec = this.newSpecialization;
       let skill = this.specSkillString;
+      let baseRating = this.get('getSpecBase');
       if (!spec) {
         this.flashMessages.danger("You didn't specify a specialization name.");
         this.set('selectSpecialization', false);
@@ -120,7 +141,7 @@ export default Component.extend({
       }
       this.set('newSpecialization', null);
       this.set('selectSpecialization', false);
-      this.get('char.specializations').pushObject( EmberObject.create( { name: spec + " (" + skill + ")", rating: '0D+1' }) );
+      this.get('char.specializations').pushObject( EmberObject.create( { name: spec + " (" + skill + ")", rating: '0D+1', base_rating: baseRating }) );
       this.validateChar();
     }
 

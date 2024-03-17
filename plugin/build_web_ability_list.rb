@@ -55,7 +55,8 @@ module AresMUSH
         list = []
         char.d6specializations.each do |s|
            spec_name = s.name + " (" + s.skill + ")"
-           list << { name: spec_name, rating: s.rating } 
+           base_rating = D6System.ability_rating(char, s.skill)
+           list << { name: spec_name, rating: s.rating, base_rating: base_rating } 
         end
         return list
       end
@@ -85,6 +86,7 @@ module AresMUSH
                list << { name: s['name'], rating: rating, desc: s['desc'] }
             else
                 if (ability_type == "skill")
+                   rating = (rating != '0D+0') ? D6System.sub_dice(rating, D6System.ability_rating(char, D6System.get_linked_attr(s['name']))) : '0D+0'
                    list << { name: s['name'], rating: rating, desc: s['desc'], linked_attr: s['linked_attr'] }
                 end
             end

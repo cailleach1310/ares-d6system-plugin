@@ -10,8 +10,9 @@
 <% specializations.each do |e| -%>
 <%= e -%>
 <% end %>
-<% end -%><% if advantages.length > 0 -%>
-%r<%= section_line 'Advantages' -%>
+<% end -%>
+%r<% if advantages.length > 0 -%>
+<%= section_line 'Advantages' -%>
 <% advantages.each do |k| -%>
 <%= k -%>
 <% end %>

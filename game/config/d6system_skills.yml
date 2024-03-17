@@ -50,7 +50,7 @@ d6system:
     desc: Operating any kind of vehicle or powered armor traveling on or through the
       ground, a liquid medium, the air, or space.
     linked_attr: Coordination
-  - name: Sleight of hand
+  - name: Sleight Of Hand
     desc: Nimbleness with the fingers and misdirection, including picking pockets,
       palming items, and stage magic.
     linked_attr: Coordination
@@ -181,6 +181,10 @@ d6system:
   - name: Intimidation
     desc: Using physical presence, verbal threats, taunts, torture, or fear to influence
       others or get information out of them.
+    linked_attr: Presence
+  - name: Performance
+    desc: Using presence and grace to entertain others. Possible specializations are
+      acting, singing and playing musical instruments.
     linked_attr: Presence
   - name: Persuasion
     desc: Influencing others or getting information out of them through bribery, honest
