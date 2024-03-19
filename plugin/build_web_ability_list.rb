@@ -12,7 +12,7 @@ module AresMUSH
           {
              attrs: build_chargen_ability_list(char, "attribute"),
              skills: build_chargen_ability_list(char, "skill"),
-             specializations: specialization_list(char),
+             specializations: build_chargen_specialization_list(char),
              advantages: build_chargen_list(char, D6System.advantages),
              disadvantages: build_chargen_list(char, D6System.disadvantages),
              special_abilities: build_chargen_list(char, D6System.special_abilities),
@@ -92,6 +92,18 @@ module AresMUSH
             end
          end
          return list
+      end
+
+      def build_chargen_specialization_list(char)
+        list = []
+        char.d6specializations.each do |s|
+           spec_name = s.name + " (" + s.skill + ")"
+           base_rating = D6System.ability_rating(char, s.skill)
+           base_rating = base_rating.split("+")[1] ? base_rating : base_rating + "+0"
+           rating = D6System.sub_dice(s.rating, base_rating) 
+           list << { name: spec_name, rating: rating, base_rating: base_rating }
+        end
+        return list
       end
 
       def build_chargen_list(char, cg_list)
