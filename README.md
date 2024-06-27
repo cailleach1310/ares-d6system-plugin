@@ -9,8 +9,6 @@ This plugin can be used as an alternative to the fs3 system. It is based on the 
 
 You need to disable the fs3 plugin on the ares-webportal before you install this plugin.
 
-Please note: This version has a major update in regards to how ability ratings are stored. It also introduces condensed sheets that only list skills that have been learned. In order to update an existing plugin installation you'll need to run migration commands to make sure existing characters will have their sheets transferred to the new setup.
-
 ### What this plugin covers
 * Setting attributes, skills, specializations, advantages, disadvantages and special abilities in chargen, both on the game client and on the webportal.
 * Rolling abilities from the game client and the webportal scene system.
@@ -26,19 +24,10 @@ Please note: This version has a major update in regards to how ability ratings a
 * Optional dice limit for rolls (specializations/skills/attributes). Additional modifiers will still apply.
 
 ### There may be bugs
-This plugin has yet to be tested on a live game, so there may be bugs and glitches. If you find any, please let me know. I'm Lyanna on the AresMUSH discord server. Also, I'll gladly help when you need assistance with installation, configuration etc.
+This plugin has been tested on a more than one live game, yet there may be bugs and glitches. If you find any, please let me know. I'm Lyanna on the AresMUSH discord server. Also, I'll gladly help when you need assistance with installation, configuration etc.
 
 ### Compatibility
-This plugin is compatible with AresMUSH v1.0.9 (ember 4) upwards. When upgrading from an older plugin installation, you'll need to adjust your profile-custom-tabs.hbs and chargen-custom.hbs with the latest version. Also, d6-chargen-option.js will have to be replaced with the newest version (this can also be achieved through a re-installation of the plugin from the game client). Make sure to redeploy the webportal after the update.
-
-If you want to use this plugin but you are running on AresMUSH < 1.0.9, you may have to have a look at d6-chargen-option.js and comment out / remove the new code ( marked as 'ember 4' in the comments ) and uncomment the code for older ember versions.
-
-### Migrating Chars from a Previous Plugin Install
-If you are updating your plugin to this version, make sure to have a recent AresMUSH backup of your game, in case things go wrong. Run the following command from the game client after re-installing the plugin, using an admin or coder bit:
-
-       ruby D6System.migrate_all()
-       
-Check the output, to make sure all ratings were transformed correctly.
+This plugin is compatible with AresMUSH v1.0.9 (ember 4) upwards. If you want to use this plugin but you are running on AresMUSH < 1.0.9, you may have to have a look at d6-chargen-option.js and comment out / remove the new code ( marked as 'ember 4' in the comments ) and uncomment the code for older ember versions.
 
 ## Screenshots
 
