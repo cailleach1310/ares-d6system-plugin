@@ -19,12 +19,13 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 * Optional cron job for regularly awarding character points (similar to how it's done with xp on FS3 Systems).
 * Admin game client commands to manage fate and character points (awarding/removing).
 * Admin game client commands for handling post chargen ability raises which will happen on request basis.
-* A damage system based on wound levels, including an admin command for setting wound levels, player commands for healing other players and cron jobs for natural healing.
 * The possibility to define starting abilities based on the group values of a char, which will be automatically applied when resetting during chargen. These will also be checked against in the app review.
 * Optional dice limit for rolls (specializations/skills/attributes). Additional modifiers will still apply.
+* A damage system based on wound levels, including an admin command for setting wound levels, player commands for healing other players and cron jobs for natural healing. The damage system also has full webportal support to be used in scenes and also in jobs.
+
 
 ### There may be bugs
-This plugin has been tested on a more than one live game, yet there may be bugs and glitches. If you find any, please let me know. I'm Lyanna on the AresMUSH discord server. Also, I'll gladly help when you need assistance with installation, configuration etc.
+This plugin has been tested on a more than one live game, yet there may be bugs and glitches. If you find any or if you have other suggestions for improvement, please let me know. I'm Lyanna on the AresMUSH discord server. Also, I'll gladly help when you need assistance with installation, configuration etc.
 
 ### Compatibility
 This plugin is compatible with AresMUSH v1.0.9 (ember 4) upwards. If you want to use this plugin but you are running on AresMUSH < 1.0.9, you may have to have a look at d6-chargen-option.js and comment out / remove the new code ( marked as 'ember 4' in the comments ) and uncomment the code for older ember versions.
