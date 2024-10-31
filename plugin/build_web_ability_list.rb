@@ -99,10 +99,13 @@ module AresMUSH
         char.d6specializations.each do |s|
            spec_name = s.name + " (" + s.skill + ")"
            base_rating = D6System.ability_rating(char, s.skill)
+           if (base_rating == '0D')
+             base_rating = D6System.ability_rating(char, D6System.get_linked_attr(s.skill))
+           end
            base_rating = base_rating.split("+")[1] ? base_rating : base_rating + "+0"
-           rating = D6System.sub_dice(s.rating, base_rating) 
-           list << { name: spec_name, rating: rating, base_rating: base_rating }
-        end
+           bonus = D6System.sub_dice(s.rating, base_rating)
+           list << { name: spec_name, rating: bonus, base_rating: base_rating }
+         end
         return list
       end
 

@@ -19,7 +19,7 @@ en:
         specialization_added: "Specialization '%{name}' has been set for the skill %{skill}."
         ability_removed: "Ability '%{name}' removed."
         admin_ability_set: "You set %{name}'s %{ability_name} ability (%{ability_type}) to %{rating}."
-        max_dice_is: "You can't set %{name} to a value higher than %{max}D6."
+        max_dice_is: "You can't set %{name} to a value higher than %{max}."
         min_dice_is: "You can't lower that ability any lower."
         no_special_characters: "Ability names may not contain special characters."
         error_saving_ability: "There was a problem saving %{name}: %{error}"

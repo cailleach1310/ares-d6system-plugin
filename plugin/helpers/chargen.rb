@@ -132,6 +132,9 @@ module AresMUSH
         spec = D6System.find_ability(char, ability_name)
         if (spec)
            base_rating = D6System.ability_rating(char, spec.skill)
+           if (base_rating == '0D')
+              base_rating = D6System.ability_rating(char, D6System.get_linked_attr(spec.skill))
+           end
         else
            return "0D"
         end
@@ -156,6 +159,9 @@ module AresMUSH
         spec = D6System.find_ability(char, ability_name)
         if (spec)
            base_rating = D6System.ability_rating(char, spec.skill)
+           if (base_rating == '0D')
+              base_rating = D6System.ability_rating(char, D6System.get_linked_attr(spec.skill))
+           end
         else
            return "0D"
         end
