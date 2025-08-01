@@ -28,7 +28,7 @@ You need to disable the fs3 plugin on the ares-webportal before you install this
 This plugin has been tested on a more than one live game, yet there may be bugs and glitches. If you find any or if you have other suggestions for improvement, please let me know. I'm Lyanna on the AresMUSH discord server. Also, I'll gladly help when you need assistance with installation, configuration etc.
 
 ### Compatibility
-This plugin is compatible with AresMUSH v1.0.9 (ember 4) upwards. If you want to use this plugin but you are running on AresMUSH < 1.0.9, you may have to have a look at d6-chargen-option.js and comment out / remove the new code ( marked as 'ember 4' in the comments ) and uncomment the code for older ember versions.
+This plugin is compatible with AresMUSH from version 2.0.0 upwards (ember 5, ruby 3.3.6).
 
 ## Screenshots
 
