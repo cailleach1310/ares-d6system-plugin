@@ -5,7 +5,7 @@ module AresMUSH
         scene = Scene[request.args[:id]]
         enactor = request.enactor
         
-        job = Job[request.args[:id]]
+        job = Job[request.args['id']]
         enactor = request.enactor
         
         error = Website.check_login(request)

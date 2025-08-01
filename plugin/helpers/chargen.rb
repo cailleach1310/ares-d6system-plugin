@@ -224,12 +224,12 @@ module AresMUSH
 
 # Saving abilities from web chargen
     def self.save_abilities(char, chargen_data)
-       save_attributes(char, chargen_data[:custom][:attrs])
-       save_other_abilities(char, chargen_data[:custom][:skills])
-       save_other_abilities(char, chargen_data[:custom][:specializations])
-       save_option_list(char, chargen_data[:custom][:advantages])
-       save_option_list(char, chargen_data[:custom][:disadvantages])
-       save_option_list(char, chargen_data[:custom][:special_abilities])
+       save_attributes(char, chargen_data['custom']['attrs'])
+       save_other_abilities(char, chargen_data['custom']['skills'])
+       save_other_abilities(char, chargen_data['custom']['specializations'])
+       save_option_list(char, chargen_data['custom']['advantages'])
+       save_option_list(char, chargen_data['custom']['disadvantages'])
+       save_option_list(char, chargen_data['custom']['special_abilities'])
     end
 
     def self.save_attributes(char, list)

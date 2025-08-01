@@ -1,0 +1,28 @@
+<div class="row fs3-abilitybox"> 
+  <div class="col col-sm-7">
+    {{yield}}
+  </div>
+
+  <div class="col col-sm-5">
+    <div class="fs3-rating-control">
+      <button class="fs3-skillbutton" {{on 'click' this.edit}}>Edit</button>
+    </div>
+    
+  </div>
+</div>
+
+<BsModalSimple @title="Edit {{this.name}}" @closeTitle="Cancel" @submitTitle="Update" @size={{null}} @fade={{true}} @open={{this.editOption}} @onSubmit={{this.update}} @onHide={{this.cancelEditOption}}>
+     <p><i>{{this.optionDesc}}</i></p>
+     <br>
+     Rank:
+    <div class="fs3-rating-display">
+      <button class="fs3-skillbutton" {{on 'click' this.lowerOption}}>-</button>
+
+        {{this.optionRating}}
+
+      <button class="fs3-skillbutton" {{on 'click' this.raiseOption}}>+</button>
+    </div>
+ <br><br>
+    <p>Details:</p>
+     <Input @type="text" size={{200}} id="optionDetails" @enter={{this.update}} @value={{this.optionDetails}} />
+  </BsModalSimple>

@@ -2,7 +2,7 @@ module AresMUSH
   module D6System
     class SetJobDamageRequestHandler
       def handle(request)
-        job = Job[request.args[:id]]
+        job = Job[request.args['id']]
         enactor = request.enactor
         
         error = Website.check_login(request)

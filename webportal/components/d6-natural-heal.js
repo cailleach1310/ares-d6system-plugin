@@ -1,4 +1,4 @@
-import EmberObject, { computed } from '@ember/object';
+import EmberObject, { computed, action } from '@ember/object';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
@@ -17,40 +17,42 @@ export default Component.extend({
       this.set('rollString', 'Physique');
     },
 
+    @action
+    cancelNaturalHeal() {
+       this.set('selectNaturalHeal', false);
+    },
 
-    actions: { 
-      
-      rollNaturalHeal() {
-        let api = this.gameApi;
-      
-        // Needed because the onChange event doesn't get triggered when the list is 
-        // first loaded, so the roll string is empty.
-        let healFate = this.healFate;
-        let healCp = this.healCp;
-        let rollString = this.rollString
+    @action
+    rollNaturalHeal() {
+       let api = this.gameApi;
+     
+       // Needed because the onChange event doesn't get triggered when the list is 
+       // first loaded, so the roll string is empty.
+       let healFate = this.healFate;
+       let healCp = this.healCp;
+       let rollString = this.rollString
 
-        
-        var sender;
-        if (this.scene) {
-          sender = this.get('scene.poseChar.name');
-        }
-          
-        this.set('selectNaturalHeal', false);
-        this.set('healFate', false);
-        this.set('healCp', false);
-        this.set('rollStr', 'Physique');
+       var sender;
+       if (this.scene) {
+         sender = this.get('scene.poseChar.name');
+       }
 
-        var destinationId, command;
-        if (this.destinationType == 'scene') {
+       this.set('selectNaturalHeal', false);
+       this.set('healFate', false);
+       this.set('healCp', false);
+       this.set('rollStr', 'Physique');
+
+       var destinationId, command;
+       if (this.destinationType == 'scene') {
           destinationId = this.get('scene.id');
           command = 'rollNaturalHealScene';
-        }
-        else {
+       }
+       else {
           destinationId = this.get('job.id');
           command = 'rollNaturalHealJob';
-        }
-        
-        api.requestOne(command, { id: destinationId,
+       }
+
+       api.requestOne(command, { id: destinationId,
            fate: healFate,
            cp: healCp,
            roll_str: rollString,
@@ -59,7 +61,6 @@ export default Component.extend({
           if (response.error) {
             return;
           }
-        });
-      },
+       });
     }
 });

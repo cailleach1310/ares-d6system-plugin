@@ -1,8 +1,9 @@
-import EmberObject, { computed } from '@ember/object';
+import EmberObject, { computed, action } from '@ember/object';
 import { A } from '@ember/array';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { capitalize } from '@ember/string'; // ember 4
+import { pushObject } from 'ares-webportal/helpers/object-ext';
 
 export default Component.extend({
   tagName: '',
@@ -16,7 +17,8 @@ export default Component.extend({
     this._super(...arguments);
     let self = this;
     this.set('updateCallback', function() { return self.onUpdate(); } );
-    this.set('optionString', this.opList.mapBy('name')[0]); // initialize value
+    let optionList = A(this.opList);
+    this.set('optionString', optionList.mapBy('name')[0]); // initialize value
    },
  
   optionPoints: computed('charList.@each.rating', function() {
@@ -47,9 +49,10 @@ export default Component.extend({
      let total = 0;
      let first = 0;
      let factor = 0;
+     let theList = A(sList);
      cList.forEach(function(opt) {
         if (opt.rating > 0) {
-           let item = sList.findBy('name', opt.name);
+           let item = theList.findBy('name', opt.name);
            first = item.cost;
         // determine cost factor for ranks > 1
            if (diff != "cost") {
@@ -64,7 +67,7 @@ export default Component.extend({
    },
 
    optionDesc: computed('optionString',function() {
-     let list = this.opList;
+     let list = A(this.opList);
      let item = list.findBy('name', this.optionString);
      if (item) {
        return item.desc;
@@ -74,7 +77,7 @@ export default Component.extend({
    }),
 
    optionMin: computed('optionString',function() {
-     let list = this.opList;
+     let list = A(this.opList);
      let item = list.findBy('name', this.optionString);
      if (item) {
        return item.ranks[0];
@@ -107,40 +110,54 @@ export default Component.extend({
 
   },
 
-  actions: {
+  @action
+  abilityChanged() {
+    this.validateChar();
+  },
 
-    abilityChanged() {
-      this.validateChar();
-    },
+  @action
+  doSelectOption() {
+    this.set('selectOption', true);
+  },
 
-    addOption() {
-      let option_list = this.opList.mapBy('name');
-      let optionString = this.optionString || option_list[0];
-      let optionDetails = this.optionDetails || null;
-      let optionMin = 1;
-      if (!optionString) {
-        this.flashMessages.danger("You have to specify a valid " + this.type + ".");
-        this.set('selectOption', false);
-        return;
-      }
-      if (this.type == 'special ability') {
-         if (!optionDetails) {
-           optionDetails = this.optionDesc;
-         }
-      } else {
-         optionMin = this.optionMin;
-         if (!optionDetails) {
-            this.flashMessages.danger("You have to specify details for the " + this.type + ".");
-            this.set('selectOption', false);
-            return;
-         }
-      }
-      this.set('optionDetails', null);
+  @action
+  cancelSelectOption() {
+    this.set('selectOption', false);
+  },
+
+  @action
+  changeOptionString(event) {
+    this.set('optionString', event.target.value);
+  },
+
+  @action
+  addOption() {
+    let convList = A(this.opList);
+    let option_list = convList.mapBy('name');
+    let optionString = this.optionString || option_list[0];
+    let optionDetails = this.optionDetails || null;
+    let optionMin = 1;
+    if (!optionString) {
+      this.flashMessages.danger("You have to specify a valid " + this.type + ".");
       this.set('selectOption', false);
-      this.get('charList').pushObject( EmberObject.create( { name: optionString, rating: optionMin, details: optionDetails }) );
-      this.validateChar();
+      return;
     }
-
+    if (this.type == 'special ability') {
+       if (!optionDetails) {
+         optionDetails = this.optionDesc;
+       }
+    } else {
+       optionMin = this.optionMin;
+       if (!optionDetails) {
+          this.flashMessages.danger("You have to specify details for the " + this.type + ".");
+          this.set('selectOption', false);
+          return;
+       }
+    }
+    this.set('optionDetails', null);
+    this.set('selectOption', false);
+    pushObject( this.charList, EmberObject.create( { name: optionString, rating: optionMin, details: optionDetails } ) , this, 'charList' );
+    this.validateChar();
   }
-    
+
 });

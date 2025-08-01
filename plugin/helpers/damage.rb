@@ -116,9 +116,9 @@ module AresMUSH
     end
 
     def self.set_damage_web(request, enactor, type)
-      target =  (type == 'scene') ? Scene[request.args[:id]] : Job[request.args[:id]]
-      char_name = request.args[:char_name]
-      wound_level = request.args[:wound_level] 
+      target =  (type == 'scene') ? Scene[request.args['id']] : Job[request.args['id']]
+      char_name = request.args['char_name']
+      wound_level = request.args['wound_level'] 
       return { error: t('dispatcher.not_allowed') } if !enactor.has_permission?("manage_damage")
       
       if (!target)
@@ -137,14 +137,14 @@ module AresMUSH
     end
 
     def self.web_natural_heal(request, enactor)
-      job = Job[request.args[:id]]
+      job = Job[request.args['id']]
       char_name = enactor.name
       wound_level = enactor.wound_level
-      fate_roll = request.args[:fate] == "true"  # the parameter comes as a string and has to be converted to boolean value
-      cp_roll = request.args[:cp] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      fate_roll = request.args['fate'] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      cp_roll = request.args['cp'] == "true"  # the parameter comes as a string and has to be converted to boolean value
       message = ""
       natural_diff = D6System.get_natural_difficulty(wound_level)
-      roll_str = request.args[:roll_str]
+      roll_str = request.args['roll_str']
       # char point spent?
       if cp_roll
          if (enactor.char_points > 0)
@@ -205,10 +205,10 @@ module AresMUSH
     end
 
     def self.web_heal(request, enactor)
-      scene = Scene[request.args[:id]]
-      char_name = request.args[:heal_name]
-      fate_roll = request.args[:fate] == "true"  # the parameter comes as a string and has to be converted to boolean value
-      cp_roll = request.args[:cp] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      scene = Scene[request.args['id']]
+      char_name = request.args['heal_name']
+      fate_roll = request.args['fate'] == "true"  # the parameter comes as a string and has to be converted to boolean value
+      cp_roll = request.args['cp'] == "true"  # the parameter comes as a string and has to be converted to boolean value
       message = ""
       char = Character.named(char_name)
       return { error: t('d6system.no_such_char', :name => char_name) } if !char

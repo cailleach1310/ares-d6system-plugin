@@ -1,18 +1,17 @@
 import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
+import EmberObject, { computed, action } from '@ember/object';
+import { A } from '@ember/array';
 
 export default Component.extend({
 
   attrSkills: computed('attribute',function() {
     let attribute = this.get('attribute');
-    let list = this.get('skills');
+    let list = A(this.get('skills'));
     return list.filterBy('linked_attr', attribute);
   }),
 
-  actions: {
-
-    abilityChanged() {
-      this.updated();
-    }
+  @action
+  abilityChanged() {
+    this.updated();
   }
 });

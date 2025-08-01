@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
+import EmberObject, { computed, action } from '@ember/object';
 
 export default Component.extend({
 
@@ -21,42 +21,43 @@ export default Component.extend({
        }
     }),
 
-    actions: { 
-        raise() {
-            var dice = parseInt(this.rating.split("D")[0]);
-            var pips = parseInt(this.rating.split("+")[1]);
-            if (dice < this.maxDice) {
-               if (pips == 2) {
-                  dice = dice + 1;
-                  pips = 0;
-               } else {
-                  if (pips < 2) {
-                     pips = pips + 1;
-                  }
-               }
-            }
-            this.set('rating', dice.toString() + "D+" + pips.toString() );
-            this.updated();
-        },
-    
-        lower() {
-            var dice = parseInt(this.rating.split("D")[0]);
-            var pips = parseInt(this.rating.split("+")[1]);
-            if ((pips == 0) && (dice > this.minRating)) {
-              dice = dice - 1;
-              pips = 2;
-            } else {
-               if (pips > 0) {
-                  pips = pips - 1;
-               }
-            }
-            this.set('rating', dice.toString() + "D+" + pips.toString() );
-            this.updated();
-        },
-
-        learn() {
-            this.set('rating', '0D+1');
-            this.updated();
+    @action
+    raiseSkill() {
+        var dice = parseInt(this.rating.split("D")[0]);
+        var pips = parseInt(this.rating.split("+")[1]);
+        if (dice < this.maxDice) {
+           if (pips == 2) {
+              dice = dice + 1;
+              pips = 0;
+           } else {
+              if (pips < 2) {
+                 pips = pips + 1;
+              }
+           }
         }
+        this.set('rating', dice.toString() + "D+" + pips.toString() );
+        this.updated();
+    },
+    
+    @action
+    lowerSkill() {
+        var dice = parseInt(this.rating.split("D")[0]);
+        var pips = parseInt(this.rating.split("+")[1]);
+        if ((pips == 0) && (dice > this.minRating)) {
+          dice = dice - 1;
+          pips = 2;
+        } else {
+           if (pips > 0) {
+              pips = pips - 1;
+           }
+        }
+        this.set('rating', dice.toString() + "D+" + pips.toString() );
+        this.updated();
+    },
+
+    @action
+    learnSkill() {
+        this.set('rating', '0D+1');
+        this.updated();
     }
 });

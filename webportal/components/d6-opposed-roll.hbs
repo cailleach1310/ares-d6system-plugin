@@ -1,0 +1,13 @@
+<BsModalSimple @title="Add Opposed Roll" @closeTitle="Cancel" @submitTitle="Roll" @size={{null}} @fade={{true}} @open={{this.selectAddOpposed}} @onSubmit={{this.addOpposedRoll}} @onHide={{this this.cancelOpposedRoll}}>
+    <p><b>Opposed Roll</b></p>
+    <p>Enter two character and ability names.</p>
+    <p>
+      Character: <Input @type="text" size={{15}} id="vsName1" @enter={{action "addOpposedRoll"}} @value={{this.vsName1}} /> 
+      Ability: <Input @type="text" size={{15}} id="vsRoll1" @enter={{action "addOpposedRoll"}} @value={{this.vsRoll1}} /><br>
+     vs<br>
+      Character: <Input @type="text" size={{15}} id="vsName2" @enter={{action "addOpposedRoll"}} @value={{this.vsName2}} /> 
+      Ability: <Input @type="text" size={{15}} id="vsRoll2" @enter={{action "addOpposedRoll"}} @value={{this.vsRoll2}} /><br>
+    </p>
+    <br>
+    <p class="hint">When rolling against an NPC, enter a name and the total of dice and modifiers.</p>
+  </BsModalSimple>

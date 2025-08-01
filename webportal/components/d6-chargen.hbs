@@ -1,0 +1,141 @@
+  {{#if this.char.reset_needed}}
+     <div class="cg-tip"><AnsiFormat @text="You need to reset your abilities first!" /></div>
+
+        <div class="action-buttons">
+           <button name="reset" {{on 'click' (fn this.resetD6Abilities this.name)}} class="btn btn-secondary">Reset Abilities</button>
+        </div>
+    {{else}}
+
+     <ul class="nav nav-tabs" role="tablist">
+
+           <li role="presentation" class="nav-item"><a href="#d6attrs" aria-controls="d6attrs" role="tab" data-bs-toggle="tab" class="nav-link active">Attributes</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6skills" aria-controls="d6skills" role="tab" data-bs-toggle="tab" class="nav-link">Skills</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6specializations" aria-controls="d6specializations" role="tab" data-bs-toggle="tab" class="nav-link">Specializations</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6advantages" aria-controls="d6advantages" role="tab" data-bs-toggle="tab" class="nav-link">Advantages</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6disadvantages" aria-controls="d6disadvantages" role="tab" data-bs-toggle="tab" class="nav-link">Disadvantages</a></li>
+           <li role="presentation" class="nav-item"><a href="#d6specials" aria-controls="d6specials" role="tab" data-bs-toggle="tab" class="nav-link">Special Abilities</a></li>
+         </ul>
+
+  <div class="tab-content">
+  
+  <div role="tabpanel" class="tab-pane active" id="d6attrs">
+
+  <div class="card card-default">
+       <div class="card-heading">
+           Attributes
+       </div>
+   <div class="card-body">
+
+     <p class="cg-tip"><AnsiFormat @text={{this.cg_info.attrs_blurb}} /></p>
+
+     {{#each this.char.attrs as |att|}}
+     <D6Attrbox @rating={{att.rating}} @maxRating={{this.cg_info.max_attr_dice}} @name={{att.name}} @extranormAttrs={{this.cg_info.extranormal_attrs}} @updated={{this.abilityChanged}}>
+         <b>{{att.name}}</b> - {{att.desc}}
+     </D6Attrbox>
+     {{/each}}
+     <br>
+     Points spent on attributes: {{this.attrPoints}} ({{this.attrDice}} dice)
+     <br>
+
+   </div>
+  </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="d6skills">
+
+  <div class="card card-default">
+       <div class="card-heading">
+           Skills
+       </div>
+   <div class="card-body">
+
+     <p class="cg-tip"><AnsiFormat @text={{this.cg_info.skills_blurb}} /></p>
+     <br>
+     <ul class="nav nav-tabs" role="tablist">
+
+    {{#each this.char.attrs as |att index|}}
+     {{#if (eq index 0)}}
+     <li role="presentation" class="nav-item"><a href="#d6{{att.name}}" aria-controls="{{att.name}}" role="tab" data-bs-toggle="tab" class="nav-link active">{{att.name}}</a></li>
+     {{else}}
+     <li role="presentation" class="nav-item"><a href="#d6{{att.name}}" aria-controls="{{att.name}}" role="tab" data-bs-toggle="tab" class="nav-link">{{att.name}}</a></li> 
+     {{/if}}
+     {{/each}}
+         </ul>    
+  <div class="tab-content">
+ 
+    {{#each this.char.attrs as |attribute index|}}
+     {{#if (eq index 0)}}
+     <div role="tabpanel" class="tab-pane active" id="d6{{attribute.name}}">
+        <D6ChargenSkills @skills={{this.char.skills}} @attribute={{attribute.name}} @attrRating={{attribute.rating}} @max={{this.cg_info.max_skill_dice}} @updated={{this.abilityChanged}}/>
+    </div>
+     {{else}}
+     <div role="tabpanel" class="tab-pane" id="d6{{attribute.name}}">
+        <D6ChargenSkills @skills={{this.char.skills}} @attribute={{attribute.name}} @attrRating={{attribute.rating}} @max={{this.cg_info.max_skill_dice}} @updated={{this.abilityChanged}}/>
+    </div>
+   {{/if}}
+   {{/each}}
+   </div>
+   <br>
+   Points spent on skills: {{this.skillPoints}} ({{this.skillDice}} dice)
+   <br>
+
+</div>
+</div>
+</div>
+
+  <div role="tabpanel" class="tab-pane" id="d6specializations">
+
+  <div class="card card-default">
+       <div class="card-heading">
+           Specializations
+       </div>
+   <div class="card-body">
+
+     <p class="cg-tip"><AnsiFormat @text={{this.cg_info.specializations_blurb}} /></p>
+     <br>
+
+     {{#each this.char.specializations as |spec|}}
+       <D6Skillbox @rating={{spec.rating}} @baseRating={{spec.base_rating}} @maxDice={{this.cg_info.max_skill_dice}} @updated={{this.abilityChanged}}>
+          <b>{{spec.name}}</b>
+       </D6Skillbox>
+     {{/each}}
+
+     <br>
+     Points spent on specializations: {{this.specPoints}} ({{this.specDice}} dice)
+     <br>
+     <br>
+     <button class="btn btn-primary" id="addspec" {{on 'click' this.doAddSpecialization}}>Add Specialization</button>
+   </div>
+  </div>
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="d6advantages">
+  <D6ChargenOption @type="advantage" @blurb={{this.cg_info.advantages_blurb}} @opList={{this.cg_info.advantages}} @charList={{this.char.advantages}} />
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="d6disadvantages">
+  <D6ChargenOption @type="disadvantage" @blurb={{this.cg_info.disadvantages_blurb}} @opList={{this.cg_info.disadvantages}} @charList={{this.char.disadvantages}} />
+  </div>
+
+  <div role="tabpanel" class="tab-pane" id="d6specials">
+  <D6ChargenOption @type="special ability" @blurb={{this.cg_info.special_abilities_blurb}} @opList={{this.cg_info.special_abilities}} @charList={{this.char.special_abilities}} @specDifficulty={{this.cg_info.specials_difficulty}} />
+  </div>
+
+ </div>
+{{/if}}
+
+<BsModalSimple @title="Specialization" @closeTitle="Cancel" @submitTitle="Add" @size={{null}} @fade={{true}} @open={{this.selectSpecialization}} @onSubmit={{this.addSpecialization}} @onHide={{this.cancelAddSpecialization}}>
+    <p>Enter a specialization name.</p>
+    <Input @type="text" size={{25}} id="specname" @enter={{this.addSpecialization}} @value={{this.newSpecialization}} />
+    <p>Choose the skill for the specialization.</p>
+       <select onchange={{this.updateSpecSkillString}}>
+       {{#each this.cg_info.skillnames as |skill|}}
+           <option value={{skill}}>{{skill}}</option>
+       {{/each}}
+       </select>
+    <Input @type="text" size={{25}} id="specSkillString" @enter={{this.addSpecialization}} @value={{this.specSkillString}} />
+    Base rating: {{this.getSpecBase}}
+     <div class="alert alert-success">
+     <p>Please make sure to save and reload the page to see and edit the new specialization after adding it.</p>
+     </div>
+  </BsModalSimple>

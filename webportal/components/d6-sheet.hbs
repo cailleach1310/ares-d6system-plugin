@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col col-md-4 col-sm-12">
+    {{#each this.char.custom.d6.abilities_1 as |entry| }}
+       <D6AbilityTable @title={{entry.attribute}} @rating={{entry.rating}} @list={{entry.skills}} @max={{5}} />
+    {{/each}}
+  </div>
+  <div class="col col-md-4 col-sm-12">
+    {{#each this.char.custom.d6.abilities_2 as |entry| }}
+       <D6AbilityTable @title={{entry.attribute}} @rating={{entry.rating}} @list={{entry.skills}} @max={{5}} />
+    {{/each}}
+  </div>
+  <div class="col col-md-4 col-sm-12">
+    {{#each this.char.custom.d6.abilities_3 as |entry| }}
+       <D6AbilityTable @title={{entry.attribute}} @rating={{entry.rating}} @list={{entry.skills}} @max={{5}} />
+    {{/each}}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-md-6 col-sm-12">
+    <D6AbilityTable @title="Specializations" @list={{this.char.custom.d6.specializations}} @max={{0}} />  
+    <D6StatsTable @list={{this.char.custom.d6.other_stats}} />
+  </div>
+  <div class="col col-md-6 col-sm-12">
+    <D6OptionTable @title="Special Abilities" @list={{this.char.custom.d6.special_abilities}} @max={{5}} />  
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-md-6 col-sm-12">
+    <D6OptionTable @title="Advantages" @list={{this.char.custom.d6.advantages}} @max={{5}} />
+  </div>
+  <div class="col col-md-6 col-sm-12">
+    <D6OptionTable @title="Disadvantages" @list={{this.char.custom.d6.disadvantages}} @max={{5}} />
+  </div>
+</div>
