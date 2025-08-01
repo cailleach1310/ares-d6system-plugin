@@ -1,5 +1,0 @@
-               {{#each this.attrSkills as |skill| }}
-                  <D6Skillbox @rating={{skill.rating}} @baseRating={{this.attrRating}} @maxDice={{this.max}} @updated={{action "abilityChanged"}}>
-                   <b>{{skill.name}}</b> (<i>{{skill.linked_attr}}</i>) - {{skill.desc}}
-                  </D6Skillbox>
-               {{/each}}
