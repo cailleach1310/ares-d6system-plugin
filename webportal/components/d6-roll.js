@@ -30,8 +30,8 @@ export default Component.extend({
     },
 
     @action
-    changeRollStr() {
-      this.set('rollStr', event.target.value);
+    changeRollString() {
+      this.set('rollString', event.target.value);
     },
 
     @action

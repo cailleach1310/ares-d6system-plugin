@@ -115,6 +115,11 @@ export default Component.extend({
   },
 
   @action
+  cancelAddSpecialization() {
+    this.set('selectSpecialization', false);
+  },
+
+  @action
   resetD6Abilities(id) {
     let api = this.gameApi;
     api.requestOne('resetD6Abilities', { name: id }, null)
