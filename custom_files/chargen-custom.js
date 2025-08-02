@@ -60,12 +60,9 @@ export default Component.extend({
     this.set('charErrors', A());
   },
 
-  actions: {
-
-    abilityChanged() {
-      this.validateChar();
-    }
-
+  @action
+  abilityChanged() {
+     this.validateChar();
   }
 
 });
