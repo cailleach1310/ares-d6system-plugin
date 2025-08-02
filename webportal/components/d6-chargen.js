@@ -106,7 +106,7 @@ export default Component.extend({
 
   @action
   abilityChanged() {
-     this.updated();
+     this.validateChar();
   },
 
   @action
